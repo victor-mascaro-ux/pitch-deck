@@ -24,7 +24,7 @@ body{
     radial-gradient(120% 80% at 50% -20%, #1c1e23 0%, transparent 60%),
     linear-gradient(180deg,#141519 0%,#101115 100%);
   color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;
-  display:flex;flex-direction:column;overflow:hidden;
+  display:flex;flex-direction:column;overflow-x:hidden;overflow-y:auto;
   padding:clamp(20px,2.6vw,40px) clamp(24px,3.4vw,58px);
 }
 /* thin scan-line texture — very subtle, backstage monitor feel */
@@ -49,8 +49,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .head p b{color:var(--text);font-weight:600}
 
 /* ---------- monitor wall ---------- */
-.wall{position:relative;z-index:1;flex:1;display:grid;grid-template-columns:repeat(3,1fr);
-  gap:clamp(16px,2vw,28px);margin-top:clamp(20px,3vh,40px);align-content:center}
+.wall{position:relative;z-index:1;flex:1 0 auto;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(16px,2vw,28px);margin-top:clamp(20px,3vh,40px);align-content:safe center}
 .mon{
   display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
   background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;
@@ -114,7 +114,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
     <a class="mon" href="./v1-obsidian.html" data-key="1">
       <div class="screen">
         <span class="tone"><i></i> Live</span>
-        <iframe src="./v1-obsidian.html" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+        <iframe src="./v1-obsidian.html#c01" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
       </div>
       <div class="meta">
         <div class="row1"><span class="vid">Version 1 · Obsidian</span><span class="num">01</span></div>
@@ -127,12 +127,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
     <a class="mon" href="./v2-daylight.html" data-key="2">
       <div class="screen">
         <span class="tone"><i></i> Live</span>
-        <iframe src="./v2-daylight.html" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+        <iframe src="./v2-daylight.html#c01" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
       </div>
       <div class="meta">
         <div class="row1"><span class="vid">Version 2 · Daylight</span><span class="num">02</span></div>
-        <h2>See the whole list</h2>
-        <div class="how">Light and simple. Every slide sits in a <b>list on the left</b> — click any one to show it. Easiest to learn.</div>
+        <h2>Lateral rail</h2>
+        <div class="how">Light and simple. Every slide stays in a <b>rail on the left</b> — click any one to show it. Easiest to learn.</div>
         <div class="open"><span class="k">2</span> Open <span class="arw">&rarr;</span></div>
       </div>
     </a>
@@ -140,7 +140,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
     <a class="mon" href="./v3-aperture.html" data-key="3">
       <div class="screen">
         <span class="tone"><i></i> Live</span>
-        <iframe src="./v3-aperture.html" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+        <iframe src="./v3-aperture.html#c01" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
       </div>
       <div class="meta">
         <div class="row1"><span class="vid">Version 3 · Aperture</span><span class="num">03</span></div>
