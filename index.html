@@ -3,113 +3,175 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Knomee · Interactive Deck — Variations</title>
+<title>Knomee · Presenter Backstage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#16032B;--plum:#240446;--plum-2:#33095F;--violet:#6D28D9;--violet-lt:#A78BFA;
-  --teal:#2DD2B0;--teal-dk:#086375;--white:#FFFFFF;
-  --dim:rgba(255,255,255,.62);--dimmer:rgba(255,255,255,.38);--line:rgba(255,255,255,.10);
-  --ease:cubic-bezier(.16,1,.3,1);
+  --bg:#131417;--bg-2:#17181C;--panel:#1D1F24;--panel-2:#222429;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --text:#EAEBED;--muted:#9B9DA4;--faint:#6B6D75;
+  --accent:#2DD2B0;--amber:#E6A94A;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100%}
+html,body{height:100%}
 body{
   min-height:100vh;background:
-    radial-gradient(120% 90% at 8% 0%, rgba(109,40,217,.34) 0%, transparent 55%),
-    radial-gradient(100% 80% at 100% 100%, rgba(45,210,176,.20) 0%, transparent 55%),
-    linear-gradient(160deg,#33095F 0%,var(--plum) 46%,#16032B 100%);
-  color:var(--white);font-family:'Poppins',system-ui,-apple-system,sans-serif;
-  -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;
-  padding:clamp(34px,5vw,80px);
+    radial-gradient(120% 80% at 50% -20%, #1c1e23 0%, transparent 60%),
+    linear-gradient(180deg,#141519 0%,#101115 100%);
+  color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;overflow:hidden;
+  padding:clamp(20px,2.6vw,40px) clamp(24px,3.4vw,58px);
 }
-.top{display:flex;justify-content:space-between;align-items:flex-start}
-.brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:15px;letter-spacing:-.01em}
-.brand .mark{width:26px;height:26px;flex:none}
-.brand small{font-size:9.5px;letter-spacing:.2em;font-weight:600;color:var(--teal);text-transform:uppercase;padding-top:2px}
-.conf{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);font-weight:600}
-.hero{margin-top:clamp(28px,5vw,60px);max-width:70ch}
-.eyebrow{font-size:clamp(10px,.82vw,12px);font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--teal);display:flex;align-items:center;gap:12px}
-.eyebrow::before{content:'';width:26px;height:2px;background:var(--teal);border-radius:2px}
-h1{font-weight:800;line-height:1.02;letter-spacing:-.028em;font-size:clamp(32px,4.6vw,64px);margin-top:18px}
-.grad{background:linear-gradient(96deg,#fff 12%,var(--violet-lt) 62%,var(--teal) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.lede{font-size:clamp(14px,1.25vw,19px);font-weight:300;color:var(--dim);line-height:1.62;margin-top:20px;max-width:62ch}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,26px);margin-top:clamp(34px,5vh,64px)}
-.card{
-  position:relative;overflow:hidden;text-decoration:none;color:inherit;
-  border:1px solid var(--line);border-radius:20px;
-  background:linear-gradient(165deg,rgba(255,255,255,.07),rgba(255,255,255,.015));
-  padding:clamp(24px,2.4vw,34px);cursor:pointer;backdrop-filter:blur(8px);
-  transition:transform .38s var(--ease),border-color .3s;display:flex;flex-direction:column;min-height:260px;
+/* thin scan-line texture — very subtle, backstage monitor feel */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px)}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.id{display:flex;align-items:center;gap:12px}
+.id svg{width:22px;height:22px}
+.id .name{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--text)}
+.id .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--faint);text-transform:uppercase;padding-left:12px;margin-left:2px;border-left:1px solid var(--line-2)}
+.status{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(45,210,176,.5);animation:live 2.4s var(--ease) infinite}
+@keyframes live{0%{box-shadow:0 0 0 0 rgba(45,210,176,.5)}70%{box-shadow:0 0 0 7px rgba(45,210,176,0)}100%{box-shadow:0 0 0 0 rgba(45,210,176,0)}}
+
+/* ---------- heading ---------- */
+.head{position:relative;z-index:1;margin-top:clamp(20px,3vw,44px);max-width:74ch}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+.head h1{font-size:clamp(26px,3.4vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-top:14px}
+.head p{font-size:clamp(13.5px,1.15vw,17px);color:var(--muted);line-height:1.6;margin-top:14px;max-width:60ch}
+.head p b{color:var(--text);font-weight:600}
+
+/* ---------- monitor wall ---------- */
+.wall{position:relative;z-index:1;flex:1;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(16px,2vw,28px);margin-top:clamp(20px,3vh,40px);align-content:center}
+.mon{
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  transition:transform .3s var(--ease),border-color .3s,box-shadow .3s var(--ease);
+  outline:none;
 }
-.card::after{content:'';position:absolute;inset:0;border-radius:20px;pointer-events:none;
-  background:radial-gradient(90% 70% at 50% 0%,rgba(109,40,217,.42),transparent 70%);
-  opacity:0;transition:opacity .38s var(--ease)}
-.card:hover{transform:translateY(-8px);border-color:rgba(167,139,250,.5)}
-.card:hover::after{opacity:1}
-.card:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
-.tagn{position:relative;font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--violet-lt)}
-.name{position:relative;font-size:clamp(22px,2.2vw,30px);font-weight:800;letter-spacing:-.03em;margin-top:12px}
-.desc{position:relative;font-size:13.5px;font-weight:300;color:var(--dim);line-height:1.55;margin-top:12px;flex:1}
-.chips{position:relative;display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
-.chip{font-size:10.5px;font-weight:500;color:var(--dim);border:1px solid var(--line);
-  border-radius:999px;padding:5px 11px;background:rgba(255,255,255,.045)}
-.open{position:relative;margin-top:18px;font-size:12.5px;font-weight:700;color:var(--teal);display:flex;align-items:center;gap:8px}
-.open span{transition:transform .3s var(--ease);display:inline-block}
-.card:hover .open span{transform:translateX(4px)}
-.swatch{position:absolute;top:0;left:0;right:0;height:4px;border-radius:20px 20px 0 0}
-.foot{margin-top:auto;padding-top:clamp(28px,4vw,52px);font-size:11px;color:var(--dimmer);letter-spacing:.06em}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.mon:hover,.mon:focus-visible{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+.mon:focus-visible{border-color:var(--accent)}
+.screen{position:relative;aspect-ratio:16/9;background:#0c0d10;overflow:hidden;border-bottom:1px solid var(--line)}
+.screen iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none}
+/* click-catcher + faint monitor glass */
+.screen::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.05),transparent 60%);pointer-events:none}
+.tone{position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:#fff;text-transform:uppercase;
+  background:rgba(0,0,0,.42);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.14);
+  padding:4px 9px;border-radius:999px;z-index:2}
+.tone i{width:5px;height:5px;border-radius:50%;background:var(--accent);display:block}
+.meta{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px}
+.meta .row1{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.meta .vid{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase}
+.meta .num{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.meta h2{font-size:clamp(16px,1.4vw,20px);font-weight:700;letter-spacing:-.02em}
+.meta .how{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:2px}
+.meta .how b{color:var(--text);font-weight:600}
+.open{margin-top:12px;display:flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:11px;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}
+.open .k{border:1px solid var(--line-2);border-radius:6px;padding:2px 7px;color:var(--muted);font-size:10.5px}
+.open .arw{transition:transform .3s var(--ease)}
+.mon:hover .open .arw,.mon:focus-visible .open .arw{transform:translateX(4px)}
+
+/* ---------- footer ---------- */
+.foot{position:relative;z-index:1;margin-top:clamp(16px,2.4vw,32px);display:flex;
+  align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.foot .hint{color:var(--muted)}
+.foot .hint kbd{font-family:var(--mono);border:1px solid var(--line-2);border-radius:5px;padding:2px 7px;color:var(--text);margin:0 2px}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.12s!important}}
+@media(max-width:900px){.wall{grid-template-columns:1fr;align-content:start;overflow:auto}body{overflow:auto}}
 </style>
 </head>
 <body>
-  <div class="top">
-    <div class="brand">
-      <svg class="mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#fff" stroke-width="2.2" stroke-dasharray="30 8"/><circle cx="16" cy="16" r="8.5" stroke="#2DD2B0" stroke-width="2.2" stroke-dasharray="18 6"/><path d="M16 19.4c-2.6-2-3.9-3.2-3.9-4.7a2.1 2.1 0 0 1 3.9-1.1 2.1 2.1 0 0 1 3.9 1.1c0 1.5-1.3 2.7-3.9 4.7Z" fill="#fff"/></svg>
-      <span>knomee</span><small>Advisor</small>
+
+  <div class="bar">
+    <div class="id">
+      <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#EAEBED" stroke-width="2.2" stroke-dasharray="30 8"/><circle cx="16" cy="16" r="8.5" stroke="#2DD2B0" stroke-width="2.2" stroke-dasharray="18 6"/><path d="M16 19.4c-2.6-2-3.9-3.2-3.9-4.7a2.1 2.1 0 0 1 3.9-1.1 2.1 2.1 0 0 1 3.9 1.1c0 1.5-1.3 2.7-3.9 4.7Z" fill="#EAEBED"/></svg>
+      <span class="name">knomee</span><span class="tag">Presenter Backstage</span>
     </div>
-    <div class="conf">Confidential · 2026</div>
+    <div class="status"><span class="dot"></span> 3 versions ready</div>
   </div>
 
-  <div class="hero">
-    <div class="eyebrow">Interactive Deck · Design System</div>
-    <h1>Three ways to open <span class="grad">the same room.</span></h1>
-    <p class="lede">One deck, three interaction models — all sampled from the Knomee design system. Each opens from <code>file://</code> with keyboard and presenter-remote navigation. Pick a variation to present.</p>
+  <div class="head">
+    <div class="kicker">Before you go in</div>
+    <h1>Pick the version you want to present.</h1>
+    <p>Same deck, three different ways to move around it. The screens below are <b>live</b> — this is exactly what your prospect will see. Click a screen to open it full size, then follow the short instructions on its first page.</p>
   </div>
 
-  <div class="grid">
-    <a class="card" href="./v1-obsidian.html">
-      <div class="swatch" style="background:linear-gradient(90deg,#6D28D9,#2DD2B0)"></div>
-      <div class="tagn">V1 · OBSIDIAN</div>
-      <div class="name">Command palette</div>
-      <div class="desc">A private terminal. Full-bleed dark purple, cinematic depth, and a ⌘K palette to jump to any of the 25 destinations mid-sentence.</div>
-      <div class="chips"><span class="chip">Dark</span><span class="chip">Poppins</span><span class="chip">⌘K jump</span></div>
-      <div class="open">Open variation <span>&rarr;</span></div>
+  <div class="wall">
+    <a class="mon" href="./v1-obsidian.html" data-key="1">
+      <div class="screen">
+        <span class="tone"><i></i> Live</span>
+        <iframe src="./v1-obsidian.html" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+      </div>
+      <div class="meta">
+        <div class="row1"><span class="vid">Version 1 · Obsidian</span><span class="num">01</span></div>
+        <h2>Search and jump</h2>
+        <div class="how">Dark and focused. Best if you like to <b>type a word and jump</b> straight to the right slide.</div>
+        <div class="open"><span class="k">1</span> Open <span class="arw">&rarr;</span></div>
+      </div>
     </a>
 
-    <a class="card" href="./v2-daylight.html">
-      <div class="swatch" style="background:linear-gradient(90deg,#2DD2B0,#240446)"></div>
-      <div class="tagn">V2 · DAYLIGHT</div>
-      <div class="name">Persistent rail</div>
-      <div class="desc">The knomee.com surface as a deck. Light, legible, enterprise-credible — the full structure stays visible in a left rail so nothing is ever buried.</div>
-      <div class="chips"><span class="chip">Light</span><span class="chip">Manrope</span><span class="chip">Chapter rail</span></div>
-      <div class="open">Open variation <span>&rarr;</span></div>
+    <a class="mon" href="./v2-daylight.html" data-key="2">
+      <div class="screen">
+        <span class="tone"><i></i> Live</span>
+        <iframe src="./v2-daylight.html" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+      </div>
+      <div class="meta">
+        <div class="row1"><span class="vid">Version 2 · Daylight</span><span class="num">02</span></div>
+        <h2>See the whole list</h2>
+        <div class="how">Light and simple. Every slide sits in a <b>list on the left</b> — click any one to show it. Easiest to learn.</div>
+        <div class="open"><span class="k">2</span> Open <span class="arw">&rarr;</span></div>
+      </div>
     </a>
 
-    <a class="card" href="./v3-aperture.html">
-      <div class="swatch" style="background:linear-gradient(90deg,#6D28D9,#086375)"></div>
-      <div class="tagn">V3 · APERTURE</div>
-      <div class="name">Morphing hub</div>
-      <div class="desc">A light canvas held in a dark device frame. Open the hub and a chapter tile physically expands into the canvas — the deck reconfigures in front of the prospect.</div>
-      <div class="chips"><span class="chip">Hybrid</span><span class="chip">Poppins + Manrope</span><span class="chip">Hub morph</span></div>
-      <div class="open">Open variation <span>&rarr;</span></div>
+    <a class="mon" href="./v3-aperture.html" data-key="3">
+      <div class="screen">
+        <span class="tone"><i></i> Live</span>
+        <iframe src="./v3-aperture.html" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+      </div>
+      <div class="meta">
+        <div class="row1"><span class="vid">Version 3 · Aperture</span><span class="num">03</span></div>
+        <h2>Open from a grid</h2>
+        <div class="how">One <b>HUB button</b> shows every slide as tiles. Click a tile and it opens up. Feels the most like an app.</div>
+        <div class="open"><span class="k">3</span> Open <span class="arw">&rarr;</span></div>
+      </div>
     </a>
   </div>
 
-  <div class="foot">17 cards · 7 chapters · 6 routes · 8 appendix answers — placeholder / demo data</div>
+  <div class="foot">
+    <span>Knomee · Confidential · 2026</span>
+    <span class="hint">Click a screen, or press <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></span>
+  </div>
+
+<script>
+// scale each live preview iframe (1280x720) to fit its monitor
+function fit(){
+  document.querySelectorAll('.screen').forEach(s=>{
+    const f=s.querySelector('iframe');
+    if(f) f.style.transform='scale('+(s.clientWidth/1280)+')';
+  });
+}
+window.addEventListener('resize',fit);
+window.addEventListener('load',fit);
+fit();
+// number-key shortcuts for Marla
+document.addEventListener('keydown',e=>{
+  const m=document.querySelector('.mon[data-key="'+e.key+'"]');
+  if(m){e.preventDefault();window.location.href=m.getAttribute('href');}
+});
+</script>
 </body>
 </html>
