@@ -272,7 +272,7 @@ body:hover #hint{opacity:.95}
     <div class="hero st">
       <div class="eyebrow">Style 01 · Obsidian</div>
       <h1 class="title">Search <span class="accent">and jump.</span></h1>
-      <p class="lede">Nothing on screen but the idea. You find any slide by typing a word — no menus, no lists to scan.</p>
+      <p class="lede">No menus or lists on the screen but the idea.</p>
       <div class="legend">
         <div class="lg"><span class="ky"><b>&#8984; / Ctrl</b><b>K</b></span> open search box, type a key word and move around content</div>
         <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
@@ -480,7 +480,7 @@ function show(el){
   crumb.textContent = el==='home' ? '' : (meta? meta.ch+' · '+meta.id : '');
   crumb.classList.toggle('show', el!=='home');
 }
-const startId=location.hash.replace('#','');
+const startId=new URLSearchParams(location.search).get('start')||location.hash.replace('#','');
 show(LIVE.includes(startId)?startId:'home');
 document.getElementById('next').addEventListener('click',()=>show(LIVE[(idx+1)%LIVE.length]));
 document.getElementById('prev').addEventListener('click',()=>show(LIVE[(idx-1+LIVE.length)%LIVE.length]));

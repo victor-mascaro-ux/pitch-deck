@@ -51,37 +51,27 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 /* ---------- monitor wall ---------- */
 .wall{position:relative;z-index:1;flex:1 0 auto;display:grid;grid-template-columns:repeat(3,1fr);
   gap:clamp(16px,2vw,28px);margin-top:clamp(20px,3vh,40px);align-content:safe center}
-.mon{
-  display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;
-  background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+.mon{display:flex;flex-direction:column;gap:14px}
+.screen{
+  position:relative;display:block;aspect-ratio:16/9;background:#0c0d10;overflow:hidden;
+  border:1px solid var(--line);border-radius:12px;outline:none;
   transition:transform .3s var(--ease),border-color .3s,box-shadow .3s var(--ease);
-  outline:none;
 }
-.mon:hover,.mon:focus-visible{transform:translateY(-6px);border-color:var(--line-2);
-  box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
-.mon:focus-visible{border-color:var(--accent)}
-.screen{position:relative;aspect-ratio:16/9;background:#0c0d10;overflow:hidden;border-bottom:1px solid var(--line)}
+.screen:hover,.screen:focus-visible{transform:translateY(-5px);border-color:var(--accent);
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.75)}
 .screen iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none}
-/* click-catcher + faint monitor glass */
-.screen::after{content:'';position:absolute;inset:0;
-  background:radial-gradient(120% 90% at 50% 0%,rgba(255,255,255,.05),transparent 60%);pointer-events:none}
-.tone{position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:7px;
-  font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:#fff;text-transform:uppercase;
-  background:rgba(0,0,0,.42);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.14);
-  padding:4px 9px;border-radius:999px;z-index:2}
-.tone i{width:5px;height:5px;border-radius:50%;background:var(--accent);display:block}
-.meta{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px}
-.meta .row1{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.meta .vid{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
-.meta .num{font-family:var(--mono);font-size:11px;color:var(--faint)}
-.meta h2{font-size:clamp(16px,1.4vw,20px);font-weight:700;letter-spacing:-.02em}
-.meta .how{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:2px}
-.meta .how b{color:var(--text);font-weight:600}
-.open{margin-top:12px;display:flex;align-items:center;gap:8px;font-family:var(--mono);
-  font-size:11px;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}
-.open .k{border:1px solid var(--line-2);border-radius:6px;padding:2px 7px;color:var(--muted);font-size:10.5px}
-.open .arw{transition:transform .3s var(--ease)}
-.mon:hover .open .arw,.mon:focus-visible .open .arw{transform:translateX(4px)}
+.cap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cap .nm{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:-.01em}
+.cap .vid{color:var(--text);font-weight:700}
+.start{
+  display:inline-flex;align-items:center;gap:8px;text-decoration:none;flex:none;
+  background:var(--accent);color:#0c0d10;border-radius:999px;padding:9px 20px;
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  transition:transform .25s var(--ease),filter .25s var(--ease);
+}
+.start:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.start .arw{transition:transform .3s var(--ease)}
+.start:hover .arw{transform:translateX(4px)}
 
 /* ---------- footer ---------- */
 .foot{position:relative;z-index:1;margin-top:clamp(16px,2.4vw,32px);display:flex;
@@ -111,44 +101,35 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
   </div>
 
   <div class="wall">
-    <a class="mon" href="./v1-obsidian.html" data-key="1">
-      <div class="screen">
-        <span class="tone"><i></i> Live</span>
-        <iframe src="./v1-obsidian.html#c01" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+    <div class="mon">
+      <a class="screen" href="./v1-obsidian.html" data-key="1" aria-label="Start Obsidian — Search and jump">
+        <iframe src="./v1-obsidian.html?start=c11" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+      </a>
+      <div class="cap">
+        <div class="nm"><span class="vid">Obsidian</span> · Search and jump</div>
+        <a class="start" href="./v1-obsidian.html">Start <span class="arw">&rarr;</span></a>
       </div>
-      <div class="meta">
-        <div class="row1"><span class="vid">Version 1 · Obsidian</span><span class="num">01</span></div>
-        <h2>Search and jump</h2>
-        <div class="how">Dark and focused. Best if you like to <b>type a word and jump</b> straight to the right slide.</div>
-        <div class="open"><span class="k">1</span> Open <span class="arw">&rarr;</span></div>
-      </div>
-    </a>
+    </div>
 
-    <a class="mon" href="./v2-daylight.html" data-key="2">
-      <div class="screen">
-        <span class="tone"><i></i> Live</span>
-        <iframe src="./v2-daylight.html#c01" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+    <div class="mon">
+      <a class="screen" href="./v2-daylight.html" data-key="2" aria-label="Start Daylight — Lateral rail">
+        <iframe src="./v2-daylight.html?start=c11" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+      </a>
+      <div class="cap">
+        <div class="nm"><span class="vid">Daylight</span> · Lateral rail</div>
+        <a class="start" href="./v2-daylight.html">Start <span class="arw">&rarr;</span></a>
       </div>
-      <div class="meta">
-        <div class="row1"><span class="vid">Version 2 · Daylight</span><span class="num">02</span></div>
-        <h2>Lateral rail</h2>
-        <div class="how">Light and simple. Every slide stays in a <b>rail on the left</b> — click any one to show it. Easiest to learn.</div>
-        <div class="open"><span class="k">2</span> Open <span class="arw">&rarr;</span></div>
-      </div>
-    </a>
+    </div>
 
-    <a class="mon" href="./v3-aperture.html" data-key="3">
-      <div class="screen">
-        <span class="tone"><i></i> Live</span>
-        <iframe src="./v3-aperture.html#c01" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+    <div class="mon">
+      <a class="screen" href="./v3-aperture.html" data-key="3" aria-label="Start Aperture — Open from a grid">
+        <iframe src="./v3-aperture.html?start=c11" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+      </a>
+      <div class="cap">
+        <div class="nm"><span class="vid">Aperture</span> · Open from a grid</div>
+        <a class="start" href="./v3-aperture.html">Start <span class="arw">&rarr;</span></a>
       </div>
-      <div class="meta">
-        <div class="row1"><span class="vid">Version 3 · Aperture</span><span class="num">03</span></div>
-        <h2>Open from a grid</h2>
-        <div class="how">One <b>HUB button</b> shows every slide as tiles. Click a tile and it opens up. Feels the most like an app.</div>
-        <div class="open"><span class="k">3</span> Open <span class="arw">&rarr;</span></div>
-      </div>
-    </a>
+    </div>
   </div>
 
   <div class="foot">
@@ -169,7 +150,7 @@ window.addEventListener('load',fit);
 fit();
 // number-key shortcuts for Marla
 document.addEventListener('keydown',e=>{
-  const m=document.querySelector('.mon[data-key="'+e.key+'"]');
+  const m=document.querySelector('.screen[data-key="'+e.key+'"]');
   if(m){e.preventDefault();window.location.href=m.getAttribute('href');}
 });
 </script>

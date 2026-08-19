@@ -473,7 +473,7 @@ function show(id){
   node.classList.add('active');
   idx=i; rpos.textContent=NAMES[id]; cpos.textContent=NAMES[id];
 }
-const startId=location.hash.replace('#','');
+const startId=new URLSearchParams(location.search).get('start')||location.hash.replace('#','');
 show(LIVE.includes(startId)?startId:'home');
 document.getElementById('next').addEventListener('click',()=>show(LIVE[(idx+1)%LIVE.length]));
 document.getElementById('prev').addEventListener('click',()=>show(LIVE[(idx-1+LIVE.length)%LIVE.length]));
