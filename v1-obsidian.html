@@ -74,6 +74,16 @@ h1.title{
 .grad{background:linear-gradient(96deg,#fff 12%,var(--violet-lt) 62%,var(--teal) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lede{font-size:clamp(14px,1.25vw,20px);font-weight:300;color:var(--dim);line-height:1.62;max-width:64ch;margin-top:20px}
 .lede em{font-style:normal;font-weight:600;color:var(--teal)}
+.legend{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.legend .lg{display:flex;align-items:center;gap:15px;font-size:clamp(13px,1.05vw,16px);color:var(--dim)}
+.legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:132px}
+.legend .ky b{border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:7px;padding:4px 9px;color:var(--teal);font-weight:600;font-size:12.5px;letter-spacing:.02em;line-height:1}
+.backto{font-size:12px;font-weight:600;color:var(--dim);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 15px;transition:all .25s var(--ease);white-space:nowrap}
+.backto:hover{color:#fff;border-color:var(--violet-lt);background:rgba(255,255,255,.05);transform:translateX(-2px)}
+#nav{position:fixed;right:24px;bottom:40px;z-index:42;display:flex;gap:10px}
+#nav button{width:46px;height:46px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;font-size:19px;cursor:pointer;font-family:inherit;transition:all .25s var(--ease);backdrop-filter:blur(8px);display:grid;place-items:center}
+#nav button:hover{background:var(--violet);border-color:var(--violet);transform:translateY(-2px)}
+#nav button:disabled{opacity:.32;cursor:default;transform:none;background:rgba(255,255,255,.04);border-color:var(--line)}
 
 /* logo mark */
 .brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:15px;letter-spacing:-.01em}
@@ -178,7 +188,7 @@ h1.title{
 }
 #railfill{height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--teal));transition:width .5s var(--ease)}
 #hint{
-  position:fixed;right:26px;bottom:22px;z-index:41;display:flex;gap:8px;align-items:center;
+  position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:41;display:flex;gap:8px;align-items:center;
   font-size:11px;color:var(--dimmer);letter-spacing:.04em;
   opacity:.5;transition:opacity .3s;pointer-events:none;
 }
@@ -245,17 +255,24 @@ body:hover #hint{opacity:.95}
   <!-- ============ HOME ============ -->
   <section class="card" id="home" data-id="home">
     <div class="top st">
-      <div class="brand">
-        <svg class="mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#fff" stroke-width="2.2" stroke-dasharray="30 8"/><circle cx="16" cy="16" r="8.5" stroke="#2DD2B0" stroke-width="2.2" stroke-dasharray="18 6"/><path d="M16 19.4c-2.6-2-3.9-3.2-3.9-4.7a2.1 2.1 0 0 1 3.9-1.1 2.1 2.1 0 0 1 3.9 1.1c0 1.5-1.3 2.7-3.9 4.7Z" fill="#fff"/></svg>
-        <span>knomee</span><small>Advisor</small>
+      <div style="display:flex;align-items:center;gap:18px">
+        <a class="backto" href="./index.html">&larr; All styles</a>
+        <div class="brand">
+          <svg class="mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#fff" stroke-width="2.2" stroke-dasharray="30 8"/><circle cx="16" cy="16" r="8.5" stroke="#2DD2B0" stroke-width="2.2" stroke-dasharray="18 6"/><path d="M16 19.4c-2.6-2-3.9-3.2-3.9-4.7a2.1 2.1 0 0 1 3.9-1.1 2.1 2.1 0 0 1 3.9 1.1c0 1.5-1.3 2.7-3.9 4.7Z" fill="#fff"/></svg>
+          <span>knomee</span><small>Advisor</small>
+        </div>
       </div>
       <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);font-weight:600">Confidential · 2026</div>
     </div>
 
     <div class="hero st">
       <div class="eyebrow">Start Here</div>
-      <h1 class="title">Present it in <span class="grad">any order.</span></h1>
-      <p class="lede">This is your home base. Press the <em>right arrow</em> for the next slide, the <em>left arrow</em> to go back. To jump straight to a slide, hold <em>&#8984; Cmd</em> (or <em>Ctrl</em>) and press <em>K</em>, type a word like <em>growth</em> or <em>referrals</em>, then press <em>Enter</em>. Or just click a chapter below. Press <em>Esc</em> at any time to come back here.</p>
+      <h1 class="title">Type and <span class="grad">go.</span></h1>
+      <div class="legend">
+        <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
+        <div class="lg"><span class="ky"><b>&#8984; / Ctrl</b><b>K</b></span> open search box</div>
+        <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
+      </div>
     </div>
 
     <div class="routes st">
@@ -323,6 +340,7 @@ body:hover #hint{opacity:.95}
 
 <div id="crumb"></div>
 <div id="hint"><kbd>←</kbd><kbd>→</kbd> navigate <kbd>⌘K</kbd> jump <kbd>esc</kbd> home</div>
+<div id="nav"><button id="prev" aria-label="Previous slide">←</button><button id="next" aria-label="Next slide">→</button></div>
 <div id="rail"><div id="railfill"></div></div>
 
 <!-- ============ COMMAND PALETTE ============ -->
@@ -385,8 +403,12 @@ function show(el){
   const meta=CARDS.find(c=>c.go===el);
   crumb.textContent = el==='home' ? '' : (meta? meta.ch+' · '+meta.id : '');
   crumb.classList.toggle('show', el!=='home');
+  document.getElementById('prev').disabled = i===0;
+  document.getElementById('next').disabled = i===LIVE.length-1;
 }
 show('home');
+document.getElementById('next').addEventListener('click',()=>show(LIVE[Math.min(idx+1,LIVE.length-1)]));
+document.getElementById('prev').addEventListener('click',()=>show(LIVE[Math.max(idx-1,0)]));
 
 document.querySelectorAll('[data-go]').forEach(n=>n.addEventListener('click',()=>show(n.dataset.go)));
 document.querySelectorAll('.route').forEach(b=>b.addEventListener('click',()=>{

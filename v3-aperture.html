@@ -6,7 +6,7 @@
 <title>Knomee · V3 Aperture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --shell:#240446;
@@ -31,7 +31,7 @@ body{
     radial-gradient(90% 70% at 12% -10%, rgba(109,40,217,.42), transparent 60%),
     radial-gradient(80% 70% at 100% 110%, rgba(45,210,176,.24), transparent 60%),
     var(--shell);
-  font-family:'Manrope',system-ui,sans-serif;color:var(--ink);
+  font-family:'Poppins',system-ui,sans-serif;color:var(--ink);
   overflow:hidden;-webkit-font-smoothing:antialiased;
   display:flex;flex-direction:column;
 }
@@ -211,6 +211,37 @@ h1.title em{font-style:normal;background:linear-gradient(96deg,var(--violet) 10%
   box-shadow:0 40px 90px -30px rgba(0,0,0,.7);
 }
 
+/* ---- key legend ---- */
+.legend{display:flex;flex-direction:column;gap:11px;margin-top:16px}
+.legend .lg{display:flex;align-items:center;gap:14px;font-size:clamp(13px,1.05vw,16px);color:var(--mute)}
+.legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:138px}
+.legend .ky b{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 9px;color:var(--teal-dk);font-weight:800;font-size:12.5px;line-height:1}
+/* ---- back to chooser ---- */
+.backto{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:rgba(255,255,255,.72);text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 13px;transition:all .25s var(--ease);white-space:nowrap;font-family:'Poppins',sans-serif}
+.backto:hover{color:#fff;border-color:var(--violet-lt);background:rgba(255,255,255,.08);transform:translateX(-2px)}
+/* ---- prev/next stepper ---- */
+#stepper{position:absolute;right:clamp(28px,4vw,64px);bottom:44px;z-index:15;display:flex;gap:10px}
+#stepper button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:18px;cursor:pointer;font-family:inherit;transition:all .25s var(--ease);display:grid;place-items:center;box-shadow:0 12px 26px -18px rgba(21,6,41,.5)}
+#stepper button:hover{border-color:var(--violet);color:var(--violet);transform:translateY(-2px)}
+#stepper button:disabled{opacity:.4;cursor:default;transform:none;border-color:var(--line);color:var(--faint)}
+/* ---- search palette ---- */
+#pal{position:fixed;inset:0;z-index:70;display:grid;place-items:start center;padding-top:12vh;background:rgba(11,3,22,.62);backdrop-filter:blur(14px) saturate(140%);opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility 0s .3s}
+#pal.open{opacity:1;visibility:visible;transition:opacity .3s var(--ease),visibility 0s 0s}
+.palbox{width:min(660px,92vw);border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fff;box-shadow:0 50px 100px -40px rgba(0,0,0,.6);transform:translateY(-14px) scale(.98);transition:transform .34s var(--ease)}
+#pal.open .palbox{transform:none}
+#q{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-family:inherit;font-size:16px;font-weight:500;padding:20px 22px;border-bottom:1px solid var(--line)}
+#q::placeholder{color:var(--faint)}
+#res{max-height:46vh;overflow:auto;padding:8px}
+#res::-webkit-scrollbar{width:6px}#res::-webkit-scrollbar-thumb{background:#DFE2E8;border-radius:3px}
+.item{display:flex;align-items:center;gap:14px;padding:11px 15px;border-radius:11px;cursor:pointer;transition:background .16s}
+.item.sel{background:#F1ECFB}
+.item .id{font-size:10.5px;font-weight:800;color:var(--violet);min-width:30px;letter-spacing:.05em}
+.item .tx{font-size:13.5px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink-2)}
+.item.sel .tx{color:var(--violet)}
+.item .ch2{font-size:10px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase}
+.item.dis .tx{color:var(--faint);font-weight:500}
+.palfoot{padding:11px 18px;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint);display:flex;gap:18px}
+
 @media (prefers-reduced-motion:reduce){*{transition-duration:.13s!important;animation:none!important}.card,.st{transform:none!important}#ghost{display:none!important}.dial .ring-fg{transition:none!important}}
 @media(max-width:1000px){.split,.metrics,.hero-row{grid-template-columns:1fr}.hgrid{grid-template-columns:repeat(3,1fr)}}
 </style>
@@ -219,9 +250,12 @@ h1.title em{font-style:normal;background:linear-gradient(96deg,var(--violet) 10%
 
 <!-- ============ CHROME ============ -->
 <header id="chrome">
+  <div style="display:flex;align-items:center;gap:16px">
+    <a class="backto" href="./index.html">&larr; All styles</a>
   <div class="brand">
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#fff" stroke-width="2.2" stroke-dasharray="30 8"/><circle cx="16" cy="16" r="8.5" stroke="#2DD2B0" stroke-width="2.2" stroke-dasharray="18 6"/><path d="M16 19.4c-2.6-2-3.9-3.2-3.9-4.7a2.1 2.1 0 0 1 3.9-1.1 2.1 2.1 0 0 1 3.9 1.1c0 1.5-1.3 2.7-3.9 4.7Z" fill="#fff"/></svg>
     <span>knomee</span><small>Advisor</small>
+  </div>
   </div>
   <div id="route"><span class="chip">Full Pitch</span><span id="rpos">Home</span></div>
   <button id="hubbtn"><span class="grid9"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> HUB</button>
@@ -233,16 +267,21 @@ h1.title em{font-style:normal;background:linear-gradient(96deg,var(--violet) 10%
   <section class="card" id="home">
     <div class="st">
       <div class="eyebrow">Start Here</div>
-      <h1 class="title">The deck <em>opens</em><br>where the room is.</h1>
-      <p class="lede">Press the <strong>HUB</strong> button in the top-right corner to see every slide at once. Click the one you want and it opens on screen. To move in order, use the right and left arrow keys. Press Esc at any time to come back to this screen.</p>
+      <h1 class="title"><em>Cards</em></h1>
+      <div class="legend">
+        <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
+        <div class="lg"><span class="ky"><b>&#8984; / Ctrl</b><b>K</b></span> open search box</div>
+        <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
+      </div>
       <div class="kpis">
         <span class="kpi"><b>17</b> cards</span><span class="kpi"><b>7</b> chapters</span>
         <span class="kpi"><b>6</b> routes</span><span class="kpi"><b>8</b> appendix answers</span>
       </div>
     </div>
-    <div class="hero-row">
+    <div class="hero-row" style="grid-template-columns:1fr;align-content:center">
       <div class="st">
-        <div class="mini">
+        <div style="font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:13px">Or jump straight to a chapter</div>
+        <div class="mini" style="max-width:840px">
           <div class="tile" data-go="c11"><div class="n">CH 1</div><div class="h">Problem</div><div class="c">3 cards</div></div>
           <div class="tile" data-go="c21"><div class="n">CH 2</div><div class="h">Proof</div><div class="c">2 cards</div></div>
           <div class="tile" data-go="c21"><div class="n">CH 3</div><div class="h">Solution</div><div class="c">4 cards</div></div>
@@ -250,12 +289,6 @@ h1.title em{font-style:normal;background:linear-gradient(96deg,var(--violet) 10%
           <div class="tile" data-go="c21"><div class="n">CH 5</div><div class="h">Platform</div><div class="c">3 cards</div></div>
           <div class="tile apx" data-go="c11"><div class="n">APX</div><div class="h">Answer Stack</div><div class="c">8 on demand</div></div>
         </div>
-      </div>
-      <div class="st" style="display:flex;flex-direction:column;gap:12px">
-        <div class="row"><span class="k">See every slide at once</span><span class="s">HUB, top-right</span></div>
-        <div class="row"><span class="k">Open a slide</span><span class="s">click it</span></div>
-        <div class="row"><span class="k">Next or previous slide</span><span class="s">&rarr; &larr; keys</span></div>
-        <div class="row"><span class="k">Come back to this screen</span><span class="s">Esc</span></div>
       </div>
     </div>
   </section>
@@ -303,8 +336,17 @@ h1.title em{font-style:normal;background:linear-gradient(96deg,var(--violet) 10%
     <div class="tag st">Real Knomee Results</div>
   </section>
 
+  <div id="stepper"><button id="prev" aria-label="Previous slide">←</button><button id="next" aria-label="Next slide">→</button></div>
   <div id="cfoot"><span id="cpos">Home</span><span>Knomee · Confidential</span></div>
 </main>
+
+<div id="pal">
+  <div class="palbox">
+    <input id="q" placeholder="Jump to any slide…  try &quot;growth&quot;, &quot;referrals&quot;, &quot;pricing&quot;" autocomplete="off">
+    <div id="res"></div>
+    <div class="palfoot"><span>↑↓ select</span><span>↵ open</span><span>esc close</span></div>
+  </div>
+</div>
 
 <!-- ============ HUB ============ -->
 <div id="hub">
@@ -337,6 +379,33 @@ h1.title em{font-style:normal;background:linear-gradient(96deg,var(--violet) 10%
 <script>
 const LIVE=['home','c11','c21'];
 const NAMES={home:'Home',c11:'Ch 1 · Card 1.1 · Growth Problem',c21:'Ch 2 · Card 2.1 · Businesses Grow'};
+const CARDS=[
+ {id:'home', t:'Home — start here', ch:'Deck', go:'home'},
+ {id:'0.1', t:"Some Wealth Firms Grow And Others Don't.", ch:'Open'},
+ {id:'1.1', t:'The Industry Has A Growth Problem.', ch:'Problem', go:'c11'},
+ {id:'1.2', t:"Clients Don't Always Say What Matters Most.", ch:'Problem'},
+ {id:'1.3', t:'Better Diagnosis Improves Outcomes.', ch:'Problem'},
+ {id:'2.1', t:'When Advisors Understand, Businesses Grow.', ch:'Proof', go:'c21'},
+ {id:'2.2', t:'95% Completion Rate.', ch:'Proof'},
+ {id:'3.1', t:'Knomee Engages Prospects Before Meetings.', ch:'Solution'},
+ {id:'3.2', t:'Advisors See Science-Proven Trust Builders.', ch:'Solution'},
+ {id:'3.3', t:'And Walk Into Meetings Ready To Help.', ch:'Solution'},
+ {id:'3.4', t:'Conversion Intelligence — Who To Focus On First.', ch:'Solution'},
+ {id:'4.1', t:'Grow From The First Interaction.', ch:'Where It Fits'},
+ {id:'4.2', t:'Advisor Transitions. Trust Continues.', ch:'Where It Fits'},
+ {id:'4.3', t:'Client Insight Becomes Firm Intelligence.', ch:'Where It Fits'},
+ {id:'5.1', t:'AI Is Only As Smart As The Data That Feeds It.', ch:'Platform'},
+ {id:'5.2', t:'Knomee Fits Into Your Existing Workflow.', ch:'Platform'},
+ {id:'5.3', t:'The Behavioral Intelligence Platform.', ch:'Platform'},
+ {id:'6.1', t:'Start With A Pilot. Pay For Outcomes.', ch:'Close'},
+ {id:'6.2', t:'Contact — Marla Sofer', ch:'Close'},
+ {id:'A1', t:'Security, Privacy & Compliance', ch:'Appendix'},
+ {id:'A2', t:'Pricing Detail & Pilot Terms', ch:'Appendix'},
+ {id:'A3', t:'Implementation Timeline · Day 0 → 90', ch:'Appendix'},
+ {id:'A4', t:'The Behavioral Science & Researchers', ch:'Appendix'},
+ {id:'A5', t:'Integrations — CRM & Planning', ch:'Appendix'},
+ {id:'A6', t:'ROI Model (interactive)', ch:'Appendix'},
+];
 let idx=0;
 const frame=document.getElementById('frame');
 const ghost=document.getElementById('ghost');
@@ -350,8 +419,12 @@ function show(id){
   void node.offsetWidth;
   node.classList.add('active');
   idx=i; rpos.textContent=NAMES[id]; cpos.textContent=NAMES[id];
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i===LIVE.length-1;
 }
 show('home');
+document.getElementById('next').addEventListener('click',()=>show(LIVE[Math.min(idx+1,LIVE.length-1)]));
+document.getElementById('prev').addEventListener('click',()=>show(LIVE[Math.max(idx-1,0)]));
 
 /* --- morph: tile rect -> canvas rect --- */
 function morphTo(el,id){
@@ -382,7 +455,38 @@ document.getElementById('hubbtn').addEventListener('click',openHub);
 document.getElementById('hubclose').addEventListener('click',closeHub);
 hub.addEventListener('click',e=>{if(e.target===hub)closeHub()});
 
+/* ---- search palette ---- */
+const pal=document.getElementById('pal'), q=document.getElementById('q'), res=document.getElementById('res');
+let sel=0, plist=[];
+function prender(){
+  const term=q.value.toLowerCase().trim();
+  plist=CARDS.filter(c=>!term || (c.t+' '+c.ch+' '+c.id).toLowerCase().includes(term));
+  sel=Math.min(sel,Math.max(0,plist.length-1));
+  res.innerHTML=plist.map((c,i)=>
+    `<div class="item ${i===sel?'sel':''} ${c.go?'':'dis'}" data-i="${i}">
+       <span class="id">${c.id}</span><span class="tx">${c.t}</span><span class="ch2">${c.ch}</span>
+     </div>`).join('');
+  res.querySelectorAll('.item').forEach(n=>{
+    n.addEventListener('click',()=>{sel=+n.dataset.i;pchoose()});
+    n.addEventListener('mouseenter',()=>{sel=+n.dataset.i;ppaint()});
+  });
+}
+function ppaint(){res.querySelectorAll('.item').forEach((n,i)=>n.classList.toggle('sel',i===sel))}
+function pchoose(){const c=plist[sel]; if(c&&c.go){closePal();show(c.go)}}
+function openPal(){if(hub.classList.contains('open'))closeHub();pal.classList.add('open');q.value='';sel=0;prender();setTimeout(()=>q.focus(),60)}
+function closePal(){pal.classList.remove('open');q.blur()}
+q.addEventListener('input',()=>{sel=0;prender()});
+pal.addEventListener('click',e=>{if(e.target===pal)closePal()});
+
 document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();pal.classList.contains('open')?closePal():openPal();return}
+  if(pal.classList.contains('open')){
+    if(e.key==='Escape'){e.preventDefault();closePal()}
+    else if(e.key==='ArrowDown'){e.preventDefault();sel=Math.min(sel+1,plist.length-1);ppaint();res.querySelectorAll('.item')[sel]?.scrollIntoView({block:'nearest'})}
+    else if(e.key==='ArrowUp'){e.preventDefault();sel=Math.max(sel-1,0);ppaint();res.querySelectorAll('.item')[sel]?.scrollIntoView({block:'nearest'})}
+    else if(e.key==='Enter'){e.preventDefault();pchoose()}
+    return;
+  }
   if(e.key==='Escape'){ if(hub.classList.contains('open')){closeHub()} else {show('home')} return }
   if(e.key.toLowerCase()==='h'){e.preventDefault();hub.classList.contains('open')?closeHub():openHub();return}
   if(hub.classList.contains('open'))return;

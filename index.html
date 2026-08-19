@@ -6,15 +6,15 @@
 <title>Knomee · Presenter Backstage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#131417;--bg-2:#17181C;--panel:#1D1F24;--panel-2:#222429;
   --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
   --text:#EAEBED;--muted:#9B9DA4;--faint:#6B6D75;
   --accent:#2DD2B0;--amber:#E6A94A;
-  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --sans:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'Poppins',system-ui,-apple-system,sans-serif;
+  --sans:'Poppins',system-ui,-apple-system,sans-serif;
   --ease:cubic-bezier(.2,.7,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -72,7 +72,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .tone i{width:5px;height:5px;border-radius:50%;background:var(--accent);display:block}
 .meta{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px}
 .meta .row1{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.meta .vid{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase}
+.meta .vid{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
 .meta .num{font-family:var(--mono);font-size:11px;color:var(--faint)}
 .meta h2{font-size:clamp(16px,1.4vw,20px);font-weight:700;letter-spacing:-.02em}
 .meta .how{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:2px}
@@ -105,9 +105,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
   </div>
 
   <div class="head">
-    <div class="kicker">Before you go in</div>
-    <h1>Pick the version you want to present.</h1>
-    <p>Same deck, three different ways to move around it. The screens below are <b>live</b> — this is exactly what your prospect will see. Click a screen to open it full size, then follow the short instructions on its first page.</p>
+    <div class="kicker">Welcome, Marla!</div>
+    <h1>Try out 3 different presentation styles!</h1>
+    <p>The samples below show <b>3 different art styles</b>, each with its own <b>interaction pattern</b>. Try them out and choose the style and interaction you prefer — mix them, or propose new ones.</p>
   </div>
 
   <div class="wall">
