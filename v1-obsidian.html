@@ -74,6 +74,29 @@ h1.title{
 .grad,.accent{color:var(--teal)}
 .lede{font-size:clamp(14px,1.25vw,20px);font-weight:300;color:var(--dim);line-height:1.62;max-width:64ch;margin-top:20px}
 .lede em{font-style:normal;font-weight:600;color:var(--teal)}
+/* ---- opener (0.1) ---- */
+.opener{flex:1;display:flex;flex-direction:column;justify-content:center}
+.opener h1.title{font-size:clamp(40px,6.6vw,104px);line-height:1.0;margin-top:22px}
+/* ---- stat + quote (3.1) ---- */
+.qwrap{display:grid;grid-template-columns:.8fr 1fr;gap:clamp(28px,4.4vw,72px);align-items:center;flex:1;margin-top:clamp(18px,3vw,40px)}
+.bigstat{text-align:center}
+.bigstat .v{font-size:clamp(64px,9.5vw,158px);font-weight:800;color:var(--teal);letter-spacing:-.05em;line-height:.88}
+.bigstat .k{font-size:clamp(14px,1.4vw,21px);font-weight:600;color:var(--dim);margin-top:10px;letter-spacing:-.01em}
+.quote{border-left:3px solid var(--teal);padding-left:clamp(20px,2.6vw,38px)}
+.quote p{font-size:clamp(18px,2.3vw,36px);font-weight:300;line-height:1.38;font-style:italic;color:#fff}
+/* ---- flow (4.1) ---- */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,26px);flex:1;align-content:center;margin-top:clamp(18px,3vw,40px)}
+.moment{border:1px solid var(--line);border-radius:20px;padding:clamp(22px,2.8vw,40px);background:rgba(255,255,255,.05);display:flex;flex-direction:column}
+.moment .idx{font-size:11px;font-weight:700;letter-spacing:.2em;color:var(--teal);text-transform:uppercase}
+.moment h3{font-size:clamp(17px,1.9vw,27px);font-weight:700;margin-top:16px;letter-spacing:-.02em;line-height:1.22}
+/* ---- compare (5.1) ---- */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.6vw,40px);flex:1;align-content:center;margin-top:clamp(16px,2.4vw,34px)}
+.col{border:1px solid var(--line);border-radius:20px;padding:clamp(22px,2.8vw,38px);background:rgba(255,255,255,.04)}
+.col.k{border-color:rgba(45,210,176,.4);background:rgba(45,210,176,.08)}
+.col h3{font-size:clamp(15px,1.5vw,22px);font-weight:700;letter-spacing:-.02em}
+.dchips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.dchip{border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:clamp(12px,1.05vw,15.5px);font-weight:500;color:var(--dim)}
+.col.k .dchip{border-color:rgba(45,210,176,.45);color:#fff;background:rgba(45,210,176,.12)}
 .legend{display:flex;flex-direction:column;gap:12px;margin-top:24px}
 .legend .lg{display:flex;align-items:center;gap:15px;font-size:clamp(13px,1.05vw,16px);color:var(--dim)}
 .legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:132px}
@@ -297,7 +320,7 @@ body:hover #hint{opacity:.95}
       <div class="ch" data-go="c31"><div class="num">CH 3</div><div class="nm">Solution</div><div class="ct">4 cards</div></div>
       <div class="ch" data-go="c41"><div class="num">CH 4</div><div class="nm">Where It Fits</div><div class="ct">3 cards</div></div>
       <div class="ch" data-go="c51"><div class="num">CH 5</div><div class="nm">Platform</div><div class="ct">3 cards</div></div>
-      <div class="ch appendix" data-go="cA1"><div class="num">APX</div><div class="nm">Answer Stack</div><div class="ct">8 on demand</div></div>
+      <div class="ch appendix" data-inert="1"><div class="num">APX</div><div class="nm">Answer Stack</div><div class="ct">8 on demand</div></div>
     </div>
   </section>
 
@@ -341,75 +364,67 @@ body:hover #hint{opacity:.95}
     <div class="tag st">Real Knomee Results</div>
   </section>
 
-  <!-- ============ CARD 0.1 ============ -->
+  <!-- ===== CARD 0.1 · deck p1 ===== -->
   <section class="card" id="c01" data-id="0.1">
-    <div class="st">
+    <div class="opener st">
       <div class="eyebrow">Chapter 0 · Open</div>
       <h1 class="title">Some Wealth Firms Grow <span class="grad">And Others Don't.</span></h1>
     </div>
-    <div class="metrics two st">
-      <div class="metric"><div class="n">11.4%</div><div class="l">Top-quartile organic growth</div><div class="src">Cerulli</div></div>
-      <div class="metric"><div class="n">&lt;2<span style="font-size:.5em">%</span></div><div class="l">Industry median organic growth</div><div class="src">Cerulli</div></div>
-    </div>
-    <div class="tag st">Same Market. Different Understanding.</div>
   </section>
 
-  <!-- ============ CARD 3.1 ============ -->
+  <!-- ===== CARD 3.1 · deck p6 ===== -->
   <section class="card" id="c31" data-id="3.1">
     <div class="st">
       <div class="eyebrow">Chapter 3 · Solution</div>
-      <h1 class="title">Knomee Engages Prospects <span class="grad">Before Meetings.</span></h1>
+      <h1 class="title">Knomee Engages Prospects &amp; Clients <span class="grad">Before Meetings.</span></h1>
     </div>
-    <div class="metrics three st">
-      <div class="metric"><div class="step">Step 01</div><div class="n sm">A Short Invitation</div><div class="l">The prospect receives a seven-minute reflection, sent in the advisor's name.</div></div>
-      <div class="metric"><div class="step">Step 02</div><div class="n sm">They Say What Matters</div><div class="l">Behavioral questions surface priorities, worries and decision style.</div></div>
-      <div class="metric"><div class="step">Step 03</div><div class="n sm">You Walk In Prepared</div><div class="l">The advisor gets a brief with science-proven trust builders.</div></div>
+    <div class="qwrap">
+      <div class="st"><div class="bigstat"><div class="v">95%</div><div class="k">Completion Rate</div></div></div>
+      <div class="st quote"><p>“This feels like other familiar self discovery apps, not a financial questionnaire.”</p></div>
     </div>
-    <div class="tag st">95% Completion Rate</div>
   </section>
 
-  <!-- ============ CARD 4.1 ============ -->
+  <!-- ===== CARD 4.1 · deck p9 ===== -->
   <section class="card" id="c41" data-id="4.1">
     <div class="st">
       <div class="eyebrow">Chapter 4 · Where It Fits</div>
-      <h1 class="title">Grow From The First <span class="grad">Interaction.</span></h1>
+      <h1 class="title">Knomee Helps Firms Grow <span class="grad">From The First Interaction.</span></h1>
     </div>
-    <div class="metrics three st">
-      <div class="metric"><div class="step">New Relationships</div><div class="n sm">Win The First Meeting</div><div class="l">Prospects arrive understood, so the first conversation starts further ahead.</div></div>
-      <div class="metric"><div class="step">Transitions</div><div class="n sm">Trust Continues</div><div class="l">When an advisor retires or moves, client understanding stays with the firm.</div></div>
-      <div class="metric"><div class="step">Firm Level</div><div class="n sm">Insight Becomes Intelligence</div><div class="l">Individual client insight aggregates into a picture of the whole book.</div></div>
+    <div class="flow st">
+      <div class="moment"><div class="idx">Prospect Conversion</div><h3>Close in one meeting!</h3></div>
+      <div class="moment"><div class="idx">Onboarding</div><h3>Build a holistic plan.</h3></div>
+      <div class="moment"><div class="idx">Prep For Reviews</div><h3>Know what’s changed and be ready to help.</h3></div>
     </div>
-    <div class="tag st">Across The Whole Client Lifecycle</div>
   </section>
 
-  <!-- ============ CARD 5.1 ============ -->
+  <!-- ===== CARD 5.1 · deck p13 ===== -->
   <section class="card" id="c51" data-id="5.1">
     <div class="st">
       <div class="eyebrow">Chapter 5 · Platform</div>
       <h1 class="title">AI Is Only As Smart As <span class="grad">The Data That Feeds It.</span></h1>
+      <p class="lede">Knomee provides the human insight you’re missing.</p>
     </div>
-    <div class="metrics three st">
-      <div class="metric"><div class="step">Data In</div><div class="n sm">First-Party Behavioral Data</div><div class="l">Collected directly from the client, with consent — not inferred or bought.</div></div>
-      <div class="metric"><div class="step">The Platform</div><div class="n sm">Behavioral Intelligence</div><div class="l">Validated models turn what clients say into what advisors should do.</div></div>
-      <div class="metric"><div class="step">Data Out</div><div class="n sm">Inside Your Workflow</div><div class="l">Delivered into the CRM and planning tools advisors already use.</div></div>
+    <div class="compare st">
+      <div class="col k">
+        <h3>Human Insight</h3>
+        <div class="dchips"><span class="dchip">Values</span><span class="dchip">Motivations</span><span class="dchip">Readiness</span><span class="dchip">Priorities</span><span class="dchip">Goals</span></div>
+      </div>
+      <div class="col">
+        <h3>Financial Data</h3>
+        <div class="dchips"><span class="dchip">Accounts</span><span class="dchip">Balances</span><span class="dchip">Assets</span><span class="dchip">Transactions</span><span class="dchip">Risk Score</span></div>
+      </div>
     </div>
-    <div class="tag st">Built On First-Party Client Data</div>
   </section>
 
-  <!-- ============ APPENDIX A1 ============ -->
-  <section class="card" id="cA1" data-id="A1">
-    <div class="st">
-      <div class="eyebrow">Appendix · Answer Stack</div>
-      <h1 class="title">Security, Privacy <span class="grad">&amp; Compliance.</span></h1>
-    </div>
-    <div class="metrics apx st">
-      <div class="metric"><div class="n sm">SOC 2 Type II</div><div class="l">Independently audited controls</div></div>
-      <div class="metric"><div class="n sm">GDPR &amp; CCPA</div><div class="l">Consent-based, right to erasure</div></div>
-      <div class="metric"><div class="n sm">Encrypted</div><div class="l">At rest and in transit</div></div>
-      <div class="metric"><div class="n sm">Client-Owned</div><div class="l">Never sold, never used to train</div></div>
-    </div>
-    <div class="tag st">Answered On Demand — Never In The Flow</div>
-  </section>
+  
+
+  
+
+  
+
+  
+
+  
 
 </div>
 
@@ -448,7 +463,7 @@ const CARDS=[
  {id:'5.3', t:'The Behavioral Intelligence Platform.', ch:'Platform'},
  {id:'6.1', t:'Start With A Pilot. Pay For Outcomes.', ch:'Close'},
  {id:'6.2', t:'Contact — Marla Sofer', ch:'Close'},
- {id:'A1', t:'Security, Privacy &amp; Compliance', ch:'Appendix', go:'cA1'},
+ {id:'A1', t:'Security, Privacy &amp; Compliance', ch:'Appendix'},
  {id:'A2', t:'Pricing Detail & Pilot Terms', ch:'Appendix'},
  {id:'A3', t:'Implementation Timeline · Day 0 → 90', ch:'Appendix'},
  {id:'A4', t:'The Behavioral Science & Researchers', ch:'Appendix'},
@@ -461,7 +476,7 @@ const stage=document.getElementById('stage');
 const railfill=document.getElementById('railfill');
 const crumb=document.getElementById('crumb');
 
-const LIVE=['home','c01','c11','c21','c31','c41','c51','cA1'];
+const LIVE=['home','c01','c11','c21','c31','c41','c51'];
 
 function show(el){
   const i=LIVE.indexOf(el); if(i<0) return;
