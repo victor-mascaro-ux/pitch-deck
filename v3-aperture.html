@@ -251,6 +251,12 @@ h1.title em{font-style:normal;color:var(--violet)}
 .metric .step{position:relative;font-size:10.5px;font-weight:800;letter-spacing:.2em;color:var(--violet);margin-bottom:12px;text-transform:uppercase}
 .metric .n.sm{font-size:clamp(17px,1.7vw,25px);letter-spacing:-.025em;line-height:1.22}
 .metric .src{position:relative;font-size:11px;font-style:italic;text-decoration:underline;color:var(--faint);margin-top:12px}
+/* ---- start page: text + sample preview ---- */
+.homegrid{flex:1;display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(22px,3vw,50px);align-items:center;margin-top:clamp(8px,1.4vw,20px)}
+.previewcol{display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2vw,24px)}
+.sample{position:relative;width:100%;aspect-ratio:16/9;border-radius:15px;overflow:hidden;
+  border:1px solid var(--line);background:var(--canvas);box-shadow:0 26px 54px -28px rgba(21,6,41,.5)}
+.sample iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none}
 .legend{display:flex;flex-direction:column;gap:11px;margin-top:16px}
 .legend .lg{display:flex;align-items:center;gap:14px;font-size:clamp(13px,1.05vw,16px);color:var(--mute)}
 .legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:138px}
@@ -287,32 +293,20 @@ h1.title em{font-style:normal;color:var(--violet)}
 <main id="frame">
 
   <section class="card" id="home">
-    <div class="st">
-      <div class="eyebrow">Style 03 · Aperture</div>
-      <h1 class="title">Open from <em>a grid.</em></h1>
-      <p class="lede">HUB lays every slide out as tiles. Tap one and it opens into the canvas — the deck reconfigures in front of the room.</p>
-      <div class="legend">
-        <div class="lg"><span class="ky"><b>HUB</b><b>H</b></span> see every slide as a grid, click one to open it</div>
-        <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
-        <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
-      </div>
-      <a class="startbtn" id="startbtn" href="#">Start <span class="arw">&rarr;</span></a>
-      <div class="kpis">
-        <span class="kpi"><b>17</b> cards</span><span class="kpi"><b>7</b> chapters</span>
-        <span class="kpi"><b>6</b> routes</span><span class="kpi"><b>8</b> appendix answers</span>
-      </div>
-    </div>
-    <div class="hero-row" style="grid-template-columns:1fr;align-content:center">
+    <div class="homegrid">
       <div class="st">
-        <div style="font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:13px">Or jump straight to a chapter</div>
-        <div class="mini" style="max-width:840px">
-          <div class="tile" data-go="c11"><div class="n">CH 1</div><div class="h">Problem</div><div class="c">3 cards</div></div>
-          <div class="tile" data-go="c21"><div class="n">CH 2</div><div class="h">Proof</div><div class="c">2 cards</div></div>
-          <div class="tile" data-go="c31"><div class="n">CH 3</div><div class="h">Solution</div><div class="c">4 cards</div></div>
-          <div class="tile" data-go="c41"><div class="n">CH 4</div><div class="h">Where It Fits</div><div class="c">3 cards</div></div>
-          <div class="tile" data-go="c51"><div class="n">CH 5</div><div class="h">Platform</div><div class="c">3 cards</div></div>
-          <div class="tile apx" data-inert="1"><div class="n">APX</div><div class="h">Answer Stack</div><div class="c">8 on demand</div></div>
+        <div class="eyebrow">Style 03 · Aperture</div>
+        <h1 class="title">Open from <em>a grid.</em></h1>
+        <p class="lede">HUB lays every slide out as tiles. Tap one and it opens into the canvas — the deck reconfigures in front of the room.</p>
+        <div class="legend">
+          <div class="lg"><span class="ky"><b>HUB</b><b>H</b></span> see every slide as a grid, click one to open it</div>
+          <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
+          <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
         </div>
+      </div>
+      <div class="previewcol st">
+        <div class="sample"><iframe data-src="./v3-aperture.html?start=c11" scrolling="no" tabindex="-1" aria-hidden="true"></iframe></div>
+        <a class="startbtn" id="startbtn" href="#">Start <span class="arw">&rarr;</span></a>
       </div>
     </div>
   </section>
@@ -544,6 +538,19 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();show(LIVE[(idx+1)%LIVE.length])}
   if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(LIVE[(idx-1+LIVE.length)%LIVE.length])}
 });
+
+// sample preview: skip entirely when this page IS a preview
+(function(){
+  if(new URLSearchParams(location.search).get('start')){
+    document.querySelectorAll('.sample iframe').forEach(n=>n.remove());
+    return;
+  }
+  const box=document.querySelector('.sample'), fr=box&&box.querySelector('iframe');
+  if(!fr) return;
+  fr.src=fr.dataset.src;
+  const fit=()=>{fr.style.transform='scale('+(box.clientWidth/1280)+')';};
+  fit(); window.addEventListener('resize',fit); fr.addEventListener('load',fit);
+})();
 </script>
 </body>
 </html>

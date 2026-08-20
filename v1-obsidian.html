@@ -105,6 +105,13 @@ h1.title{
 .startbtn:hover{transform:translateY(-3px);box-shadow:0 26px 50px -18px rgba(45,210,176,.85)}
 .startbtn .arw{transition:transform .3s var(--ease)}
 .startbtn:hover .arw{transform:translateX(5px)}
+/* ---- start page: text + sample preview ---- */
+.homegrid{flex:1;display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(24px,3.4vw,60px);align-items:center;margin-top:clamp(10px,1.6vw,24px)}
+#home .hero{margin-top:0;flex:none;justify-content:flex-start}
+.previewcol{display:flex;flex-direction:column;align-items:center;gap:clamp(16px,2.2vw,28px)}
+.sample{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;
+  border:1px solid var(--line);background:#16032B;box-shadow:0 40px 80px -34px rgba(0,0,0,.75)}
+.sample iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none}
 .legend{display:flex;flex-direction:column;gap:12px;margin-top:24px}
 .legend .lg{display:flex;align-items:center;gap:15px;font-size:clamp(13px,1.05vw,16px);color:var(--dim)}
 .legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:132px}
@@ -299,37 +306,21 @@ body:hover #hint{opacity:.95}
       </div>
       <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);font-weight:600">Confidential · 2026</div>
     </div>
-
-    <div class="hero st">
-      <div class="eyebrow">Style 01 · Obsidian</div>
-      <h1 class="title">Search <span class="accent">and jump.</span></h1>
-      <p class="lede">No menus or lists on the screen but the idea.</p>
-      <div class="legend">
-        <div class="lg"><span class="ky"><b>&#8984; / Ctrl</b><b>K</b></span> open search box, type a key word and move around content</div>
-        <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
-        <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
+    <div class="homegrid">
+      <div class="hero st">
+        <div class="eyebrow">Style 01 · Obsidian</div>
+        <h1 class="title">Search <span class="accent">and jump.</span></h1>
+        <p class="lede">No menus or lists on the screen but the idea.</p>
+        <div class="legend">
+          <div class="lg"><span class="ky"><b>&#8984; / Ctrl</b><b>K</b></span> open search box, type a key word and move around content</div>
+          <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
+          <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
+        </div>
       </div>
-      <a class="startbtn" id="startbtn" href="#">Start <span class="arw">&rarr;</span></a>
-    </div>
-
-    <div class="routes st">
-      <span class="lbl">Set your time, then present</span>
-      <button class="route on">Full Pitch<span class="t">20m</span></button>
-      <button class="route">The Five<span class="t">5m</span></button>
-      <button class="route">Growth / CGO<span class="t">12m</span></button>
-      <button class="route">Platform / CTO<span class="t">12m</span></button>
-      <button class="route">Advisor<span class="t">10m</span></button>
-      <button class="route">Succession / M&amp;A<span class="t">10m</span></button>
-    </div>
-
-    <div class="chapters st">
-      <div class="ch" data-go="c01"><div class="num">CH 0</div><div class="nm">Open</div><div class="ct">1 card</div></div>
-      <div class="ch" data-go="c11"><div class="num">CH 1</div><div class="nm">Problem</div><div class="ct">3 cards</div></div>
-      <div class="ch" data-go="c21"><div class="num">CH 2</div><div class="nm">Proof</div><div class="ct">2 cards</div></div>
-      <div class="ch" data-go="c31"><div class="num">CH 3</div><div class="nm">Solution</div><div class="ct">4 cards</div></div>
-      <div class="ch" data-go="c41"><div class="num">CH 4</div><div class="nm">Where It Fits</div><div class="ct">3 cards</div></div>
-      <div class="ch" data-go="c51"><div class="num">CH 5</div><div class="nm">Platform</div><div class="ct">3 cards</div></div>
-      <div class="ch appendix" data-inert="1"><div class="num">APX</div><div class="nm">Answer Stack</div><div class="ct">8 on demand</div></div>
+      <div class="previewcol st">
+        <div class="sample"><iframe data-src="./v1-obsidian.html?start=c11" scrolling="no" tabindex="-1" aria-hidden="true"></iframe></div>
+        <a class="startbtn" id="startbtn" href="#">Start <span class="arw">&rarr;</span></a>
+      </div>
     </div>
   </section>
 
@@ -552,6 +543,19 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){show('home')}
 });
 pal.addEventListener('click',e=>{if(e.target===pal)closePal()});
+
+// sample preview: skip entirely when this page IS a preview
+(function(){
+  if(new URLSearchParams(location.search).get('start')){
+    document.querySelectorAll('.sample iframe').forEach(n=>n.remove());
+    return;
+  }
+  const box=document.querySelector('.sample'), fr=box&&box.querySelector('iframe');
+  if(!fr) return;
+  fr.src=fr.dataset.src;
+  const fit=()=>{fr.style.transform='scale('+(box.clientWidth/1280)+')';};
+  fit(); window.addEventListener('resize',fit); fr.addEventListener('load',fit);
+})();
 </script>
 </body>
 </html>

@@ -237,6 +237,12 @@ h1.title em{font-style:normal;color:var(--plum)}
 .metric .step{font-size:10.5px;font-weight:800;letter-spacing:.2em;color:var(--teal-dk);margin-bottom:12px;text-transform:uppercase}
 .metric .n.sm{font-size:clamp(17px,1.7vw,25px);letter-spacing:-.025em;line-height:1.22}
 .metric .src{font-size:11px;font-style:italic;text-decoration:underline;color:var(--faint);margin-top:12px}
+/* ---- start page: text + sample preview ---- */
+.homegrid{flex:1;display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(24px,3.2vw,54px);align-items:center;margin-top:clamp(10px,1.6vw,22px)}
+.previewcol{display:flex;flex-direction:column;align-items:center;gap:clamp(16px,2.2vw,26px)}
+.sample{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;
+  border:1px solid var(--line);background:var(--paper);box-shadow:0 30px 60px -30px rgba(18,10,36,.35)}
+.sample iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none}
 .legend{display:flex;flex-direction:column;gap:11px;margin-top:18px}
 .legend .lg{display:flex;align-items:center;gap:14px;font-size:clamp(13px,1.05vw,16px);color:var(--mute)}
 .legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:138px}
@@ -325,43 +331,21 @@ body.collapsed .backto .bt{display:none}
 <main id="stage">
 
   <section class="card" id="home">
-    <div class="st" style="flex:1;display:flex;flex-direction:column;justify-content:center">
-      <div class="eyebrow">Style 02 · Daylight</div>
-      <h1 class="title">Lateral <em>rail.</em></h1>
-      <p class="lede">Slides stay visible in the rail on the left. You can hide or show the rail.</p>
-      <div class="legend">
-        <div class="lg"><span class="ky"><b>Click</b></span> any slide in the left rail</div>
-        <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
-        <div class="lg"><span class="ky"><b>\\</b></span> hide or show the rail</div>
-        <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
+    <div class="homegrid">
+      <div class="st">
+        <div class="eyebrow">Style 02 · Daylight</div>
+        <h1 class="title">Lateral <em>rail.</em></h1>
+        <p class="lede">Slides stay visible in the rail on the left. You can hide or show the rail.</p>
+        <div class="legend">
+          <div class="lg"><span class="ky"><b>Click</b></span> any slide in the left rail</div>
+          <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
+          <div class="lg"><span class="ky"><b>\\</b></span> hide or show the rail</div>
+          <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
+        </div>
       </div>
-      <a class="startbtn" id="startbtn" href="#">Start <span class="arw">&rarr;</span></a>
-      <div class="stats">
-        <span class="pill"><b>17</b> cards</span>
-        <span class="pill"><b>7</b> chapters</span>
-        <span class="pill"><b>6</b> routes</span>
-        <span class="pill"><b>8</b> appendix answers</span>
-      </div>
-    </div>
-
-    <div class="hgrid st">
-      <div class="hcard" data-go="c11">
-        <div class="k">Ch 1 · Problem</div>
-        <div class="h">Why growth stalled</div>
-        <div class="p">The &lt;2% organic growth problem, what clients don't say, and why better diagnosis changes outcomes.</div>
-        <div class="go">Open chapter <span>→</span></div>
-      </div>
-      <div class="hcard" data-go="c21">
-        <div class="k">Ch 2 · Proof</div>
-        <div class="h">What actually happens</div>
-        <div class="p">30% faster conversion, 20% more capacity, 5X referrals, 95% completion. Lead with this.</div>
-        <div class="go">Open chapter <span>→</span></div>
-      </div>
-      <div class="hcard apx" data-inert="1">
-        <div class="k">Appendix</div>
-        <div class="h">The answer stack</div>
-        <div class="p">Security, pricing, timeline, science, integrations, ROI. Never in the flow — always one click away.</div>
-        <div class="go">Open appendix <span>→</span></div>
+      <div class="previewcol st">
+        <div class="sample"><iframe data-src="./v2-daylight.html?start=c11" scrolling="no" tabindex="-1" aria-hidden="true"></iframe></div>
+        <a class="startbtn" id="startbtn" href="#">Start <span class="arw">&rarr;</span></a>
       </div>
     </div>
   </section>
@@ -558,6 +542,19 @@ document.addEventListener('keydown',e=>{
   if(e.key==='\\'){e.preventDefault();toggleRail()}
 });
 window.addEventListener('resize',()=>show(LIVE[idx]));
+
+// sample preview: skip entirely when this page IS a preview
+(function(){
+  if(new URLSearchParams(location.search).get('start')){
+    document.querySelectorAll('.sample iframe').forEach(n=>n.remove());
+    return;
+  }
+  const box=document.querySelector('.sample'), fr=box&&box.querySelector('iframe');
+  if(!fr) return;
+  fr.src=fr.dataset.src;
+  const fit=()=>{fr.style.transform='scale('+(box.clientWidth/1280)+')';};
+  fit(); window.addEventListener('resize',fit); fr.addEventListener('load',fit);
+})();
 </script>
 </body>
 </html>
