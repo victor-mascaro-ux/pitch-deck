@@ -279,6 +279,44 @@ h1.title em{font-style:normal;color:var(--plum)}
 .card.active .dchip:nth-child(5){animation-delay:.84s}
 /* a quote is spoken — it eases in from the side */
 .card.active .quote{animation:kInLeft .62s var(--ease) .32s backwards}
+/* ===== go deeper: optional detail, never in the main flow ===== */
+.deepbtn{position:absolute;top:clamp(30px,4vw,64px);right:clamp(30px,4.4vw,70px);z-index:12;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:inherit;
+  background:var(--paper);border:1px dashed var(--teal-dk);color:var(--teal-dk);border-radius:999px;
+  padding:9px 17px;font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  transition:transform .25s var(--ease),opacity .25s var(--ease)}
+.deepbtn:hover{transform:translateY(-2px)}
+.deepbtn .pl{font-size:14px;line-height:1}
+#deep{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:clamp(20px,4vw,60px);
+  background:rgba(34,24,51,.44);backdrop-filter:blur(14px);opacity:0;visibility:hidden;
+  transition:opacity .3s var(--ease),visibility 0s .3s}
+#deep.open{opacity:1;visibility:visible;transition:opacity .3s var(--ease),visibility 0s 0s}
+.deepbox{width:min(920px,94vw);max-height:86vh;overflow:auto;background:var(--paper);border:1px solid var(--line);
+  border-radius:22px;padding:clamp(26px,3.4vw,52px);color:var(--ink);
+  transform:translateY(18px) scale(.98);transition:transform .36s var(--ease);
+  box-shadow:0 50px 100px -40px rgba(0,0,0,.6)}
+#deep.open .deepbox{transform:none}
+.deephead{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.deepeyebrow{font-size:10.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--teal-dk)}
+.deepclose{flex:none;width:36px;height:36px;border-radius:11px;border:1px solid var(--line);background:transparent;
+  color:var(--ink);font-size:17px;cursor:pointer;font-family:inherit;transition:transform .25s var(--ease)}
+.deepclose:hover{transform:rotate(90deg)}
+.deeptabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.deeptab{border:1px solid var(--line);background:var(--paper);color:var(--mute);border-radius:999px;padding:7px 15px;
+  font-size:11.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .25s var(--ease)}
+.deeptab.on{background:var(--teal-dk);border-color:var(--teal-dk);color:var(--paper)}
+.deepbody{margin-top:clamp(18px,2.2vw,30px)}
+.deepbody h3{font-size:clamp(20px,2.3vw,34px);font-weight:800;letter-spacing:-.03em;line-height:1.12}
+.deepbody .dl{font-size:clamp(13.5px,1.15vw,17px);color:var(--mute);line-height:1.6;margin-top:12px}
+.deepbody .dq{font-size:clamp(16px,1.8vw,26px);font-style:italic;line-height:1.4;margin-top:18px;
+  border-left:3px solid var(--teal-dk);padding-left:20px}
+.deeplist{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.deeplist span{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:11px 17px;
+  font-size:clamp(12.5px,1.05vw,15.5px);font-weight:600}
+.deepnote{margin-top:20px;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-dk)}
+.deepsrc{margin-top:20px;display:flex;gap:16px;font-size:11.5px;font-style:italic;
+  text-decoration:underline;color:var(--mute)}
+.deepfoot{margin-top:clamp(20px,2.4vw,32px);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .legend{display:flex;flex-direction:column;gap:11px;margin-top:18px}
 .legend .lg{display:flex;align-items:center;gap:14px;font-size:clamp(13px,1.05vw,16px);color:var(--mute)}
 .legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:138px}
@@ -493,6 +531,18 @@ body.collapsed .backto .bt{display:none}
 
 
 
+<div id="deep">
+  <div class="deepbox">
+    <div class="deephead">
+      <div id="deepeyebrow" class="deepeyebrow"></div>
+      <button id="deepclose" class="deepclose">&times;</button>
+    </div>
+    <div id="deeptabs" class="deeptabs"></div>
+    <div id="deepbody" class="deepbody"></div>
+    <div class="deepfoot">Esc to close · this detail is never part of the main flow</div>
+  </div>
+</div>
+
 <script>
 const NAMES={home:'Home',c01:'Chapter 0 · Card 0.1',c11:'Chapter 1 · Card 1.1',c21:'Chapter 2 · Card 2.1',c31:'Chapter 3 · Card 3.1',c41:'Chapter 4 · Card 4.1',c51:'Chapter 5 · Card 5.1'};
 const CARDS=[
@@ -594,6 +644,11 @@ document.getElementById('prev').addEventListener('click',()=>show(LIVE[(idx-1+LI
 
 
 document.addEventListener('keydown',e=>{
+  if(deep.classList.contains('open')){
+    if(e.key==='Escape'){e.preventDefault();closeDeep();}
+    return;
+  }
+  if(e.key.toLowerCase()==='d'){e.preventDefault();openDeep(LIVE[idx]);return;}
   if(e.target.tagName==='SELECT')return;
   if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();show(LIVE[(idx+1)%LIVE.length])}
   if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(LIVE[(idx-1+LIVE.length)%LIVE.length])}
@@ -614,6 +669,51 @@ window.addEventListener('resize',()=>show(LIVE[idx]));
   const fit=()=>{fr.style.transform='scale('+(box.clientWidth/1280)+')';};
   fit(); window.addEventListener('resize',fit); fr.addEventListener('load',fit);
 })();
+
+/* ===== go deeper — optional detail drawn from the full deck ===== */
+const DEEPER={"c01": [{"id": "6.1", "t": "Start With A Pilot. Pay For Outcomes.", "lede": "The Firms That Win Know Their Clients Best."}], "c11": [{"id": "1.2", "t": "Clients Don’t Always Say What Matters Most.", "lede": "What surfaces when you ask differently.", "items": ["Retirement Planning", "Fear of running out of money", "World travel", "Identity after work", "Private market investing", "Helping kids", "Home near aging parents", "Philanthropy", "Early retirement"]}, {"id": "1.3", "t": "Better Diagnosis Improves Outcomes.", "lede": "In wealth management, deeper understanding drives growth.", "sources": ["McKinsey", "Cerulli", "Schwab"]}], "c21": [{"id": "2.2", "t": "95% Completion Rate", "quote": "This feels like other familiar self discovery apps, not a financial questionnaire."}], "c31": [{"id": "3.2", "t": "Advisors See Actionable, Science-Proven Trust Builders"}, {"id": "3.3", "t": "And Walk Into Meetings Ready To Help."}, {"id": "3.4", "t": "Conversion Intelligence Identifies Who to Focus on First."}], "c41": [{"id": "4.2", "t": "Advisor Transitions. Trust Continues.", "items": ["Succession", "Advisor Transition", "M&A Integration"], "note": "Knomee Behavioral Intelligence Layer"}, {"id": "4.3", "t": "Client Insight Becomes Firm Intelligence.", "items": ["Prospect / Client", "Advisor", "Firm"], "note": "Intelligence Layer"}], "c51": [{"id": "5.2", "t": "Knomee Fits Into Your Existing Workflow.", "items": ["AI / Advisor Workflow", "Planning", "CRM / Marketing Tools", "APIs"]}, {"id": "5.3", "t": "Knomee Is The Behavioral Intelligence Platform That Powers The AI Future Of Wealth Management.", "items": ["Advisors — Better meetings, faster trust.", "AI Systems — Personalization, smarter recommendations.", "Firm — Growth, retention, scale."], "note": "Behavioral Intelligence Layer · Real-time Behavioral Insights"}]};
+const deep=document.getElementById('deep');
+const deepBody=document.getElementById('deepbody');
+const deepTabs=document.getElementById('deeptabs');
+const deepEye=document.getElementById('deepeyebrow');
+let deepSet=[],deepAt=0;
+function renderDeep(){
+  const d=deepSet[deepAt]; if(!d) return;
+  deepEye.textContent='Card '+d.id+' · deeper';
+  deepTabs.innerHTML = deepSet.length>1 ? deepSet.map((x,i)=>
+    `<button class="deeptab ${i===deepAt?'on':''}" data-i="${i}">${x.id}</button>`).join('') : '';
+  deepTabs.querySelectorAll('.deeptab').forEach(b=>b.addEventListener('click',()=>{deepAt=+b.dataset.i;renderDeep();}));
+  let h='<h3>'+d.t+'</h3>';
+  if(d.lede)  h+='<p class="dl">'+d.lede+'</p>';
+  if(d.quote) h+='<p class="dq">“'+d.quote+'”</p>';
+  if(d.items) h+='<div class="deeplist">'+d.items.map(i=>'<span>'+i+'</span>').join('')+'</div>';
+  if(d.note)  h+='<div class="deepnote">'+d.note+'</div>';
+  if(d.sources) h+='<div class="deepsrc">'+d.sources.map(s=>'<span>'+s+'</span>').join('')+'</div>';
+  deepBody.innerHTML=h;
+}
+function openDeep(id){
+  const set=DEEPER[id]; if(!set||!set.length) return;
+  deepSet=set; deepAt=0; renderDeep(); deep.classList.add('open');
+}
+function closeDeep(){deep.classList.remove('open');}
+deep.addEventListener('click',e=>{if(e.target===deep)closeDeep();});
+document.getElementById('deepclose').addEventListener('click',closeDeep);
+
+/* a discreet "go deeper" affordance on every card that has more behind it */
+document.querySelectorAll('.card').forEach(card=>{
+  const set=DEEPER[card.id]; if(!set||!set.length) return;
+  const b=document.createElement('button');
+  b.className='deepbtn';
+  b.innerHTML='<span class="pl">+</span> Go deeper'+(set.length>1?' ('+set.length+')':'');
+  b.addEventListener('click',ev=>{ev.stopPropagation();openDeep(card.id);});
+  card.appendChild(b);
+  /* the content itself is clickable too */
+  card.querySelectorAll('.row,.metric,.moment,.compare .col').forEach(el=>{
+    el.style.cursor='pointer';
+    el.addEventListener('click',()=>openDeep(card.id));
+  });
+});
+
 </script>
 </body>
 </html>
