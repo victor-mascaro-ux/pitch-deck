@@ -155,7 +155,7 @@ h1.title em{font-style:normal;color:var(--plum)}
   box-shadow:0 30px 60px -30px rgba(8,99,117,.6);
   position:relative;overflow:hidden;
 }
-.bignum::before{content:'';position:absolute;inset:0;background:radial-gradient(70% 60% at 30% 20%,rgba(255,255,255,.42),transparent 60%)}
+
 .bignum .n{position:relative;font-size:clamp(56px,7.4vw,112px);font-weight:800;letter-spacing:-.06em;line-height:.92}
 .bignum .l{position:relative;font-size:clamp(15px,1.5vw,22px);font-weight:800;margin-top:6px;letter-spacing:-.02em}
 .bignum .s{position:relative;font-size:11.5px;font-style:italic;opacity:.72;margin-top:8px}
@@ -243,6 +243,42 @@ h1.title em{font-style:normal;color:var(--plum)}
 .sample{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;
   border:1px solid var(--line);background:var(--paper);box-shadow:0 30px 60px -30px rgba(18,10,36,.35)}
 .sample iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none}
+/* ===== contextual entrances — each element type arrives in its own way ===== */
+@keyframes kPop{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:none}}
+@keyframes kRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes kRiseScale{from{opacity:0;transform:translateY(26px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes kInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+@keyframes kInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes kChip{from{opacity:0;transform:translateY(10px) scale(.9)}to{opacity:1;transform:none}}
+/* the stat hero lands with weight — it scales up */
+.card.active .orb,.card.active .dial,.card.active .bignum,.card.active .bigstat{animation:kPop .74s var(--ease) .16s backwards}
+/* evidence rows arrive one at a time, from the right */
+.card.active .stack .row{animation:kInRight .55s var(--ease) backwards}
+.card.active .stack .row:nth-of-type(1){animation-delay:.34s}
+.card.active .stack .row:nth-of-type(2){animation-delay:.44s}
+.card.active .stack .row:nth-of-type(3){animation-delay:.54s}
+/* metrics rise and settle, left to right */
+.card.active .metric{animation:kRiseScale .6s var(--ease) backwards}
+.card.active .metric:nth-child(1){animation-delay:.26s}
+.card.active .metric:nth-child(2){animation-delay:.36s}
+.card.active .metric:nth-child(3){animation-delay:.46s}
+.card.active .metric:nth-child(4){animation-delay:.56s}
+/* a three-step story steps through */
+.card.active .moment{animation:kRise .58s var(--ease) backwards}
+.card.active .moment:nth-child(1){animation-delay:.28s}
+.card.active .moment:nth-child(2){animation-delay:.44s}
+.card.active .moment:nth-child(3){animation-delay:.60s}
+/* a comparison meets in the middle */
+.card.active .compare .col:nth-child(1){animation:kInLeft .62s var(--ease) .26s backwards}
+.card.active .compare .col:nth-child(2){animation:kInRight .62s var(--ease) .36s backwards}
+.card.active .dchip{animation:kChip .42s var(--ease) backwards}
+.card.active .dchip:nth-child(1){animation-delay:.56s}
+.card.active .dchip:nth-child(2){animation-delay:.63s}
+.card.active .dchip:nth-child(3){animation-delay:.70s}
+.card.active .dchip:nth-child(4){animation-delay:.77s}
+.card.active .dchip:nth-child(5){animation-delay:.84s}
+/* a quote is spoken — it eases in from the side */
+.card.active .quote{animation:kInLeft .62s var(--ease) .32s backwards}
 .legend{display:flex;flex-direction:column;gap:11px;margin-top:18px}
 .legend .lg{display:flex;align-items:center;gap:14px;font-size:clamp(13px,1.05vw,16px);color:var(--mute)}
 .legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:138px}
@@ -491,6 +527,28 @@ let idx=0;
 const marker=document.getElementById('marker');
 const pos=document.getElementById('pos');
 
+
+/* numbers count up when a card lands — reads as a live figure, not a static one */
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(card){
+  if(REDUCED||!card) return;
+  card.querySelectorAll('.metric .n, .bigstat .v').forEach(el=>{
+    if(el.children.length) return;                    // skip styled markup
+    const raw = el.dataset.raw || (el.dataset.raw = el.textContent.trim());
+    const m = raw.match(/^(\D*?)(\d+(?:\.\d+)?)(\D*)$/);
+    if(!m) return;
+    const pre=m[1], target=parseFloat(m[2]), suf=m[3];
+    const dec=(m[2].split('.')[1]||'').length, dur=900, t0=performance.now();
+    el.textContent=pre+(0).toFixed(dec)+suf;
+    const step=t=>{
+      const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3);
+      el.textContent = k<1 ? pre+(target*e).toFixed(dec)+suf : raw;
+      if(k<1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+
 function show(id){
   const i=LIVE.indexOf(id); if(i<0) return;
   const goingBack=i<idx;
@@ -503,6 +561,7 @@ function show(id){
   void node.offsetWidth;
   node.classList.remove('back');
   node.classList.add('active');
+  setTimeout(()=>countUp(node),260);
   idx=i;
   pos.textContent=NAMES[id];
   document.querySelectorAll('.nitem').forEach(n=>n.classList.remove('on'));

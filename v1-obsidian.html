@@ -39,10 +39,7 @@ body{
   position:absolute;inset:0;
   display:flex;flex-direction:column;
   padding:clamp(38px,5.2vw,86px);
-  background:
-    radial-gradient(120% 90% at 8% 0%, rgba(109,40,217,.34) 0%, transparent 55%),
-    radial-gradient(100% 80% at 100% 100%, rgba(45,210,176,.20) 0%, transparent 55%),
-    linear-gradient(160deg,#33095F 0%,var(--plum) 46%,#16032B 100%);
+  background:var(--plum);
   opacity:0;visibility:hidden;
   transform:scale(1.055) translateZ(0);
   filter:blur(14px);
@@ -112,6 +109,42 @@ h1.title{
 .sample{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;
   border:1px solid var(--line);background:#16032B;box-shadow:0 40px 80px -34px rgba(0,0,0,.75)}
 .sample iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform-origin:top left;pointer-events:none}
+/* ===== contextual entrances — each element type arrives in its own way ===== */
+@keyframes kPop{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:none}}
+@keyframes kRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes kRiseScale{from{opacity:0;transform:translateY(26px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes kInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+@keyframes kInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes kChip{from{opacity:0;transform:translateY(10px) scale(.9)}to{opacity:1;transform:none}}
+/* the stat hero lands with weight — it scales up */
+.card.active .orb,.card.active .dial,.card.active .bignum,.card.active .bigstat{animation:kPop .74s var(--ease) .16s backwards}
+/* evidence rows arrive one at a time, from the right */
+.card.active .stack .row{animation:kInRight .55s var(--ease) backwards}
+.card.active .stack .row:nth-of-type(1){animation-delay:.34s}
+.card.active .stack .row:nth-of-type(2){animation-delay:.44s}
+.card.active .stack .row:nth-of-type(3){animation-delay:.54s}
+/* metrics rise and settle, left to right */
+.card.active .metric{animation:kRiseScale .6s var(--ease) backwards}
+.card.active .metric:nth-child(1){animation-delay:.26s}
+.card.active .metric:nth-child(2){animation-delay:.36s}
+.card.active .metric:nth-child(3){animation-delay:.46s}
+.card.active .metric:nth-child(4){animation-delay:.56s}
+/* a three-step story steps through */
+.card.active .moment{animation:kRise .58s var(--ease) backwards}
+.card.active .moment:nth-child(1){animation-delay:.28s}
+.card.active .moment:nth-child(2){animation-delay:.44s}
+.card.active .moment:nth-child(3){animation-delay:.60s}
+/* a comparison meets in the middle */
+.card.active .compare .col:nth-child(1){animation:kInLeft .62s var(--ease) .26s backwards}
+.card.active .compare .col:nth-child(2){animation:kInRight .62s var(--ease) .36s backwards}
+.card.active .dchip{animation:kChip .42s var(--ease) backwards}
+.card.active .dchip:nth-child(1){animation-delay:.56s}
+.card.active .dchip:nth-child(2){animation-delay:.63s}
+.card.active .dchip:nth-child(3){animation-delay:.70s}
+.card.active .dchip:nth-child(4){animation-delay:.77s}
+.card.active .dchip:nth-child(5){animation-delay:.84s}
+/* a quote is spoken — it eases in from the side */
+.card.active .quote{animation:kInLeft .62s var(--ease) .32s backwards}
 .legend{display:flex;flex-direction:column;gap:12px;margin-top:24px}
 .legend .lg{display:flex;align-items:center;gap:15px;font-size:clamp(13px,1.05vw,16px);color:var(--dim)}
 .legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:132px}
@@ -149,7 +182,7 @@ h1.title{
 }
 .ch::after{
   content:'';position:absolute;inset:0;border-radius:16px;pointer-events:none;
-  background:radial-gradient(90% 70% at 50% 0%,rgba(109,40,217,.42),transparent 70%);
+  background:rgba(109,40,217,.30);
   opacity:0;transition:opacity .38s var(--ease);
 }
 .ch:hover{transform:translateY(-6px);border-color:rgba(167,139,250,.5)}
@@ -194,10 +227,10 @@ h1.title{
 .row{
   display:flex;align-items:baseline;gap:16px;padding:16px 20px;
   border-left:2px solid rgba(167,139,250,.45);
-  background:linear-gradient(90deg,rgba(255,255,255,.055),transparent);
+  background:rgba(255,255,255,.05);
   border-radius:0 12px 12px 0;transition:all .34s var(--ease);cursor:default;
 }
-.row:hover{border-left-color:var(--teal);background:linear-gradient(90deg,rgba(45,210,176,.13),transparent);transform:translateX(6px)}
+.row:hover{border-left-color:var(--teal);background:rgba(45,210,176,.12);transform:translateX(6px)}
 .row .k{font-size:clamp(15px,1.45vw,22px);font-weight:600;letter-spacing:-.015em}
 .row .s{font-size:11px;font-style:italic;color:var(--teal);margin-left:auto;text-decoration:underline;opacity:.8}
 
@@ -212,7 +245,7 @@ h1.title{
 }
 .metric::before{
   content:'';position:absolute;inset:0;opacity:0;transition:opacity .42s var(--ease);
-  background:radial-gradient(80% 70% at 50% 0%,rgba(45,210,176,.34),transparent 72%);
+  background:rgba(45,210,176,.22);
 }
 .metric:hover{transform:translateY(-10px);border-color:var(--teal);box-shadow:0 34px 60px -28px rgba(45,210,176,.75)}
 .metric:hover::before{opacity:1}
@@ -228,7 +261,7 @@ h1.title{
 #rail{
   position:fixed;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.07);z-index:40;
 }
-#railfill{height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--teal));transition:width .5s var(--ease)}
+#railfill{height:100%;width:0;background:var(--teal);transition:width .5s var(--ease)}
 #hint{
   position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:41;display:flex;gap:8px;align-items:center;
   font-size:11px;color:var(--dimmer);letter-spacing:.04em;
@@ -478,6 +511,28 @@ const crumb=document.getElementById('crumb');
 
 const LIVE=['home','c01','c11','c21','c31','c41','c51'];
 
+
+/* numbers count up when a card lands — reads as a live figure, not a static one */
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(card){
+  if(REDUCED||!card) return;
+  card.querySelectorAll('.metric .n, .bigstat .v').forEach(el=>{
+    if(el.children.length) return;                    // skip styled markup
+    const raw = el.dataset.raw || (el.dataset.raw = el.textContent.trim());
+    const m = raw.match(/^(\D*?)(\d+(?:\.\d+)?)(\D*)$/);
+    if(!m) return;
+    const pre=m[1], target=parseFloat(m[2]), suf=m[3];
+    const dec=(m[2].split('.')[1]||'').length, dur=900, t0=performance.now();
+    el.textContent=pre+(0).toFixed(dec)+suf;
+    const step=t=>{
+      const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3);
+      el.textContent = k<1 ? pre+(target*e).toFixed(dec)+suf : raw;
+      if(k<1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+
 function show(el){
   const i=LIVE.indexOf(el); if(i<0) return;
   document.querySelectorAll('.card').forEach(c=>{
@@ -489,6 +544,7 @@ function show(el){
   // force reflow so stagger replays
   void node.offsetWidth;
   node.classList.add('active');
+  setTimeout(()=>countUp(node),260);
   idx=i;
   railfill.style.width=((i)/(LIVE.length-1)*100)+'%';
   const meta=CARDS.find(c=>c.go===el);
