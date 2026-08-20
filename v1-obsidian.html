@@ -97,6 +97,14 @@ h1.title{
 .dchips{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
 .dchip{border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:clamp(12px,1.05vw,15.5px);font-weight:500;color:var(--dim)}
 .col.k .dchip{border-color:rgba(45,210,176,.45);color:#fff;background:rgba(45,210,176,.12)}
+.startbtn{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:30px;
+  background:var(--teal);color:#16032B;border-radius:999px;padding:14px 30px;text-decoration:none;
+  font-size:13.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+  box-shadow:0 18px 40px -18px rgba(45,210,176,.7)}
+.startbtn:hover{transform:translateY(-3px);box-shadow:0 26px 50px -18px rgba(45,210,176,.85)}
+.startbtn .arw{transition:transform .3s var(--ease)}
+.startbtn:hover .arw{transform:translateX(5px)}
 .legend{display:flex;flex-direction:column;gap:12px;margin-top:24px}
 .legend .lg{display:flex;align-items:center;gap:15px;font-size:clamp(13px,1.05vw,16px);color:var(--dim)}
 .legend .ky{display:inline-flex;align-items:center;gap:6px;min-width:132px}
@@ -301,6 +309,7 @@ body:hover #hint{opacity:.95}
         <div class="lg"><span class="ky"><b>&larr;</b><b>&rarr;</b></span> navigation</div>
         <div class="lg"><span class="ky"><b>Esc</b></span> home</div>
       </div>
+      <a class="startbtn" id="startbtn" href="#">Start <span class="arw">&rarr;</span></a>
     </div>
 
     <div class="routes st">
@@ -497,6 +506,7 @@ function show(el){
 }
 const startId=new URLSearchParams(location.search).get('start')||location.hash.replace('#','');
 show(LIVE.includes(startId)?startId:'home');
+document.getElementById('startbtn').addEventListener('click',e=>{e.preventDefault();show(LIVE[1]);});
 document.getElementById('next').addEventListener('click',()=>show(LIVE[(idx+1)%LIVE.length]));
 document.getElementById('prev').addEventListener('click',()=>show(LIVE[(idx-1+LIVE.length)%LIVE.length]));
 
