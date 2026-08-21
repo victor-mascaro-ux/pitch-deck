@@ -226,6 +226,99 @@ h1.title em{font-style:normal;color:var(--violet)}
 .item .ch2{font-size:10px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase}
 .palfoot{padding:11px 18px;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint);display:flex;gap:18px}
 
+
+/* ===== charts, diagrams, motifs ===== */
+:root{--c1:#6D28D9;--c2:#0E9B87;--grid:#E3E6EC}
+.motif{position:absolute;right:-6%;top:50%;transform:translateY(-50%);width:min(46%,520px);
+  color:var(--violet);opacity:.10;pointer-events:none;z-index:0}
+.card>*{position:relative;z-index:1}
+
+/* --- horizontal bar chart (single series, one unit) --- */
+.chartwrap{display:grid;grid-template-columns:1.55fr .95fr;gap:clamp(22px,3vw,50px);flex:1;
+  align-items:center;margin-top:clamp(12px,1.8vw,26px)}
+.chart{display:flex;flex-direction:column;gap:clamp(14px,2vw,26px)}
+.ctitle{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.crow{display:grid;grid-template-columns:minmax(120px,auto) 1fr auto;align-items:center;gap:14px;position:relative}
+.clab{font-size:clamp(13px,1.25vw,19px);font-weight:600;color:var(--ink-2);text-align:right}
+.ctrack{position:relative;height:clamp(26px,3vw,42px);background:#fff;border:1px solid var(--grid);border-radius:6px}
+.cbar{position:absolute;left:0;top:0;bottom:0;width:var(--w);background:var(--c1);
+  border-radius:0 5px 5px 0;transform-origin:left;transform:scaleX(0);
+  transition:transform .8s var(--ease)}
+.card.active .cbar{transform:scaleX(1)}
+.card.active .crow:nth-of-type(2) .cbar{transition-delay:.30s}
+.card.active .crow:nth-of-type(3) .cbar{transition-delay:.42s}
+.card.active .crow:nth-of-type(4) .cbar{transition-delay:.54s}
+.cval{font-size:clamp(18px,2vw,32px);font-weight:800;color:var(--ink);letter-spacing:-.03em;min-width:74px}
+.caxis{display:grid;grid-template-columns:minmax(120px,auto) 1fr auto;gap:14px;margin-top:2px}
+.cticks{display:flex;justify-content:space-between;font-size:10.5px;color:var(--faint);font-weight:600;
+  border-top:1px solid var(--grid);padding-top:6px}
+.crow:hover .cbar{filter:brightness(1.12)}
+.ctip{position:absolute;left:0;bottom:calc(100% + 8px);background:var(--ink);color:#fff;
+  border-radius:8px;padding:7px 11px;font-size:11.5px;font-weight:600;white-space:nowrap;
+  opacity:0;transform:translateY(4px);transition:all .2s var(--ease);pointer-events:none;z-index:4}
+.crow:hover .ctip{opacity:1;transform:none}
+/* the multiplier lives apart — different unit, never the same axis */
+.refstat{background:#fff;border:1px solid var(--line);border-radius:19px;padding:clamp(26px,3.2vw,48px);text-align:center}
+.refstat .rv{font-size:clamp(40px,5vw,80px);font-weight:800;color:var(--c2);letter-spacing:-.055em;line-height:1}
+.refstat .rl{font-size:clamp(12px,1.05vw,15px);font-weight:600;color:var(--mute);margin-top:10px}
+.dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
+.dots i{width:11px;height:11px;border-radius:50%;background:var(--c2);display:block;opacity:0;
+  animation:kChip .3s var(--ease) forwards}
+.card.active .dots i:nth-child(1){animation-delay:.55s}
+.card.active .dots i:nth-child(2){animation-delay:.63s}
+.card.active .dots i:nth-child(3){animation-delay:.71s}
+.card.active .dots i:nth-child(4){animation-delay:.79s}
+.card.active .dots i:nth-child(5){animation-delay:.87s}
+
+/* --- donut gauge --- */
+.gauge{position:relative;width:min(100%,330px);aspect-ratio:1;margin:0 auto;display:grid;place-items:center}
+.gauge svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .g-bg{fill:none;stroke:var(--grid);stroke-width:12}
+.gauge .g-fg{fill:none;stroke:var(--c2);stroke-width:12;stroke-linecap:round;
+  stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset 1.5s var(--ease) .3s}
+.card.active .gauge .g-fg{stroke-dashoffset:14}
+.gauge .gv{font-size:clamp(38px,4.6vw,64px);font-weight:800;color:var(--c2);letter-spacing:-.055em;line-height:1}
+.gauge .gl{font-size:clamp(12px,1.1vw,16px);font-weight:800;margin-top:4px;text-align:center}
+
+/* --- product screen frame --- */
+.shot{flex:1;margin-top:clamp(14px,2vw,30px);border:1px solid var(--line);border-radius:16px;
+  background:#fff;overflow:hidden;display:flex;flex-direction:column}
+.shotbar{height:34px;flex:none;border-bottom:1px solid var(--line);display:flex;align-items:center;
+  gap:6px;padding:0 14px;background:var(--canvas)}
+.shotbar i{width:8px;height:8px;border-radius:50%;background:var(--grid);display:block}
+.shotbody{flex:1;display:grid;grid-template-columns:180px 1fr;gap:18px;padding:18px}
+.skelcol{display:flex;flex-direction:column;gap:9px}
+.skel{background:var(--grid);border-radius:6px;height:12px}
+.skel.t{height:20px;width:60%}.skel.w70{width:70%}.skel.w45{width:45%}.skel.w85{width:85%}
+.skelbox{background:var(--canvas);border:1px solid var(--line);border-radius:12px;flex:1;
+  display:grid;place-items:center}
+.shotnote{font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+/* --- timeline flow --- */
+.tflow{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);
+  flex:1;align-content:center;margin-top:clamp(14px,2vw,30px)}
+.tnode:not(:last-child)::after{content:'';position:absolute;top:31px;left:50%;width:calc(100% + clamp(12px,1.6vw,22px));height:2px;background:var(--grid);z-index:0}
+.tnode{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
+.tdot{width:64px;height:64px;border-radius:50%;background:var(--c1);color:#fff;display:grid;
+  place-items:center;font-weight:800;font-size:18px;position:relative;z-index:1;
+  box-shadow:0 0 0 8px var(--canvas)}
+.tnode h3{font-size:clamp(14px,1.5vw,21px);font-weight:800;margin-top:16px;letter-spacing:-.025em;line-height:1.25;min-height:2.5em}
+.tnode .idx{font-size:10px;font-weight:800;letter-spacing:.2em;color:var(--c2);text-transform:uppercase;margin-top:10px}
+
+/* --- layer diagram --- */
+.diag{flex:1;display:flex;flex-direction:column;justify-content:center;gap:0;margin-top:clamp(12px,1.8vw,26px)}
+.dtop{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px)}
+.dbox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(20px,2.6vw,38px);
+  text-align:center;font-weight:800;letter-spacing:-.02em;font-size:clamp(13px,1.35vw,20px)}
+.darrows{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);height:34px}
+.darrows span{display:grid;place-items:center;color:var(--faint);font-size:18px}
+.dbar{background:var(--c1);color:#fff;border-radius:14px;padding:clamp(15px,1.8vw,24px);text-align:center;
+  font-size:clamp(11.5px,1.1vw,15px);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+
+/* --- hub & spoke --- */
+.spokes{flex:1;display:grid;place-items:center;margin-top:clamp(10px,1.6vw,24px)}
+.spokes svg{width:min(100%,980px);height:auto}
+
 /* ===== contextual entrances ===== */
 @keyframes kPop{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:none}}
 @keyframes kRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
@@ -283,6 +376,12 @@ h1.title em{font-style:normal;color:var(--violet)}
 <main id="frame">
 
   <section class="card" id="s01" data-id="0.1" data-ch="Open">
+    <svg class="motif" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="185" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="44 16"/>
+      <circle cx="200" cy="200" r="128" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="28 11"/>
+      <circle cx="200" cy="200" r="72"  fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    
     <div class="opener st">
       <div class="eyebrow">Chapter 0 · Open</div>
       <h1 class="title">Some Wealth Firms Grow <em>And Others Don’t.</em></h1>
@@ -323,6 +422,12 @@ h1.title em{font-style:normal;color:var(--violet)}
   </section>
 
   <section class="card" id="s13" data-id="1.3" data-ch="Problem">
+    <svg class="motif" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="185" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="44 16"/>
+      <circle cx="200" cy="200" r="128" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="28 11"/>
+      <circle cx="200" cy="200" r="72"  fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    
     <div class="statement st">
       <div class="eyebrow">Chapter 1 · Problem</div>
       <h1 class="title">Better Diagnosis <em>Improves Outcomes.</em></h1>
@@ -336,13 +441,26 @@ h1.title em{font-style:normal;color:var(--violet)}
       <div class="eyebrow">Chapter 2 · Proof</div>
       <h1 class="title">When Advisors Understand, <em>Businesses Grow.</em></h1>
     </div>
-    <div class="metrics st">
-      <div class="metric"><div class="n">30%</div><div class="l">Faster<br>Conversion</div></div>
-      <div class="metric"><div class="n">20%</div><div class="l">More Advisor<br>Capacity</div></div>
-      <div class="metric"><div class="n">5X</div><div class="l">More<br>Referrals</div></div>
-      <div class="metric"><div class="n">50%</div><div class="l">More Advice<br>Implemented</div></div>
+    <div class="chartwrap st">
+      <div class="chart">
+        <div class="ctitle">Lift vs. baseline · real Knomee results</div>
+        <div class="crow"><span class="clab">Faster Conversion</span>
+          <div class="ctrack"><div class="cbar" style="--w:50%"></div><div class="ctip">Faster conversion · +30%</div></div>
+          <span class="cval">30%</span></div>
+        <div class="crow"><span class="clab">More Advisor Capacity</span>
+          <div class="ctrack"><div class="cbar" style="--w:33.3%"></div><div class="ctip">More advisor capacity · +20%</div></div>
+          <span class="cval">20%</span></div>
+        <div class="crow"><span class="clab">More Advice Implemented</span>
+          <div class="ctrack"><div class="cbar" style="--w:83.3%"></div><div class="ctip">More advice implemented · +50%</div></div>
+          <span class="cval">50%</span></div>
+        <div class="caxis"><span></span><div class="cticks"><span>0</span><span>20%</span><span>40%</span><span>60%</span></div><span></span></div>
+      </div>
+      <div class="refstat">
+        <div class="rv">5X</div>
+        <div class="rl">More Referrals</div>
+        <div class="dots"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
     </div>
-    <div class="tag st">Real Knomee Results</div>
   </section>
 
   <section class="card" id="s31" data-id="3.1" data-ch="Solution">
@@ -351,7 +469,10 @@ h1.title em{font-style:normal;color:var(--violet)}
       <h1 class="title">Knomee Engages Prospects &amp; Clients <em>Before Meetings.</em></h1>
     </div>
     <div class="qwrap">
-      <div class="st"><div class="bigstat"><div class="v">95%</div><div class="k">Completion Rate</div></div></div>
+      <div class="st"><div class="gauge">
+          <svg viewBox="0 0 100 100"><circle class="g-bg" cx="50" cy="50" r="45"/><circle class="g-fg" cx="50" cy="50" r="45"/></svg>
+          <div style="text-align:center"><div class="gv">95%</div><div class="gl">Completion<br>Rate</div></div>
+        </div></div>
       <div class="st quote"><p>“This feels like other familiar self discovery apps, not a financial questionnaire.”</p></div>
     </div>
   </section>
@@ -361,7 +482,14 @@ h1.title em{font-style:normal;color:var(--violet)}
       <div class="eyebrow">Chapter 3 · Solution</div>
       <h1 class="title">Advisors See Actionable, <em>Science-Proven Trust Builders</em></h1>
     </div>
-    <div class="shot st"><span>Product screen</span></div>
+    <div class="shot st">
+      <div class="shotbar"><i></i><i></i><i></i></div>
+      <div class="shotbody">
+        <div class="skelcol"><div class="skel t"></div><div class="skel w85"></div><div class="skel w70"></div>
+          <div class="skel w45"></div><div class="skel w70"></div><div class="skel w85"></div><div class="skel w45"></div></div>
+        <div class="skelbox"><span class="shotnote">Product screen</span></div>
+      </div>
+    </div>
   </section>
 
   <section class="card" id="s33" data-id="3.3" data-ch="Solution">
@@ -369,7 +497,14 @@ h1.title em{font-style:normal;color:var(--violet)}
       <div class="eyebrow">Chapter 3 · Solution</div>
       <h1 class="title">And Walk Into Meetings <em>Ready To Help.</em></h1>
     </div>
-    <div class="shot st"><span>Product screen</span></div>
+    <div class="shot st">
+      <div class="shotbar"><i></i><i></i><i></i></div>
+      <div class="shotbody">
+        <div class="skelcol"><div class="skel t"></div><div class="skel w85"></div><div class="skel w70"></div>
+          <div class="skel w45"></div><div class="skel w70"></div><div class="skel w85"></div><div class="skel w45"></div></div>
+        <div class="skelbox"><span class="shotnote">Product screen</span></div>
+      </div>
+    </div>
   </section>
 
   <section class="card" id="s34" data-id="3.4" data-ch="Solution">
@@ -377,7 +512,14 @@ h1.title em{font-style:normal;color:var(--violet)}
       <div class="eyebrow">Chapter 3 · Solution</div>
       <h1 class="title">Conversion Intelligence Identifies <em>Who to Focus on First.</em></h1>
     </div>
-    <div class="shot st"><span>Product screen</span></div>
+    <div class="shot st">
+      <div class="shotbar"><i></i><i></i><i></i></div>
+      <div class="shotbody">
+        <div class="skelcol"><div class="skel t"></div><div class="skel w85"></div><div class="skel w70"></div>
+          <div class="skel w45"></div><div class="skel w70"></div><div class="skel w85"></div><div class="skel w45"></div></div>
+        <div class="skelbox"><span class="shotnote">Product screen</span></div>
+      </div>
+    </div>
   </section>
 
   <section class="card" id="s41" data-id="4.1" data-ch="Where It Fits">
@@ -385,10 +527,10 @@ h1.title em{font-style:normal;color:var(--violet)}
       <div class="eyebrow">Chapter 4 · Where It Fits</div>
       <h1 class="title">Knomee Helps Firms Grow <em>From The First Interaction.</em></h1>
     </div>
-    <div class="flow st">
-      <div class="moment"><div class="idx">Prospect Conversion</div><h3>Close in one meeting!</h3></div>
-      <div class="moment"><div class="idx">Onboarding</div><h3>Build a holistic plan.</h3></div>
-      <div class="moment"><div class="idx">Prep For Reviews</div><h3>Know what’s changed and be ready to help.</h3></div>
+    <div class="tflow st">
+      <div class="tnode"><div class="tdot">1</div><h3>Close in one meeting!</h3><div class="idx">Prospect Conversion</div></div>
+      <div class="tnode"><div class="tdot">2</div><h3>Build a holistic plan.</h3><div class="idx">Onboarding</div></div>
+      <div class="tnode"><div class="tdot">3</div><h3>Know what’s changed and be ready to help.</h3><div class="idx">Prep For Reviews</div></div>
     </div>
   </section>
 
@@ -397,12 +539,7 @@ h1.title em{font-style:normal;color:var(--violet)}
       <div class="eyebrow">Chapter 4 · Where It Fits</div>
       <h1 class="title">Advisor Transitions. <em>Trust Continues.</em></h1>
     </div>
-    <div class="layerwrap st">
-      <div class="layerrow">
-        <div class="lcard">Succession</div><div class="lcard">Advisor Transition</div><div class="lcard">M&amp;A Integration</div>
-      </div>
-      <div class="layerbar">Knomee Behavioral Intelligence Layer</div>
-    </div>
+    <div class="diag st">\n      <div class="dtop"><div class="dbox">Succession</div><div class="dbox">Advisor Transition</div><div class="dbox">M&amp;A Integration</div></div>\n      <div class="darrows"><span>↓</span><span>↓</span><span>↓</span></div>\n      <div class="dbar">Knomee Behavioral Intelligence Layer</div>\n    </div>
   </section>
 
   <section class="card" id="s43" data-id="4.3" data-ch="Where It Fits">
@@ -410,12 +547,7 @@ h1.title em{font-style:normal;color:var(--violet)}
       <div class="eyebrow">Chapter 4 · Where It Fits</div>
       <h1 class="title">Client Insight Becomes <em>Firm Intelligence.</em></h1>
     </div>
-    <div class="layerwrap st">
-      <div class="layerrow">
-        <div class="lcard">Prospect / Client</div><div class="lcard">Advisor</div><div class="lcard">Firm</div>
-      </div>
-      <div class="layerbar">Intelligence Layer</div>
-    </div>
+    <div class="diag st">\n      <div class="dtop"><div class="dbox">Prospect / Client</div><div class="dbox">Advisor</div><div class="dbox">Firm</div></div>\n      <div class="darrows"><span>↓</span><span>↓</span><span>↓</span></div>\n      <div class="dbar">Intelligence Layer</div>\n    </div>
   </section>
 
   <section class="card" id="s51" data-id="5.1" data-ch="Platform">
@@ -437,9 +569,25 @@ h1.title em{font-style:normal;color:var(--violet)}
       <div class="eyebrow">Chapter 5 · Platform</div>
       <h1 class="title">Knomee Fits Into <em>Your Existing Workflow.</em></h1>
     </div>
-    <div class="grid4 st">
-      <div class="gcard">AI / Advisor Workflow</div><div class="gcard">Planning</div>
-      <div class="gcard">CRM / Marketing Tools</div><div class="gcard">APIs</div>
+    <div class="spokes st">
+      <svg viewBox="0 0 760 300" role="img" aria-label="Knomee connects to AI and advisor workflow, planning, CRM and marketing tools, and APIs">
+        <line x1="380" y1="150" x2="150" y2="70"  stroke="#E3E6EC" stroke-width="2"/>
+        <line x1="380" y1="150" x2="610" y2="70"  stroke="#E3E6EC" stroke-width="2"/>
+        <line x1="380" y1="150" x2="150" y2="234" stroke="#E3E6EC" stroke-width="2"/>
+        <line x1="380" y1="150" x2="610" y2="234" stroke="#E3E6EC" stroke-width="2"/>
+        <g>
+          <rect x="20"  y="42"  width="260" height="56" rx="14" fill="#fff" stroke="#E8EAF0"/>
+          <text x="150" y="76"  text-anchor="middle" font-size="16" font-weight="700" fill="#221833" font-family="Poppins,sans-serif">AI / Advisor Workflow</text>
+          <rect x="480" y="42"  width="260" height="56" rx="14" fill="#fff" stroke="#E8EAF0"/>
+          <text x="610" y="76"  text-anchor="middle" font-size="16" font-weight="700" fill="#221833" font-family="Poppins,sans-serif">Planning</text>
+          <rect x="20"  y="206" width="260" height="56" rx="14" fill="#fff" stroke="#E8EAF0"/>
+          <text x="150" y="240" text-anchor="middle" font-size="16" font-weight="700" fill="#221833" font-family="Poppins,sans-serif">CRM / Marketing Tools</text>
+          <rect x="480" y="206" width="260" height="56" rx="14" fill="#fff" stroke="#E8EAF0"/>
+          <text x="610" y="240" text-anchor="middle" font-size="16" font-weight="700" fill="#221833" font-family="Poppins,sans-serif">APIs</text>
+        </g>
+        <circle cx="380" cy="150" r="62" fill="#6D28D9"/>
+        <text x="380" y="157" text-anchor="middle" font-size="19" font-weight="800" fill="#fff" font-family="Poppins,sans-serif">knomee</text>
+      </svg>
     </div>
   </section>
 
@@ -462,6 +610,12 @@ h1.title em{font-style:normal;color:var(--violet)}
   </section>
 
   <section class="card" id="s61" data-id="6.1" data-ch="Close">
+    <svg class="motif" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="185" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="44 16"/>
+      <circle cx="200" cy="200" r="128" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="28 11"/>
+      <circle cx="200" cy="200" r="72"  fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    
     <div class="statement st">
       <div class="eyebrow">Chapter 6 · Close</div>
       <h1 class="title">Start With A Pilot. <em>Pay For Outcomes.</em></h1>
