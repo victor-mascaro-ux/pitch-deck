@@ -197,6 +197,7 @@ h1.title em{font-style:normal;color:var(--violet)}
   transition:transform .32s var(--ease),border-color .3s,background .3s}
 .htile:hover{transform:translateY(-5px);border-color:var(--violet-lt);background:rgba(109,40,217,.4)}
 .htile.on{border-color:var(--teal);background:rgba(45,210,176,.16)}
+.htile.det{border-style:dashed}
 .htile .n{font-size:9.5px;font-weight:800;letter-spacing:.16em;color:var(--violet-lt)}
 .htile .h{font-size:12.5px;font-weight:700;line-height:1.25;letter-spacing:-.02em;margin-top:auto;padding-top:8px}
 #hubclose{position:absolute;top:clamp(22px,3vw,48px);right:clamp(24px,3.4vw,54px);
@@ -318,6 +319,28 @@ h1.title em{font-style:normal;color:var(--violet)}
 /* --- hub & spoke --- */
 .spokes{flex:1;display:grid;place-items:center;margin-top:clamp(10px,1.6vw,24px)}
 .spokes svg{width:min(100%,980px);height:auto}
+
+
+/* ===== open up / close down ===== */
+.deepbtn{position:absolute;top:clamp(30px,4vw,64px);right:clamp(32px,4.4vw,74px);z-index:14;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:inherit;
+  background:#fff;border:1px dashed var(--violet);color:var(--violet);border-radius:999px;
+  padding:10px 18px;font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  transition:transform .25s var(--ease),background .25s var(--ease)}
+.deepbtn:hover{transform:translateY(-2px);background:#F6F2FE}
+.deepbtn .pl{font-size:15px;line-height:1}
+#detbar{position:absolute;left:clamp(32px,4.4vw,74px);top:clamp(30px,4vw,64px);z-index:14;
+  display:none;align-items:center;gap:14px}
+#detbar.on{display:flex}
+#detback{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:inherit;
+  background:var(--violet);color:#fff;border:0;border-radius:999px;padding:10px 18px;
+  font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  transition:transform .25s var(--ease),filter .25s var(--ease)}
+#detback:hover{transform:translateX(-3px);filter:brightness(1.08)}
+#detcount{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+body.detail #frame{box-shadow:0 40px 90px -30px rgba(0,0,0,.6),0 0 0 2px var(--violet)}
+body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
+.card.active .deepbtn{animation:kChip .5s var(--ease) .5s backwards}
 
 /* ===== contextual entrances ===== */
 @keyframes kPop{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:none}}
@@ -637,6 +660,7 @@ h1.title em{font-style:normal;color:var(--violet)}
   </section>
 
   <div id="stepper"><button id="prev" aria-label="Previous slide">←</button><button id="next" aria-label="Next slide">→</button></div>
+  <div id="detbar"><button id="detback">&larr; Back</button><span id="detcount"></span></div>
   <div id="cfoot"><span id="cpos">Open · 0.1</span><span>Knomee · Confidential</span></div>
   <div id="bar"></div>
 </main>
@@ -665,16 +689,21 @@ const CARDS=[...document.querySelectorAll('.card')].map(c=>({
   el:c.id, id:c.dataset.id, ch:c.dataset.ch,
   t:c.querySelector('h1.title')?c.querySelector('h1.title').textContent.trim():(c.querySelector('.who')?'Contact — Marla Sofer':c.id)
 }));
-const LIVE=CARDS.map(c=>c.el);
-let idx=0;
+/* the spine is what you walk through; everything else opens on demand */
+const SPINE=['s01','s11','s21','s31','s41','s51','s61','s62'];
+const DETAIL={s11:['s12','s13'],s31:['s32','s33','s34'],s41:['s42','s43'],s51:['s52','s53']};
+const PARENT={}; Object.entries(DETAIL).forEach(([p,ds])=>ds.forEach(d=>PARENT[d]=p));
+const meta=id=>CARDS.find(c=>c.el===id);
+let cur=SPINE[0];
+
 const frame=document.getElementById('frame'), ghost=document.getElementById('ghost'), hub=document.getElementById('hub');
 const cnt=document.getElementById('cnt'), ppath=document.getElementById('ppath'), cpos=document.getElementById('cpos'), bar=document.getElementById('bar');
+const detbar=document.getElementById('detbar'), detcount=document.getElementById('detcount');
 const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* numbers count up when a slide lands */
 function countUp(card){
   if(REDUCED||!card) return;
-  card.querySelectorAll('.metric .n, .bigstat .v').forEach(el=>{
+  card.querySelectorAll('.metric .n, .bigstat .v, .refstat .rv').forEach(el=>{
     if(el.children.length) return;
     const raw=el.dataset.raw||(el.dataset.raw=el.textContent.trim());
     const m=raw.match(/^(\D*?)(\d+(?:\.\d+)?)(\D*)$/); if(!m) return;
@@ -687,31 +716,63 @@ function countUp(card){
   });
 }
 
-function show(elId){
-  const i=LIVE.indexOf(elId); if(i<0) return;
+function show(id){
+  const node=document.getElementById(id); if(!node) return;
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
-  const node=document.getElementById(elId);
   void node.offsetWidth;
   node.classList.add('active');
   setTimeout(()=>countUp(node),260);
-  idx=i;
-  const c=CARDS[i], label=c.ch+' · '+c.id;
-  cnt.textContent=(i+1)+' / '+LIVE.length;
+  cur=id;
+  const c=meta(id), inDetail=!!PARENT[id];
+  document.body.classList.toggle('detail',inDetail);
+  detbar.classList.toggle('on',inDetail);
+  if(inDetail){
+    const p=PARENT[id], list=DETAIL[p];
+    detcount.textContent='Detail '+(list.indexOf(id)+1)+' of '+list.length;
+    document.getElementById('detback').innerHTML='&larr; Back to '+meta(p).id;
+    cnt.textContent=c.id;
+  }else{
+    cnt.textContent=(SPINE.indexOf(id)+1)+' / '+SPINE.length;
+  }
+  const label=c.ch+' · '+c.id;
   ppath.textContent=label; cpos.textContent=label;
-  bar.style.width=((i+1)/LIVE.length*100)+'%';
-  document.getElementById('prev').disabled=i===0;
-  document.getElementById('next').disabled=i===LIVE.length-1;
-  document.querySelectorAll('.htile').forEach(t=>t.classList.toggle('on',t.dataset.go===elId));
+  const sIdx=inDetail?SPINE.indexOf(PARENT[id]):SPINE.indexOf(id);
+  bar.style.width=((sIdx+1)/SPINE.length*100)+'%';
+  const atStart=inDetail?DETAIL[PARENT[id]].indexOf(id)===0:SPINE.indexOf(id)===0;
+  const atEnd=inDetail?DETAIL[PARENT[id]].indexOf(id)===DETAIL[PARENT[id]].length-1:SPINE.indexOf(id)===SPINE.length-1;
+  document.getElementById('prev').disabled=atStart&&!inDetail;
+  document.getElementById('next').disabled=atEnd&&!inDetail;
+  document.querySelectorAll('.htile').forEach(t=>t.classList.toggle('on',t.dataset.go===id));
 }
-document.getElementById('next').addEventListener('click',()=>show(LIVE[Math.min(idx+1,LIVE.length-1)]));
-document.getElementById('prev').addEventListener('click',()=>show(LIVE[Math.max(idx-1,0)]));
+function step(dir){
+  if(PARENT[cur]){
+    const p=PARENT[cur], list=DETAIL[p], i=list.indexOf(cur)+dir;
+    if(i<0||i>=list.length) show(p); else show(list[i]);   // walking off either end closes the detail
+  }else{
+    const i=SPINE.indexOf(cur)+dir;
+    if(i>=0&&i<SPINE.length) show(SPINE[i]);
+  }
+}
+document.getElementById('next').addEventListener('click',()=>step(1));
+document.getElementById('prev').addEventListener('click',()=>step(-1));
+document.getElementById('detback').addEventListener('click',()=>show(PARENT[cur]||SPINE[0]));
+
+/* a "go deeper" chip on every spine slide that has more behind it */
+Object.entries(DETAIL).forEach(([p,list])=>{
+  const card=document.getElementById(p); if(!card) return;
+  const b=document.createElement('button');
+  b.className='deepbtn';
+  b.innerHTML='<span class="pl">+</span> Go deeper ('+list.length+')';
+  b.addEventListener('click',ev=>{ev.stopPropagation();show(list[0]);});
+  card.appendChild(b);
+});
 
 /* HUB, grouped by chapter */
 const groups=[];
 CARDS.forEach(c=>{ let g=groups.find(x=>x.ch===c.ch); if(!g){g={ch:c.ch,items:[]};groups.push(g);} g.items.push(c); });
 document.getElementById('hubgroups').innerHTML=groups.map(g=>
   `<div class="hgroup"><h4>${g.ch} · ${g.items.length}</h4><div class="hrow">`+
-  g.items.map(c=>`<div class="htile" data-go="${c.el}"><div class="n">${c.id}</div><div class="h">${c.t}</div></div>`).join('')+
+  g.items.map(c=>`<div class="htile${PARENT[c.el]?' det':''}" data-go="${c.el}"><div class="n">${c.id}${PARENT[c.el]?' · detail':''}</div><div class="h">${c.t}</div></div>`).join('')+
   `</div></div>`).join('');
 
 function morphTo(el,id){
@@ -736,14 +797,14 @@ document.getElementById('hubbtn').addEventListener('click',openHub);
 document.getElementById('hubclose').addEventListener('click',closeHub);
 hub.addEventListener('click',e=>{if(e.target===hub)closeHub()});
 
-/* search */
+/* search — everything is reachable, spine or detail */
 const pal=document.getElementById('pal'), q=document.getElementById('q'), res=document.getElementById('res');
 let sel=0,plist=[];
 function prender(){
   const term=q.value.toLowerCase().trim();
   plist=CARDS.filter(c=>!term||(c.t+' '+c.ch+' '+c.id).toLowerCase().includes(term));
   sel=Math.min(sel,Math.max(0,plist.length-1));
-  res.innerHTML=plist.map((c,i)=>`<div class="item ${i===sel?'sel':''}" data-i="${i}"><span class="id">${c.id}</span><span class="tx">${c.t}</span><span class="ch2">${c.ch}</span></div>`).join('');
+  res.innerHTML=plist.map((c,i)=>`<div class="item ${i===sel?'sel':''}" data-i="${i}"><span class="id">${c.id}</span><span class="tx">${c.t}</span><span class="ch2">${PARENT[c.el]?'detail':c.ch}</span></div>`).join('');
   res.querySelectorAll('.item').forEach(n=>{
     n.addEventListener('click',()=>{sel=+n.dataset.i;pchoose()});
     n.addEventListener('mouseenter',()=>{sel=+n.dataset.i;ppaint()});
@@ -765,20 +826,25 @@ document.addEventListener('keydown',e=>{
     else if(e.key==='Enter'){e.preventDefault();pchoose()}
     return;
   }
-  if(e.key==='Escape'){ if(hub.classList.contains('open')){closeHub()} else {show(LIVE[0])} return }
+  if(e.key==='Escape'){
+    if(hub.classList.contains('open')) closeHub();
+    else if(PARENT[cur]) show(PARENT[cur]);        // close the detail, stay put
+    else show(SPINE[0]);
+    return;
+  }
   if(e.key.toLowerCase()==='h'){e.preventDefault();hub.classList.contains('open')?closeHub():openHub();return}
+  if(e.key.toLowerCase()==='d'){e.preventDefault();if(DETAIL[cur])show(DETAIL[cur][0]);return}
   if(hub.classList.contains('open'))return;
-  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();show(LIVE[Math.min(idx+1,LIVE.length-1)])}
-  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(LIVE[Math.max(idx-1,0)])}
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();step(1)}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();step(-1)}
 });
 
-/* deep-link: deck.html#3.4 opens that slide */
 function fromHash(){
   const want=location.hash.replace('#','');
   const found=CARDS.find(c=>c.id===want||c.el===want);
   return found?found.el:null;
 }
-show(fromHash()||LIVE[0]);
+show(fromHash()||SPINE[0]);
 window.addEventListener('hashchange',()=>{const t=fromHash();if(t)show(t);});
 </script>
 </body>
