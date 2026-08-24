@@ -347,10 +347,76 @@ h1.title em{font-style:normal;color:var(--violet)}
   transition:transform .25s var(--ease),filter .25s var(--ease)}
 #detback:hover{transform:translateX(-3px);filter:brightness(1.08)}
 #detcount{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
-body.detail #frame{box-shadow:0 40px 90px -30px rgba(0,0,0,.6),0 0 0 2px var(--violet)}
-body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
 .card.active .deepbtn{animation:kChip .5s var(--ease) .5s backwards}
 
+
+
+/* ===== per-chapter identity: accent + canvas tint + edge ===== */
+#frame{--acc:var(--violet);--tint:#F8FAFA;--sheet-inset:clamp(22px,3.6vw,58px)}
+#frame[data-ch="Open"]         {--acc:#6D28D9;--tint:#F7F5FC}
+#frame[data-ch="Problem"]      {--acc:#6D28D9;--tint:#FAF7FE}
+#frame[data-ch="Proof"]        {--acc:#0E9B87;--tint:#F3FBF8}
+#frame[data-ch="Solution"]     {--acc:#6D28D9;--tint:#F6F4FD}
+#frame[data-ch="Where It Fits"]{--acc:#0E9B87;--tint:#F2FAF9}
+#frame[data-ch="Platform"]     {--acc:#6D28D9;--tint:#F8F6FE}
+#frame[data-ch="Close"]        {--acc:#0E9B87;--tint:#F4FBF9}
+.card{background:var(--tint)}
+#frame{background:var(--tint);transition:background .5s var(--ease)}
+#chedge{position:absolute;top:0;left:0;right:0;height:5px;background:var(--acc);z-index:6;
+  transform-origin:left;transition:background .5s var(--ease)}
+.eyebrow{color:var(--acc)}
+.eyebrow::before{background:var(--acc)}
+h1.title em{color:var(--acc)}
+.tdot,.dbar,.layerbar{background:var(--acc)}
+.moment .idx,.aud h3,.stack h2{color:var(--acc)}
+#bar{background:var(--acc)}
+/* chapter rail in the chrome */
+#chaprail{display:flex;align-items:center;gap:7px;margin-left:14px}
+#chaprail button{width:9px;height:9px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.24);transition:all .3s var(--ease)}
+#chaprail button:hover{background:rgba(255,255,255,.55);transform:scale(1.25)}
+#chaprail button.on{background:var(--teal);width:24px;border-radius:999px}
+
+/* ===== extra content: an overlay sheet, deliberately unlike the deck ===== */
+#backdrop{position:absolute;inset:0;z-index:18;background:rgba(18,5,38,.40);
+  backdrop-filter:blur(4px) saturate(115%);opacity:0;visibility:hidden;
+  transition:opacity .38s var(--ease),visibility 0s .38s}
+body.detail #backdrop{opacity:1;visibility:visible;transition:opacity .38s var(--ease),visibility 0s 0s}
+.card.sheet.active{
+  inset:var(--sheet-inset);z-index:19;border-radius:26px;
+  background:var(--shell);color:#fff;
+  padding:clamp(46px,4.6vw,72px) clamp(30px,3.6vw,58px) clamp(34px,3.4vw,52px);
+  box-shadow:0 60px 130px -40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.12);
+  animation:sheetIn .46s var(--ease)}
+@keyframes sheetIn{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+/* the sheet inverts the deck's palette so it never reads as a core slide */
+.sheet .eyebrow{color:var(--teal)}
+.sheet .eyebrow::before{background:var(--teal)}
+.sheet h1.title{color:#fff}
+.sheet h1.title em{color:var(--teal)}
+.sheet .lede{color:rgba(255,255,255,.68)}
+.sheet .cloud span,.sheet .sources span,.sheet .dchip,.sheet .dbox,.sheet .lcard,
+.sheet .gcard,.sheet .aud,.sheet .col,.sheet .moment,.sheet .row{
+  background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16);color:#fff}
+.sheet .cloud span:nth-child(3n+1){color:var(--violet-lt);border-color:rgba(167,139,250,.4)}
+.sheet .cloud span:nth-child(3n+2){color:var(--teal);border-color:rgba(45,210,176,.4)}
+.sheet .col.k{background:rgba(109,40,217,.34);border-color:rgba(167,139,250,.5)}
+.sheet .col h3,.sheet .aud h3{color:var(--teal)}
+.sheet .dchip{color:rgba(255,255,255,.9)}
+.sheet .col.k .dchip{color:#fff;border-color:rgba(167,139,250,.5)}
+.sheet .dbar,.sheet .layerbar{background:var(--teal);color:#04231D}
+.sheet .darrows span{color:rgba(255,255,255,.4)}
+.sheet .motif{color:#fff;opacity:.07}
+.sheet .row .s,.sheet .src{color:rgba(255,255,255,.5)}
+.sheet .shot{border-color:rgba(255,255,255,.16)}
+/* the aside is labelled as one */
+.sheet::before{content:'Extra detail';position:absolute;top:clamp(18px,2vw,26px);
+  right:clamp(30px,3.6vw,58px);font-size:10px;font-weight:800;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--teal);opacity:.85}
+body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
+  top:calc(var(--sheet-inset) + clamp(16px,1.8vw,24px));z-index:21}
+#detback{background:var(--teal);color:#04231D}
+#detcount{color:rgba(255,255,255,.55)}
 
 /* ===== chapter break — a beat between chapters ===== */
 #chapbreak{position:absolute;inset:0;z-index:20;background:var(--violet);display:grid;place-items:center;
@@ -419,7 +485,7 @@ body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#fff" stroke-width="2.2" stroke-dasharray="30 8"/><circle cx="16" cy="16" r="8.5" stroke="#2DD2B0" stroke-width="2.2" stroke-dasharray="18 6"/><path d="M16 19.4c-2.6-2-3.9-3.2-3.9-4.7a2.1 2.1 0 0 1 3.9-1.1 2.1 2.1 0 0 1 3.9 1.1c0 1.5-1.3 2.7-3.9 4.7Z" fill="#fff"/></svg>
     <span>knomee</span><small>Advisor</small>
   </div>
-  <div id="path"><span class="cnt" id="cnt">1 / 17</span><span id="ppath">Open · 0.1</span></div>
+  <div id="path"><span class="cnt" id="cnt">1 / 8</span><span id="ppath">Open · 0.1</span><span id="chaprail"></span></div>
   <button id="hubbtn"><span class="grid9"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> HUB</button>
 </header>
 
@@ -695,6 +761,8 @@ body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
   </section>
 
   <div id="stepper"><button id="prev" aria-label="Previous slide">←</button><button id="next" aria-label="Next slide">→</button></div>
+  <div id="backdrop"></div>
+  <div id="chedge"></div>
   <div id="chapbreak"><div><div class="cbnum"></div><div class="cbname"></div><div class="cbrule"></div></div></div>
   <div id="detbar"><button id="detback">&larr; Back</button><span id="detcount"></span></div>
   <div id="cfoot"><span id="cpos">Open · 0.1</span><span id="dethint">Click any element for detail</span><span>Knomee · Confidential</span></div>
@@ -754,7 +822,12 @@ function countUp(card){
 
 function show(id){
   const node=document.getElementById(id); if(!node) return;
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+  const asSheet=!!PARENT[id];
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active','sheet'));
+  if(asSheet){                                   // the slide behind stays on screen
+    document.getElementById(PARENT[id]).classList.add('active');
+    node.classList.add('sheet');
+  }
   void node.offsetWidth;
   node.classList.add('active');
   setTimeout(()=>countUp(node),260);
@@ -772,6 +845,9 @@ function show(id){
   }
   const label=c.ch+' · '+c.id;
   ppath.textContent=label; cpos.textContent=label;
+  frame.dataset.ch = inDetail ? meta(PARENT[id]).ch : c.ch;
+  const chNow=frame.dataset.ch;
+  document.querySelectorAll('#chaprail button').forEach(bn=>bn.classList.toggle('on',bn.dataset.ch===chNow));
   const sIdx=inDetail?SPINE.indexOf(PARENT[id]):SPINE.indexOf(id);
   bar.style.width=((sIdx+1)/SPINE.length*100)+'%';
   const atStart=inDetail?DETAIL[PARENT[id]].indexOf(id)===0:SPINE.indexOf(id)===0;
@@ -829,6 +905,15 @@ document.getElementById('hubgroups').innerHTML=groups.map(g=>
   `<div class="hgroup"><h4>${g.ch} · ${g.items.length}</h4><div class="hrow">`+
   g.items.map(c=>`<div class="htile${PARENT[c.el]?' det':''}" data-go="${c.el}"><div class="n">${c.id}${PARENT[c.el]?' · detail':''}</div><div class="h">${c.t}</div></div>`).join('')+
   `</div></div>`).join('');
+
+/* one dot per chapter, so the room can see where we are */
+const CHAPTERS=[...new Set(CARDS.map(c=>c.ch))];
+document.getElementById('chaprail').innerHTML=CHAPTERS.map(ch=>{
+  const first=SPINE.find(id=>meta(id).ch===ch)||SPINE[0];
+  return `<button data-ch="${ch}" data-go="${first}" title="${ch}" aria-label="${ch}"></button>`;
+}).join('');
+document.querySelectorAll('#chaprail button').forEach(bn=>
+  bn.addEventListener('click',()=>goTo(bn.dataset.go)));
 
 function morphTo(el,id){
   if(REDUCED){closeHub();show(id);return;}
