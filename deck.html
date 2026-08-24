@@ -335,9 +335,6 @@ h1.title em{font-style:normal;color:var(--violet)}
 .row.opens:hover{transform:translateX(6px) translateY(-3px)}
 .dial.opens,.gauge.opens{border-radius:50%}
 .dial.opens::after,.gauge.opens::after{top:4%;right:4%}
-#dethint{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);
-  opacity:0;transition:opacity .4s var(--ease)}
-#dethint.on{opacity:1}
 #detbar{position:absolute;left:clamp(32px,4.4vw,74px);top:clamp(30px,4vw,64px);z-index:14;
   display:none;align-items:center;gap:14px}
 #detbar.on{display:flex}
@@ -346,7 +343,7 @@ h1.title em{font-style:normal;color:var(--violet)}
   font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
   transition:transform .25s var(--ease),filter .25s var(--ease)}
 #detback:hover{transform:translateX(-3px);filter:brightness(1.08)}
-#detcount{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+#detcount{font-size:12.5px;font-weight:800;letter-spacing:.06em;color:rgba(255,255,255,.6)}
 .card.active .deepbtn{animation:kChip .5s var(--ease) .5s backwards}
 
 
@@ -385,7 +382,7 @@ body.detail #backdrop{opacity:1;visibility:visible;transition:opacity .38s var(-
 .card.sheet.active{
   inset:var(--sheet-inset);z-index:19;border-radius:26px;
   background:var(--shell);color:#fff;
-  padding:clamp(46px,4.6vw,72px) clamp(30px,3.6vw,58px) clamp(34px,3.4vw,52px);
+  padding:calc(clamp(16px,1.8vw,24px) + 72px) clamp(30px,3.6vw,58px) clamp(34px,3.4vw,52px);
   box-shadow:0 60px 130px -40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.12);
   animation:sheetIn .46s var(--ease)}
 @keyframes sheetIn{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
@@ -410,9 +407,14 @@ body.detail #backdrop{opacity:1;visibility:visible;transition:opacity .38s var(-
 .sheet .row .s,.sheet .src{color:rgba(255,255,255,.5)}
 .sheet .shot{border-color:rgba(255,255,255,.16)}
 /* the aside is labelled as one */
-.sheet::before{content:'Extra detail';position:absolute;top:clamp(18px,2vw,26px);
-  right:clamp(30px,3.6vw,58px);font-size:10px;font-weight:800;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--teal);opacity:.85}
+
+/* the stepper has to stay usable on top of the sheet */
+body.detail #stepper{z-index:21;
+  right:calc(var(--sheet-inset) + clamp(20px,2.4vw,36px));
+  bottom:calc(var(--sheet-inset) + clamp(16px,1.8vw,28px))}
+body.detail #stepper button{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);color:#fff}
+body.detail #stepper button:hover{background:var(--teal);border-color:var(--teal);color:#04231D}
+body.detail #stepper button:disabled{opacity:.35;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5)}
 body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
   top:calc(var(--sheet-inset) + clamp(16px,1.8vw,24px));z-index:21}
 #detback{background:var(--teal);color:#04231D}
@@ -765,7 +767,7 @@ body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
   <div id="chedge"></div>
   <div id="chapbreak"><div><div class="cbnum"></div><div class="cbname"></div><div class="cbrule"></div></div></div>
   <div id="detbar"><button id="detback">&larr; Back</button><span id="detcount"></span></div>
-  <div id="cfoot"><span id="cpos">Open · 0.1</span><span id="dethint">Click any element for detail</span><span>Knomee · Confidential</span></div>
+  <div id="cfoot"><span id="cpos">Open · 0.1</span><span>Knomee · Confidential</span></div>
   <div id="bar"></div>
 </main>
 
@@ -835,15 +837,17 @@ function show(id){
   const c=meta(id), inDetail=!!PARENT[id];
   document.body.classList.toggle('detail',inDetail);
   detbar.classList.toggle('on',inDetail);
+  let shownId=c.id;
   if(inDetail){
     const p=PARENT[id], list=DETAIL[p];
-    detcount.textContent='Detail '+(list.indexOf(id)+1)+' of '+list.length;
+    shownId=meta(p).id+'.'+(list.indexOf(id)+1);      // 1.1 -> 1.1.1, 1.1.2
+    detcount.textContent=shownId;
     document.getElementById('detback').innerHTML='&larr; Back to '+meta(p).id;
-    cnt.textContent=c.id;
+    cnt.textContent=shownId;
   }else{
     cnt.textContent=(SPINE.indexOf(id)+1)+' / '+SPINE.length;
   }
-  const label=c.ch+' · '+c.id;
+  const label=c.ch+' · '+shownId;
   ppath.textContent=label; cpos.textContent=label;
   frame.dataset.ch = inDetail ? meta(PARENT[id]).ch : c.ch;
   const chNow=frame.dataset.ch;
@@ -855,7 +859,6 @@ function show(id){
   document.getElementById('prev').disabled=atStart&&!inDetail;
   document.getElementById('next').disabled=atEnd&&!inDetail;
   document.querySelectorAll('.htile').forEach(t=>t.classList.toggle('on',t.dataset.go===id));
-  document.getElementById('dethint').classList.toggle('on',!!DETAIL[id]);
 }
 const chapbreak=document.getElementById('chapbreak');
 /* crossing into a new chapter gets a beat of its own — never blocks input */
