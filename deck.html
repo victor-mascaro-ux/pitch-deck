@@ -333,6 +333,14 @@ h1.title em{font-style:normal;color:var(--violet)}
   opacity:0;transform:scale(.6);transition:all .28s var(--ease);pointer-events:none;z-index:5}
 .opens:hover::after{opacity:1;transform:none}
 .row.opens:hover{transform:translateX(6px) translateY(-3px)}
+/* the + badge must never be clipped by its own card */
+.row.opens{overflow:visible}
+.row.opens::before{border-radius:13px 0 0 13px}
+.metric.opens,.shot.opens{overflow:visible}
+.shot.opens>.shotbar{border-radius:15px 15px 0 0}
+/* where a badge would still sit outside the canvas, tuck it inside */
+.col.opens::after,.gcard.opens::after,.dbox.opens::after,.lcard.opens::after{top:-8px;right:-8px}
+
 .dial.opens,.gauge.opens{border-radius:50%}
 .dial.opens::after,.gauge.opens::after{top:4%;right:4%}
 #detbar{position:absolute;left:clamp(32px,4.4vw,74px);top:clamp(30px,4vw,64px);z-index:14;
