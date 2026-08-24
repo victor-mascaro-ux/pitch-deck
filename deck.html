@@ -239,7 +239,7 @@ h1.title em{font-style:normal;color:var(--violet)}
   align-items:center;margin-top:clamp(12px,1.8vw,26px)}
 .chart{display:flex;flex-direction:column;gap:clamp(14px,2vw,26px)}
 .ctitle{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
-.crow{display:grid;grid-template-columns:minmax(120px,auto) 1fr auto;align-items:center;gap:14px;position:relative}
+.crow{display:grid;grid-template-columns:clamp(130px,16vw,250px) 1fr clamp(58px,6.5vw,92px);align-items:center;gap:14px;position:relative}
 .clab{font-size:clamp(13px,1.25vw,19px);font-weight:600;color:var(--ink-2);text-align:right}
 .ctrack{position:relative;height:clamp(26px,3vw,42px);background:#fff;border:1px solid var(--grid);border-radius:6px}
 .cbar{position:absolute;left:0;top:0;bottom:0;width:var(--w);background:var(--c1);
@@ -249,8 +249,8 @@ h1.title em{font-style:normal;color:var(--violet)}
 .card.active .crow:nth-of-type(2) .cbar{transition-delay:.30s}
 .card.active .crow:nth-of-type(3) .cbar{transition-delay:.42s}
 .card.active .crow:nth-of-type(4) .cbar{transition-delay:.54s}
-.cval{font-size:clamp(18px,2vw,32px);font-weight:800;color:var(--ink);letter-spacing:-.03em;min-width:74px}
-.caxis{display:grid;grid-template-columns:minmax(120px,auto) 1fr auto;gap:14px;margin-top:2px}
+.cval{font-size:clamp(18px,2vw,32px);font-weight:800;color:var(--ink);letter-spacing:-.03em;text-align:left}
+.caxis{display:grid;grid-template-columns:clamp(130px,16vw,250px) 1fr clamp(58px,6.5vw,92px);gap:14px;margin-top:2px}
 .cticks{display:flex;justify-content:space-between;font-size:10.5px;color:var(--faint);font-weight:600;
   border-top:1px solid var(--grid);padding-top:6px}
 .crow:hover .cbar{filter:brightness(1.12)}
@@ -322,13 +322,22 @@ h1.title em{font-style:normal;color:var(--violet)}
 
 
 /* ===== open up / close down ===== */
-.deepbtn{position:absolute;top:clamp(30px,4vw,64px);right:clamp(32px,4.4vw,74px);z-index:14;
-  display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-family:inherit;
-  background:#fff;border:1px dashed var(--violet);color:var(--violet);border-radius:999px;
-  padding:10px 18px;font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
-  transition:transform .25s var(--ease),background .25s var(--ease)}
-.deepbtn:hover{transform:translateY(-2px);background:#F6F2FE}
-.deepbtn .pl{font-size:15px;line-height:1}
+
+/* the content is the affordance — no buttons */
+.opens{cursor:pointer;position:relative;transition:transform .3s var(--ease),box-shadow .3s var(--ease),outline-color .3s var(--ease);
+  outline:2px solid transparent;outline-offset:3px;border-radius:14px}
+.opens:hover{outline-color:rgba(109,40,217,.55);transform:translateY(-3px);
+  box-shadow:0 18px 38px -24px rgba(21,6,41,.55)}
+.opens::after{content:'+';position:absolute;top:-10px;right:-10px;width:26px;height:26px;border-radius:50%;
+  background:var(--violet);color:#fff;font-size:15px;font-weight:700;line-height:26px;text-align:center;
+  opacity:0;transform:scale(.6);transition:all .28s var(--ease);pointer-events:none;z-index:5}
+.opens:hover::after{opacity:1;transform:none}
+.row.opens:hover{transform:translateX(6px) translateY(-3px)}
+.dial.opens,.gauge.opens{border-radius:50%}
+.dial.opens::after,.gauge.opens::after{top:4%;right:4%}
+#dethint{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);
+  opacity:0;transition:opacity .4s var(--ease)}
+#dethint.on{opacity:1}
 #detbar{position:absolute;left:clamp(32px,4.4vw,74px);top:clamp(30px,4vw,64px);z-index:14;
   display:none;align-items:center;gap:14px}
 #detbar.on{display:flex}
@@ -341,6 +350,24 @@ h1.title em{font-style:normal;color:var(--violet)}
 body.detail #frame{box-shadow:0 40px 90px -30px rgba(0,0,0,.6),0 0 0 2px var(--violet)}
 body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
 .card.active .deepbtn{animation:kChip .5s var(--ease) .5s backwards}
+
+
+/* ===== chapter break — a beat between chapters ===== */
+#chapbreak{position:absolute;inset:0;z-index:20;background:var(--violet);display:grid;place-items:center;
+  opacity:0;visibility:hidden;pointer-events:none;text-align:center;color:#fff}
+#chapbreak.run{animation:chapSweep .98s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes chapSweep{
+  0%{opacity:0;visibility:visible;transform:scale(.34);border-radius:120px}
+  24%{opacity:1;transform:scale(1);border-radius:0}
+  64%{opacity:1;transform:scale(1);border-radius:0}
+  100%{opacity:0;visibility:hidden;transform:scale(1.05);border-radius:0}
+}
+#chapbreak .cbnum{font-size:11px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;opacity:.75}
+#chapbreak .cbname{font-size:clamp(34px,5.4vw,86px);font-weight:800;letter-spacing:-.04em;margin-top:12px;line-height:1}
+#chapbreak .cbrule{width:74px;height:3px;background:#fff;opacity:.6;margin:22px auto 0;border-radius:3px;
+  transform:scaleX(0);transform-origin:center}
+#chapbreak.run .cbrule{animation:cbRule .6s cubic-bezier(.16,1,.3,1) .22s forwards}
+@keyframes cbRule{to{transform:scaleX(1)}}
 
 /* ===== contextual entrances ===== */
 @keyframes kPop{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:none}}
@@ -419,7 +446,7 @@ body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
     <div class="split">
       <div class="st">
         <div class="dial">
-          <svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="45"/><circle class="ring-fg" cx="50" cy="50" r="45"/></svg>
+          <svg viewBox="-8 -8 116 116"><circle class="ring-bg" cx="50" cy="50" r="45"/><circle class="ring-fg" cx="50" cy="50" r="45"/></svg>
           <div class="in"><div class="n">&lt;2<span style="font-size:.5em">%</span></div><div class="l">Organic Growth</div><div class="src">Cerulli</div></div>
         </div>
       </div>
@@ -493,7 +520,7 @@ body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
     </div>
     <div class="qwrap">
       <div class="st"><div class="gauge">
-          <svg viewBox="0 0 100 100"><circle class="g-bg" cx="50" cy="50" r="45"/><circle class="g-fg" cx="50" cy="50" r="45"/></svg>
+          <svg viewBox="-8 -8 116 116"><circle class="g-bg" cx="50" cy="50" r="45"/><circle class="g-fg" cx="50" cy="50" r="45"/></svg>
           <div style="text-align:center"><div class="gv">95%</div><div class="gl">Completion<br>Rate</div></div>
         </div></div>
       <div class="st quote"><p>“This feels like other familiar self discovery apps, not a financial questionnaire.”</p></div>
@@ -562,7 +589,11 @@ body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
       <div class="eyebrow">Chapter 4 · Where It Fits</div>
       <h1 class="title">Advisor Transitions. <em>Trust Continues.</em></h1>
     </div>
-    <div class="diag st">\n      <div class="dtop"><div class="dbox">Succession</div><div class="dbox">Advisor Transition</div><div class="dbox">M&amp;A Integration</div></div>\n      <div class="darrows"><span>↓</span><span>↓</span><span>↓</span></div>\n      <div class="dbar">Knomee Behavioral Intelligence Layer</div>\n    </div>
+    <div class="diag st">
+      <div class="dtop"><div class="dbox">Succession</div><div class="dbox">Advisor Transition</div><div class="dbox">M&amp;A Integration</div></div>
+      <div class="darrows"><span>↓</span><span>↓</span><span>↓</span></div>
+      <div class="dbar">Knomee Behavioral Intelligence Layer</div>
+    </div>
   </section>
 
   <section class="card" id="s43" data-id="4.3" data-ch="Where It Fits">
@@ -570,7 +601,11 @@ body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
       <div class="eyebrow">Chapter 4 · Where It Fits</div>
       <h1 class="title">Client Insight Becomes <em>Firm Intelligence.</em></h1>
     </div>
-    <div class="diag st">\n      <div class="dtop"><div class="dbox">Prospect / Client</div><div class="dbox">Advisor</div><div class="dbox">Firm</div></div>\n      <div class="darrows"><span>↓</span><span>↓</span><span>↓</span></div>\n      <div class="dbar">Intelligence Layer</div>\n    </div>
+    <div class="diag st">
+      <div class="dtop"><div class="dbox">Prospect / Client</div><div class="dbox">Advisor</div><div class="dbox">Firm</div></div>
+      <div class="darrows"><span>↓</span><span>↓</span><span>↓</span></div>
+      <div class="dbar">Intelligence Layer</div>
+    </div>
   </section>
 
   <section class="card" id="s51" data-id="5.1" data-ch="Platform">
@@ -660,8 +695,9 @@ body.detail .card.active{padding-top:calc(clamp(30px,4vw,64px) + 52px)}
   </section>
 
   <div id="stepper"><button id="prev" aria-label="Previous slide">←</button><button id="next" aria-label="Next slide">→</button></div>
+  <div id="chapbreak"><div><div class="cbnum"></div><div class="cbname"></div><div class="cbrule"></div></div></div>
   <div id="detbar"><button id="detback">&larr; Back</button><span id="detcount"></span></div>
-  <div id="cfoot"><span id="cpos">Open · 0.1</span><span>Knomee · Confidential</span></div>
+  <div id="cfoot"><span id="cpos">Open · 0.1</span><span id="dethint">Click any element for detail</span><span>Knomee · Confidential</span></div>
   <div id="bar"></div>
 </main>
 
@@ -743,6 +779,22 @@ function show(id){
   document.getElementById('prev').disabled=atStart&&!inDetail;
   document.getElementById('next').disabled=atEnd&&!inDetail;
   document.querySelectorAll('.htile').forEach(t=>t.classList.toggle('on',t.dataset.go===id));
+  document.getElementById('dethint').classList.toggle('on',!!DETAIL[id]);
+}
+const chapbreak=document.getElementById('chapbreak');
+/* crossing into a new chapter gets a beat of its own — never blocks input */
+function playChapterBreak(id){
+  const c=meta(id);
+  chapbreak.querySelector('.cbnum').textContent='Chapter '+c.id.split('.')[0];
+  chapbreak.querySelector('.cbname').textContent=c.ch;
+  chapbreak.classList.remove('run'); void chapbreak.offsetWidth; chapbreak.classList.add('run');
+  clearTimeout(chapbreak._end);
+  chapbreak._end=setTimeout(()=>chapbreak.classList.remove('run'),1000);
+}
+function goTo(id){
+  const crossing = !PARENT[cur] && !PARENT[id] && meta(cur).ch!==meta(id).ch;
+  show(id);                                   // advance first — input is never queued
+  if(crossing && !REDUCED) playChapterBreak(id);
 }
 function step(dir){
   if(PARENT[cur]){
@@ -750,21 +802,24 @@ function step(dir){
     if(i<0||i>=list.length) show(p); else show(list[i]);   // walking off either end closes the detail
   }else{
     const i=SPINE.indexOf(cur)+dir;
-    if(i>=0&&i<SPINE.length) show(SPINE[i]);
+    if(i>=0&&i<SPINE.length) goTo(SPINE[i]);
   }
 }
 document.getElementById('next').addEventListener('click',()=>step(1));
 document.getElementById('prev').addEventListener('click',()=>step(-1));
 document.getElementById('detback').addEventListener('click',()=>show(PARENT[cur]||SPINE[0]));
 
-/* a "go deeper" chip on every spine slide that has more behind it */
+/* the slide's own content opens the detail — no buttons anywhere */
+const OPENABLE='.row,.metric,.refstat,.crow,.tnode,.dbox,.lcard,.gcard,.col,.dial,.gauge,.quote,.cloud span,.shot';
 Object.entries(DETAIL).forEach(([p,list])=>{
   const card=document.getElementById(p); if(!card) return;
-  const b=document.createElement('button');
-  b.className='deepbtn';
-  b.innerHTML='<span class="pl">+</span> Go deeper ('+list.length+')';
-  b.addEventListener('click',ev=>{ev.stopPropagation();show(list[0]);});
-  card.appendChild(b);
+  card.querySelectorAll(OPENABLE).forEach(el=>{
+    el.classList.add('opens');
+    el.setAttribute('tabindex','0');
+    el.setAttribute('role','button');
+    el.addEventListener('click',ev=>{ev.stopPropagation();show(list[0]);});
+    el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();show(list[0]);}});
+  });
 });
 
 /* HUB, grouped by chapter */
