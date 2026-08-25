@@ -670,6 +670,23 @@ body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
 .card.active .wtu{animation:kInRight .48s var(--ease) .60s backwards}
 .card.active .take{animation:kRise .45s var(--ease) .80s backwards}
 
+
+/* ===== tier colour scheme (demo ramp: --prospect-1/2/3) ===== */
+.grp{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:clamp(5px,.6vw,9px) clamp(9px,1.1vw,18px);border-radius:7px;
+  font-size:clamp(8.5px,.85vw,12.5px);font-weight:700;letter-spacing:.06em;
+  text-transform:none;color:#fff;margin:clamp(4px,.5vw,8px) 0 clamp(4px,.5vw,7px)}
+.grp .rng{font-weight:600;opacity:.85;white-space:nowrap;text-align:right}
+.grp.t1{background:#240446}
+.grp.t2{background:#7639a1}
+.grp.t3{background:#c9a8dd;color:#2E1345}
+.grp.t3 .rng{opacity:.75}
+.pk{min-width:clamp(26px,2.6vw,38px);text-align:center;border-radius:999px;color:#fff;
+  padding:2px clamp(5px,.6vw,9px);font-weight:800}
+.pk.t1{background:#240446}
+.pk.t2{background:#7639a1}
+.pk.t3{background:#c9a8dd;color:#2E1345}
+
 /* ===== chapter break — a beat between chapters ===== */
 #chapbreak{position:absolute;inset:0;z-index:20;background:var(--violet);display:grid;place-items:center;
   opacity:0;visibility:hidden;pointer-events:none;text-align:center;color:#fff}
@@ -876,7 +893,7 @@ body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
       <div class="eyebrow">Chapter 3 · Solution</div>
       <h1 class="title">Conversion Intelligence Identifies <em>Who to Focus on First.</em></h1>
     </div>
-    <div class="scr st"><div class="scrhead"><span><span class="scrname">My Prospects</span><span class="scrsub">12 prospects · ranked by readiness</span></span></div><div class="plist"><div><div class="grp">Tier 1 — Ready now <em>· 70–100 KQ</em></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">E</span><span class="pn">Emma Rossi</span><span class="pk" style="color:var(--violet)">88</span><span class="pa">Caregiving urgency — discuss home &amp; estate plan</span></div><div class="prow on"><span class="av" style="background:#EDE7FA;color:#6D28D9">S</span><span class="pn">Sarah Mitchell</span><span class="pk" style="color:var(--violet)">81</span><span class="pa">Call now — lead with the Future You vision</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">J</span><span class="pn">Jorday Ray</span><span class="pk" style="color:var(--violet)">76</span><span class="pa">Family legacy is their stated #1 life goal</span></div></div><div><div class="grp">Tier 2 — Considering <em>· 40–69 KQ</em></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#8A8697">B</span><span class="pn">Barbara Dean</span><span class="pk" style="color:var(--mute)">68</span><span class="pa">Needs a goal reframe session</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#8A8697">S</span><span class="pn">Sophie Dean</span><span class="pk" style="color:var(--mute)">62</span><span class="pa">Send value-add travel planning content</span></div><div class="grp">Tier 3 — Nurture <em>· 0–39 KQ</em></div><div class="prow"><span class="av" style="background:#F3F3F5;color:#A9A5B4">E</span><span class="pn">Emily Watson</span><span class="pk" style="color:var(--faint)">35</span><span class="pa">Quarterly light-touch check-in</span></div></div></div></div></section>
+    <div class="scr st"><div class="scrhead"><span><span class="scrname">My Prospects</span><span class="scrsub">12 prospects · ranked by readiness</span></span></div><div class="plist"><div><div class="grp t1"><span>Tier 1 — Ready now</span><span class="rng">70–100 KQ</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">E</span><span class="pn">Emma Rossi</span><span class="pk t1">88</span><span class="pa">Caregiving urgency — discuss estate plan</span></div><div class="prow on"><span class="av" style="background:#EDE7FA;color:#6D28D9">S</span><span class="pn">Sarah Mitchell</span><span class="pk t1">81</span><span class="pa">Call now — lead with the Future You vision</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">J</span><span class="pn">Jorday Ray</span><span class="pk t1">76</span><span class="pa">Family legacy is their stated #1 life goal</span></div></div><div><div class="grp t2"><span>Tier 2 — Considering</span><span class="rng">40–69 KQ</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#8A8697">B</span><span class="pn">Barbara Dean</span><span class="pk t2">68</span><span class="pa">Needs a goal reframe session</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#8A8697">S</span><span class="pn">Sophie Dean</span><span class="pk t2">62</span><span class="pa">Send value-add travel planning content</span></div><div class="grp t3"><span>Tier 3 — Nurture</span><span class="rng">0–39 KQ</span></div><div class="prow"><span class="av" style="background:#F3F3F5;color:#A9A5B4">E</span><span class="pn">Emily Watson</span><span class="pk t3">35</span><span class="pa">Quarterly light-touch check-in</span></div></div></div></div></section>
 
   <section class="card" id="s41" data-id="4.1" data-ch="Where It Fits">
     <div class="st">
