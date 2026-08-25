@@ -687,6 +687,80 @@ body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
 .pk.t2{background:#7639a1}
 .pk.t3{background:#c9a8dd;color:#2E1345}
 
+
+/* ═══════ commenting overlay — same language as the demo's ═══════ */
+:root{--cc-pin:#FFD84D;--cc-pin-ink:#4A3B00;--cc-ink:#1E1A28;--cc-text:#37323F;
+  --cc-muted:#6E6880;--cc-glass:rgba(255,255,255,.72);--cc-radius:16px}
+#ccLayer{position:absolute;inset:0;z-index:40;pointer-events:none;display:none}
+body.cc #ccLayer{display:block}
+#ccCatcher{position:absolute;inset:0;z-index:30;display:none;pointer-events:auto;
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 24 24'%3E%3Cpath d='M5 4H19C20.1 4 21 4.9 21 6V15C21 16.1 20.1 17 19 17H9.41L5.71 20.71C5.42 21 5 20.79 5 20.38V17C3.9 17 3 16.1 3 15V6C3 4.9 3.9 4 5 4Z' fill='none' stroke='%231E1A28' stroke-width='3.2' stroke-linejoin='round' stroke-opacity='.9'/%3E%3Cpath d='M5 4H19C20.1 4 21 4.9 21 6V15C21 16.1 20.1 17 19 17H9.41L5.71 20.71C5.42 21 5 20.79 5 20.38V17C3.9 17 3 16.1 3 15V6C3 4.9 3.9 4 5 4Z' fill='%23FFD84D' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E") 6 22,crosshair}
+body.cc #ccCatcher{display:block}
+.cc-pin-wrap{position:absolute;width:40px;height:40px;margin-left:-20px;margin-top:-40px;
+  pointer-events:auto;cursor:pointer;background:none;border:0;padding:0}
+.cc-pin{position:absolute;left:6px;top:6px;width:28px;height:28px;background:var(--cc-pin);
+  border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+  box-shadow:0 0 0 2px #fff,0 4px 10px rgba(20,10,40,.4);
+  display:flex;align-items:center;justify-content:center;transition:transform .15s ease,box-shadow .15s ease}
+.cc-pin>span{transform:rotate(45deg);color:var(--cc-pin-ink);font-weight:800;font-size:12px;font-variant-numeric:tabular-nums}
+.cc-pin-wrap:hover .cc-pin{transform:rotate(-45deg) scale(1.08)}
+.cc-pin-wrap.on .cc-pin{transform:rotate(-45deg) scale(1.12);
+  box-shadow:0 0 0 2px #fff,0 0 0 4.5px var(--cc-ink),0 6px 14px rgba(20,10,40,.45)}
+.cc-token{width:20px;height:20px;flex:none;background:var(--cc-pin);border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1.5px #fff}
+.cc-token>span{transform:rotate(45deg);color:var(--cc-pin-ink);font-size:10px;font-weight:800}
+#ccPop{position:absolute;width:300px;z-index:70;border-radius:var(--cc-radius);background:var(--cc-glass);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 24px 60px -18px rgba(20,10,40,.5),0 0 0 1px rgba(255,255,255,.6);
+  padding:14px;pointer-events:auto;display:none;font-family:'Poppins',sans-serif}
+#ccPop.on{display:block}
+#ccPop .cch{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+#ccPop .cch b{font-size:11px;color:var(--cc-muted);font-weight:700;letter-spacing:.04em}
+#ccPop .ccx{margin-left:auto;border:0;background:none;cursor:pointer;color:var(--cc-muted);font-size:15px;font-family:inherit}
+.cc-msg{background:#fff;border-radius:10px;padding:9px 11px;margin-bottom:7px;position:relative}
+.cc-msg p{font-size:12.5px;color:var(--cc-text);line-height:1.45;white-space:pre-wrap}
+.cc-msg time{display:block;font-size:10px;color:var(--cc-muted);margin-top:4px}
+.cc-msg .del{position:absolute;top:6px;right:7px;border:0;background:none;cursor:pointer;
+  color:var(--cc-muted);font-size:12px;opacity:0;transition:opacity .2s;font-family:inherit}
+.cc-msg:hover .del{opacity:1}
+#ccText{width:100%;border:1px solid rgba(20,10,40,.14);border-radius:10px;padding:8px 10px;
+  font-family:inherit;font-size:12.5px;color:var(--cc-text);resize:none;background:#fff;outline:0}
+#ccText:focus{border-color:var(--cc-ink)}
+#ccPop .cca{display:flex;gap:7px;margin-top:8px}
+#ccPop .cca button{flex:1;border:0;border-radius:9px;padding:8px;font-family:inherit;font-size:11.5px;
+  font-weight:800;cursor:pointer;background:var(--cc-ink);color:#fff}
+#ccPop .cca button.gh{background:rgba(20,10,40,.07);color:var(--cc-text)}
+#ccRail{position:fixed;top:0;left:0;bottom:0;width:322px;z-index:55;display:none;flex-direction:column;
+  background:var(--cc-glass);-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:0 0 60px rgba(20,10,40,.35);font-family:'Poppins',sans-serif;padding:16px}
+body.cc #ccRail{display:flex}
+body{transition:padding-left .32s var(--ease)}
+body.cc:not(.ccmin){padding-left:322px}
+body.cc.ccmin #ccRail{display:none}
+#ccRail h4{font-size:13px;font-weight:800;color:var(--cc-text);display:flex;align-items:center;gap:8px}
+#ccRail h4 span{background:var(--cc-ink);color:#fff;border-radius:999px;padding:1px 8px;font-size:11px}
+#ccRail .sub{font-size:11.5px;color:var(--cc-muted);margin-top:4px;line-height:1.5}
+#ccList{flex:1;overflow:auto;margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.cc-item{display:flex;gap:9px;align-items:flex-start;background:#fff;border-radius:12px;padding:10px;
+  cursor:pointer;border:1px solid rgba(20,10,40,.07);text-align:left;font-family:inherit}
+.cc-item:hover{border-color:var(--cc-ink)}
+.cc-item .b{min-width:0}
+.cc-item .sl{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--cc-muted);text-transform:uppercase}
+.cc-item p{font-size:12px;color:var(--cc-text);line-height:1.4;margin-top:2px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#ccEmpty{margin:24px 8px;padding:26px 16px;text-align:center;border:1.5px dashed rgba(20,10,40,.18);
+  border-radius:14px;color:var(--cc-muted);font-size:12px;line-height:1.55}
+#ccEmpty b{display:block;font-size:13px;color:var(--cc-text);margin-bottom:4px}
+#ccFoot{display:flex;gap:7px;margin-top:10px}
+#ccFoot button{flex:1;border:0;border-radius:9px;padding:9px;font-family:inherit;font-size:11.5px;
+  font-weight:800;cursor:pointer;background:rgba(20,10,40,.07);color:var(--cc-text)}
+#ccFoot button.dang{color:#A32338}
+#ccFlag{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:56;display:none;
+  background:var(--cc-ink);color:#fff;border-radius:999px;padding:8px 18px;font-size:11.5px;font-weight:700;
+  font-family:'Poppins',sans-serif;letter-spacing:.04em;box-shadow:0 12px 30px -12px rgba(0,0,0,.6)}
+body.cc #ccFlag{display:block}
+@media (prefers-reduced-motion:reduce){.cc-pin{transition:none}}
+
 /* ===== chapter break — a beat between chapters ===== */
 #chapbreak{position:absolute;inset:0;z-index:20;background:var(--violet);display:grid;place-items:center;
   opacity:0;visibility:hidden;pointer-events:none;text-align:center;color:#fff}
@@ -1018,6 +1092,16 @@ body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
   <div id="chedge"></div>
   <div id="chapbreak"><div><div class="cbnum"></div><div class="cbname"></div><div class="cbrule"></div></div></div>
   <div id="detbar"><button id="detback">&larr; Back</button><span id="detcount"></span></div>
+  
+<div id="ccLayer"></div>
+<div id="ccCatcher"></div>
+<div id="ccPop">
+  <div class="cch"><span class="cc-token"><span id="ccPopNum">1</span></span>
+    <b id="ccPopSlide"></b><button class="ccx" id="ccPopX">&times;</button></div>
+  <div id="ccMsgs"></div>
+  <textarea id="ccText" rows="3" placeholder="Leave a comment…"></textarea>
+  <div class="cca"><button id="ccAdd">Comment</button><button class="gh" id="ccDel">Delete pin</button></div>
+</div>
   <div id="cfoot"><span id="cpos">Open · 0.1</span><span>Knomee · Confidential</span></div>
   <div id="bar"></div>
 </main>
@@ -1033,6 +1117,14 @@ body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
 
 <div id="ghost"></div>
 
+
+<aside id="ccRail">
+  <h4>Comments <span id="ccCount">0</span></h4>
+  <div class="sub">Click anywhere on the slide to drop a pin. Press <b>C</b> to leave comment mode.</div>
+  <div id="ccList"></div>
+  <div id="ccFoot"><button id="ccHide">Hide panel</button><button class="dang" id="ccClear">Clear all</button></div>
+</aside>
+<div id="ccFlag">Comment mode — click the slide to pin · C to exit</div>
 <div id="pal">
   <div class="palbox">
     <input id="q" placeholder="Jump to any slide…  try &quot;growth&quot;, &quot;referrals&quot;, &quot;pilot&quot;" autocomplete="off">
@@ -1110,6 +1202,7 @@ function show(id){
   document.getElementById('prev').disabled=atStart&&!inDetail;
   document.getElementById('next').disabled=atEnd&&!inDetail;
   document.querySelectorAll('.htile').forEach(t=>t.classList.toggle('on',t.dataset.go===id));
+  if(typeof ccRender==='function'){ccClose();}
 }
 const chapbreak=document.getElementById('chapbreak');
 /* crossing into a new chapter gets a beat of its own — never blocks input */
@@ -1212,6 +1305,9 @@ q.addEventListener('input',()=>{sel=0;prender()});
 pal.addEventListener('click',e=>{if(e.target===pal)closePal()});
 
 document.addEventListener('keydown',e=>{
+  if(e.key==='F2'||((e.key==='c'||e.key==='C')&&!e.metaKey&&!e.ctrlKey&&!e.altKey)){
+    e.preventDefault();ccToggle();return;
+  }
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();pal.classList.contains('open')?closePal():openPal();return}
   if(pal.classList.contains('open')){
     if(e.key==='Escape'){e.preventDefault();closePal()}
@@ -1233,12 +1329,102 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();step(-1)}
 });
 
+
+/* ═══════ commenting overlay ═══════ */
+const CC_KEY='knomee-deck-comments';
+let ccThreads=[], ccOpen=null;
+try{ ccThreads=JSON.parse(localStorage.getItem(CC_KEY)||'[]'); }catch(e){ ccThreads=[]; }
+const ccSave=()=>{ try{ localStorage.setItem(CC_KEY,JSON.stringify(ccThreads)); }catch(e){} };
+const ccLayer=document.getElementById('ccLayer'), ccCatcher=document.getElementById('ccCatcher');
+const ccPop=document.getElementById('ccPop'), ccRail=document.getElementById('ccRail');
+const ccList=document.getElementById('ccList'), ccCount=document.getElementById('ccCount');
+const ccText=document.getElementById('ccText');
+const ccSlideLabel=id=>{const c=meta(id); return c?(PARENT[id]?meta(PARENT[id]).id+'.'+(DETAIL[PARENT[id]].indexOf(id)+1):c.id):id;};
+
+function ccRender(){
+  // pins for the slide on screen, anchored as a % of the canvas
+  ccLayer.innerHTML='';
+  ccThreads.forEach((t,i)=>{
+    if(t.slide!==cur) return;
+    const b=document.createElement('button');
+    b.className='cc-pin-wrap'+(ccOpen===t.id?' on':'');
+    b.style.left=t.x+'%'; b.style.top=t.y+'%';
+    b.innerHTML='<span class="cc-pin"><span>'+(i+1)+'</span></span>';
+    b.addEventListener('click',ev=>{ev.stopPropagation();ccOpenThread(t.id);});
+    ccLayer.appendChild(b);
+  });
+  ccCount.textContent=ccThreads.length;
+  ccList.innerHTML = ccThreads.length ? ccThreads.map((t,i)=>
+    '<button class="cc-item" data-id="'+t.id+'"><span class="cc-token"><span>'+(i+1)+'</span></span>'+
+    '<span class="b"><span class="sl">Slide '+ccSlideLabel(t.slide)+'</span>'+
+    '<p>'+(t.comments[0]?t.comments[0].text.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])):'—')+'</p></span></button>').join('')
+    : '<div id="ccEmpty"><b>No comments yet</b>Click anywhere on a slide to drop a pin and leave a note.</div>';
+  ccList.querySelectorAll('.cc-item').forEach(n=>n.addEventListener('click',()=>{
+    const t=ccThreads.find(x=>x.id===n.dataset.id); if(!t) return;
+    if(t.slide!==cur) show(t.slide);
+    setTimeout(()=>ccOpenThread(t.id),60);
+  }));
+}
+function ccOpenThread(id){
+  const t=ccThreads.find(x=>x.id===id); if(!t) return;
+  ccOpen=id; ccRender();
+  const i=ccThreads.indexOf(t);
+  document.getElementById('ccPopNum').textContent=i+1;
+  document.getElementById('ccPopSlide').textContent='Slide '+ccSlideLabel(t.slide);
+  document.getElementById('ccMsgs').innerHTML=t.comments.map((c,ci)=>
+    '<div class="cc-msg"><p>'+c.text.replace(/[<>&]/g,ch=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[ch]))+'</p>'+
+    '<time>'+new Date(c.ts).toLocaleString()+'</time>'+
+    '<button class="del" data-i="'+ci+'">&times;</button></div>').join('');
+  document.getElementById('ccMsgs').querySelectorAll('.del').forEach(d=>d.addEventListener('click',()=>{
+    t.comments.splice(+d.dataset.i,1); ccSave(); ccOpenThread(id);
+  }));
+  const fr=frame.getBoundingClientRect();
+  const railW=(document.body.classList.contains('cc')&&!document.body.classList.contains('ccmin'))?334:12;
+  ccPop.style.left=Math.min(Math.max(fr.left+fr.width*t.x/100-150,railW),window.innerWidth-312)+'px';
+  ccPop.style.top=Math.min(fr.top+fr.height*t.y/100+8,window.innerHeight-260)+'px';
+  ccPop.style.position='fixed';
+  ccPop.classList.add('on'); ccText.value=''; setTimeout(()=>ccText.focus(),40);
+}
+function ccClose(){ ccOpen=null; ccPop.classList.remove('on'); ccRender(); }
+ccCatcher.addEventListener('click',e=>{
+  const fr=frame.getBoundingClientRect();
+  const x=(e.clientX-fr.left)/fr.width*100, y=(e.clientY-fr.top)/fr.height*100;
+  if(x<0||x>100||y<0||y>100) return;
+  const t={id:'t'+Date.now(),slide:cur,x:+x.toFixed(2),y:+y.toFixed(2),comments:[]};
+  ccThreads.push(t); ccSave(); ccOpenThread(t.id);
+});
+document.getElementById('ccAdd').addEventListener('click',()=>{
+  const t=ccThreads.find(x=>x.id===ccOpen); if(!t) return;
+  const v=ccText.value.trim(); if(!v) return;
+  t.comments.push({text:v,ts:Date.now()}); ccSave(); ccOpenThread(t.id);
+});
+ccText.addEventListener('keydown',e=>{
+  e.stopPropagation();
+  if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){e.preventDefault();document.getElementById('ccAdd').click();}
+});
+document.getElementById('ccDel').addEventListener('click',()=>{
+  ccThreads=ccThreads.filter(x=>x.id!==ccOpen); ccSave(); ccClose();
+});
+document.getElementById('ccPopX').addEventListener('click',ccClose);
+document.getElementById('ccHide').addEventListener('click',()=>document.body.classList.toggle('ccmin'));
+document.getElementById('ccClear').addEventListener('click',()=>{
+  if(!ccThreads.length) return;
+  ccThreads=[]; ccSave(); ccClose();
+});
+function ccToggle(on){
+  document.body.classList.toggle('cc', on!==undefined?on:!document.body.classList.contains('cc'));
+  if(!document.body.classList.contains('cc')) ccClose(); else ccRender();
+}
+frame.appendChild(ccCatcher); frame.appendChild(ccLayer);
+ccRender();
+
 function fromHash(){
   const want=location.hash.replace('#','');
   const found=CARDS.find(c=>c.id===want||c.el===want);
   return found?found.el:null;
 }
 show(fromHash()||SPINE[0]);
+window.addEventListener('resize',()=>{if(ccOpen)ccOpenThread(ccOpen);});
 window.addEventListener('hashchange',()=>{const t=fromHash();if(t)show(t);});
 </script>
 </body>
