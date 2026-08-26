@@ -113,7 +113,7 @@ h1.title em{font-style:normal;color:var(--violet)}
 .tag{align-self:center;margin-top:clamp(14px,2vw,28px);font-size:11px;font-weight:800;letter-spacing:.18em;
   text-transform:uppercase;color:var(--teal-dk);background:var(--teal-lt);border-radius:999px;padding:9px 22px}
 
-.qwrap{display:grid;grid-template-columns:.75fr 1fr;gap:clamp(26px,3.8vw,60px);align-items:center;flex:1;margin-top:clamp(14px,2vw,30px)}
+.qwrap{display:grid;grid-template-columns:.75fr 1fr;gap:clamp(26px,3.8vw,60px);align-items:center;flex:1;min-height:0;margin-top:clamp(14px,2vw,30px)}
 .bigstat{text-align:center}
 .bigstat .v{font-size:clamp(52px,8vw,132px);font-weight:800;color:var(--violet);letter-spacing:-.055em;line-height:.9}
 .bigstat .k{font-size:clamp(13px,1.3vw,19px);font-weight:800;margin-top:8px}
@@ -272,7 +272,7 @@ h1.title em{font-style:normal;color:var(--violet)}
 .card.active .dots i:nth-child(5){animation-delay:.87s}
 
 /* --- donut gauge --- */
-.gauge{position:relative;width:min(100%,330px);aspect-ratio:1;margin:0 auto;display:grid;place-items:center}
+.gauge{position:relative;width:min(100%,330px,38vh);aspect-ratio:1;margin:0 auto;display:grid;place-items:center}
 .gauge svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .gauge .g-bg{fill:none;stroke:var(--grid);stroke-width:12}
 .gauge .g-fg{fill:none;stroke:var(--c2);stroke-width:12;stroke-linecap:round;
@@ -818,6 +818,7 @@ body.cc #ccFlag{display:block}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.13s!important;animation:none!important}
   .card,.st{transform:none!important}#ghost{display:none!important}.dial .ring-fg{transition:none!important}}
 @media(max-width:1000px){.split,.qwrap,.compare{grid-template-columns:1fr}
+  .qwrap{gap:clamp(14px,2vh,26px);align-content:center}.gauge{width:min(100%,300px,30vh)}.quote p{font-size:clamp(15px,1.7vw,22px)}
   .metrics,.grid4{grid-template-columns:repeat(2,1fr)}.flow,.auds,.layerrow{grid-template-columns:1fr}}
 </style>
 </head>
