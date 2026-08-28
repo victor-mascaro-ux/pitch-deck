@@ -759,6 +759,7 @@ body.cc.ccmin #ccRail{display:none}
   background:var(--cc-ink);color:#fff;border-radius:999px;padding:8px 18px;font-size:11.5px;font-weight:700;
   font-family:'Poppins',sans-serif;letter-spacing:.04em;box-shadow:0 12px 30px -12px rgba(0,0,0,.6)}
 body.cc #ccFlag{display:block}
+.cc-warning{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#C0392B;color:#fff;font-size:13px;font-weight:500;font-family:inherit;padding:10px 20px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:100;max-width:460px;text-align:center}
 @media (prefers-reduced-motion:reduce){.cc-pin{transition:none}}
 
 /* ===== chapter break — a beat between chapters ===== */
@@ -821,6 +822,8 @@ body.cc #ccFlag{display:block}
   .qwrap{gap:clamp(14px,2vh,26px);align-content:center}.gauge{width:min(100%,300px,30vh)}.quote p{font-size:clamp(15px,1.7vw,22px)}
   .metrics,.grid4{grid-template-columns:repeat(2,1fr)}.flow,.auds,.layerrow{grid-template-columns:1fr}}
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -1332,10 +1335,47 @@ document.addEventListener('keydown',e=>{
 
 
 /* ═══════ commenting overlay ═══════ */
+// Shared storage, same wiring as the knomee-demo overlay: the Firestore
+// project's rules only allow the top-level "video-feedback" collection, so
+// each prototype is namespaced by its own doc id underneath it. localStorage
+// is kept purely as a fast-paint seed and an offline fallback.
+const CC_PROJECT='knomee-pitch-deck';
 const CC_KEY='knomee-deck-comments';
-let ccThreads=[], ccOpen=null;
-try{ ccThreads=JSON.parse(localStorage.getItem(CC_KEY)||'[]'); }catch(e){ ccThreads=[]; }
-const ccSave=()=>{ try{ localStorage.setItem(CC_KEY,JSON.stringify(ccThreads)); }catch(e){} };
+const CC_MIGRATED_KEY='knomee-deck-comments-migrated';
+let ccThreads=[], ccOpen=null, ccDb=null, ccThreadsRef=null, ccStateRef=null;
+
+const ccNormalize=r=>({
+  id:r.id, slide:r.slide, x:r.x, y:r.y,
+  createdAt:r.createdAt||Date.now(),
+  comments:Array.isArray(r.comments)?r.comments:[]
+});
+try{ ccThreads=(JSON.parse(localStorage.getItem(CC_KEY)||'[]')).map(ccNormalize); }catch(e){ ccThreads=[]; }
+
+let ccWarnEl=null;
+function ccWarn(msg,sticky){
+  const text=msg||"Couldn't save that comment \u2014 it may be lost on reload.";
+  if(ccWarnEl){ ccWarnEl.textContent=text; return; }
+  const el=document.createElement('div'); el.className='cc-warning'; el.textContent=text;
+  document.body.appendChild(el); ccWarnEl=el;
+  if(sticky){ el.style.cursor='pointer'; el.title='Dismiss';
+    el.addEventListener('click',()=>{el.remove(); if(ccWarnEl===el) ccWarnEl=null;}); }
+  else setTimeout(()=>{el.remove(); if(ccWarnEl===el) ccWarnEl=null;},7000);
+}
+
+function ccCacheLocally(){ try{ localStorage.setItem(CC_KEY,JSON.stringify(ccThreads)); }catch(e){} }
+// Write-through: cache locally, then push the one thread that changed.
+function ccSave(t){
+  ccCacheLocally();
+  if(!ccThreadsRef) return;
+  (t?[t]:ccThreads).forEach(d=>ccThreadsRef.doc(d.id).set(ccNormalize(d)).catch(err=>{
+    console.warn('Could not save comment',err); ccWarn();
+  }));
+}
+function ccRemote(id){
+  ccCacheLocally();
+  if(!ccThreadsRef) return;
+  ccThreadsRef.doc(id).delete().catch(err=>{console.warn('Could not delete comment',err); ccWarn();});
+}
 const ccLayer=document.getElementById('ccLayer'), ccCatcher=document.getElementById('ccCatcher');
 const ccPop=document.getElementById('ccPop'), ccRail=document.getElementById('ccRail');
 const ccList=document.getElementById('ccList'), ccCount=document.getElementById('ccCount');
@@ -1377,7 +1417,7 @@ function ccOpenThread(id){
     '<time>'+new Date(c.ts).toLocaleString()+'</time>'+
     '<button class="del" data-i="'+ci+'">&times;</button></div>').join('');
   document.getElementById('ccMsgs').querySelectorAll('.del').forEach(d=>d.addEventListener('click',()=>{
-    t.comments.splice(+d.dataset.i,1); ccSave(); ccOpenThread(id);
+    t.comments.splice(+d.dataset.i,1); ccSave(t); ccOpenThread(id);
   }));
   const fr=frame.getBoundingClientRect();
   const railW=(document.body.classList.contains('cc')&&!document.body.classList.contains('ccmin'))?334:12;
@@ -1391,26 +1431,28 @@ ccCatcher.addEventListener('click',e=>{
   const fr=frame.getBoundingClientRect();
   const x=(e.clientX-fr.left)/fr.width*100, y=(e.clientY-fr.top)/fr.height*100;
   if(x<0||x>100||y<0||y>100) return;
-  const t={id:'t'+Date.now(),slide:cur,x:+x.toFixed(2),y:+y.toFixed(2),comments:[]};
-  ccThreads.push(t); ccSave(); ccOpenThread(t.id);
+  const t={id:'t'+Date.now()+'-'+Math.random().toString(36).slice(2,7),slide:cur,
+    x:+x.toFixed(2),y:+y.toFixed(2),createdAt:Date.now(),comments:[]};
+  ccThreads.push(t); ccSave(t); ccOpenThread(t.id);
 });
 document.getElementById('ccAdd').addEventListener('click',()=>{
   const t=ccThreads.find(x=>x.id===ccOpen); if(!t) return;
   const v=ccText.value.trim(); if(!v) return;
-  t.comments.push({text:v,ts:Date.now()}); ccSave(); ccOpenThread(t.id);
+  t.comments.push({text:v,ts:Date.now()}); ccSave(t); ccOpenThread(t.id);
 });
 ccText.addEventListener('keydown',e=>{
   e.stopPropagation();
   if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){e.preventDefault();document.getElementById('ccAdd').click();}
 });
 document.getElementById('ccDel').addEventListener('click',()=>{
-  ccThreads=ccThreads.filter(x=>x.id!==ccOpen); ccSave(); ccClose();
+  const gone=ccOpen; ccThreads=ccThreads.filter(x=>x.id!==gone); ccRemote(gone); ccClose();
 });
 document.getElementById('ccPopX').addEventListener('click',ccClose);
 document.getElementById('ccHide').addEventListener('click',()=>document.body.classList.toggle('ccmin'));
 document.getElementById('ccClear').addEventListener('click',()=>{
   if(!ccThreads.length) return;
-  ccThreads=[]; ccSave(); ccClose();
+  if(!confirm('Delete every comment on this deck, for everyone?')) return;
+  const ids=ccThreads.map(t=>t.id); ccThreads=[]; ids.forEach(ccRemote); ccClose();
 });
 function ccToggle(on){
   document.body.classList.toggle('cc', on!==undefined?on:!document.body.classList.contains('cc'));
@@ -1418,6 +1460,64 @@ function ccToggle(on){
 }
 frame.appendChild(ccCatcher); frame.appendChild(ccLayer);
 ccRender();
+
+// -- live sync ---------------------------------------------------------
+(function ccConnect(){
+  if(typeof firebase==='undefined'){
+    console.warn('Firebase SDK unavailable - comments stay on this device only.');
+    return;
+  }
+  try{
+    firebase.initializeApp({
+      apiKey:"AIzaSyBqmxrO__M6mGypXsxQ_HgCu81qs8mXe90",
+      authDomain:"knomee-playbook.firebaseapp.com",
+      projectId:"knomee-playbook",
+      storageBucket:"knomee-playbook.firebasestorage.app",
+      messagingSenderId:"956493019959",
+      appId:"1:956493019959:web:13f099b4ea42ef948d78b2"
+    });
+    ccDb=firebase.firestore();
+    ccStateRef=ccDb.collection('video-feedback').doc(CC_PROJECT);
+    ccThreadsRef=ccStateRef.collection('comments');
+  }catch(e){ console.warn('Firestore init failed',e); return; }
+
+  // Push anything this browser saved before the deck went shared. Runs once
+  // per browser so threads someone else deleted never come back. The local
+  // copy is captured here, before the first snapshot overwrites the cache.
+  const ccPreSync=ccThreads.slice();
+  function ccMigrateLocal(remoteIds){
+    let done=false;
+    try{ done=localStorage.getItem(CC_MIGRATED_KEY)==='1'; }catch(e){}
+    if(done) return;
+    const pending=ccPreSync.filter(t=>t.comments.length&&!remoteIds.has(t.id));
+    pending.forEach(t=>ccThreadsRef.doc(t.id).set(t).catch(err=>console.warn('Migration failed',err)));
+    try{ localStorage.setItem(CC_MIGRATED_KEY,'1'); }catch(e){}
+    if(pending.length) console.info('Published '+pending.length+' local comment thread(s) to Firestore.');
+  }
+
+  let ccFirstSnap=true;
+  ccThreadsRef.orderBy('createdAt').onSnapshot(snap=>{
+    ccThreads=snap.docs.map(d=>ccNormalize(d.data()));
+    ccCacheLocally();
+    if(ccFirstSnap){ ccFirstSnap=false; ccMigrateLocal(new Set(ccThreads.map(t=>t.id))); }
+    ccRender();
+    if(ccOpen){ ccThreads.some(t=>t.id===ccOpen) ? ccOpenThread(ccOpen) : ccClose(); }
+  },err=>{
+    console.warn('Firestore sync error',err);
+    ccWarn("Can't reach the shared comment server \u2014 showing your last saved copy.");
+  });
+
+  // Stamp the namespace so a second deployment on the same id is caught.
+  const site=location.host+location.pathname.replace(/deck\.html$/,'').replace(/\/$/,'');
+  if(!['localhost','127.0.0.1',''].includes(location.hostname)){
+    ccStateRef.get().then(snap=>{
+      const claimed=snap.exists?snap.data().claimedBy:null;
+      if(claimed&&claimed!==site)
+        ccWarn('Another prototype ('+claimed+') uses the same comment namespace \u2014 you are sharing threads. (Click to dismiss)',true);
+      return ccStateRef.set({claimedBy:site},{merge:true});
+    }).catch(err=>console.warn('Namespace check failed',err));
+  }
+})();
 
 function fromHash(){
   const want=location.hash.replace('#','');
