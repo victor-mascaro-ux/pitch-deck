@@ -1124,11 +1124,11 @@ body.cc #ccFlag{display:block}
 
 <aside id="ccRail">
   <h4>Comments <span id="ccCount">0</span></h4>
-  <div class="sub">Click anywhere on the slide to drop a pin. Press <b>C</b> to leave comment mode.</div>
+  <div class="sub">Click anywhere on the slide to drop a pin. Press <b>Esc</b> to leave comment mode.</div>
   <div id="ccList"></div>
   <div id="ccFoot"><button id="ccHide">Hide panel</button><button class="dang" id="ccClear">Clear all</button></div>
 </aside>
-<div id="ccFlag">Comment mode — click the slide to pin · C to exit</div>
+<div id="ccFlag">Comment mode — click the slide to pin · Esc to exit</div>
 <div id="pal">
   <div class="palbox">
     <input id="q" placeholder="Jump to any slide…  try &quot;growth&quot;, &quot;referrals&quot;, &quot;pilot&quot;" autocomplete="off">
@@ -1320,6 +1320,13 @@ document.addEventListener('keydown',e=>{
     else if(e.key==='Enter'){e.preventDefault();pchoose()}
     return;
   }
+  // In comment mode Esc unwinds the overlay before it touches the deck:
+  // an open note first, then comment mode itself.
+  if(e.key==='Escape'&&document.body.classList.contains('cc')){
+    e.preventDefault();
+    if(ccOpen) ccClose(); else ccToggle(false);
+    return;
+  }
   if(e.key==='Escape'){
     if(hub.classList.contains('open')) closeHub();
     else if(PARENT[cur]) show(PARENT[cur]);        // close the detail, stay put
@@ -1442,6 +1449,7 @@ document.getElementById('ccAdd').addEventListener('click',()=>{
 });
 ccText.addEventListener('keydown',e=>{
   e.stopPropagation();
+  if(e.key==='Escape'){e.preventDefault();ccClose();return;}
   if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){e.preventDefault();document.getElementById('ccAdd').click();}
 });
 document.getElementById('ccDel').addEventListener('click',()=>{
