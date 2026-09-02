@@ -298,7 +298,7 @@ h1.title em{font-style:normal;color:var(--violet)}
 /* --- timeline flow --- */
 .tflow{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);
   flex:1;align-content:center;margin-top:clamp(14px,2vw,30px)}
-.tnode:not(:last-child)::after{content:'';position:absolute;top:31px;left:50%;width:calc(100% + clamp(12px,1.6vw,22px));height:2px;background:var(--grid);z-index:0}
+.tnode:not(:last-child)::before{content:'';position:absolute;top:31px;left:50%;width:calc(100% + clamp(12px,1.6vw,22px));height:2px;background:var(--grid);z-index:0}
 .tnode{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
 .tdot{width:64px;height:64px;border-radius:50%;background:var(--c1);color:#fff;display:grid;
   place-items:center;font-weight:800;font-size:18px;position:relative;z-index:1;
@@ -367,17 +367,19 @@ h1.title em{font-style:normal;color:var(--violet)}
 
 /* ===== per-chapter identity: accent + canvas tint + edge ===== */
 #frame{--acc:var(--violet);--tint:#F8FAFA;--sheet-inset:clamp(22px,3.6vw,58px)}
-#frame[data-ch="Open"]{--acc:#6D28D9;--tint:#F7F5FC}
-#frame[data-ch="Problem"]{--acc:#6D28D9;--tint:#FAF7FE}
-#frame[data-ch="Insight Layer"]{--acc:#0E9B87;--tint:#F2FAF9}
-#frame[data-ch="Product"]{--acc:#6D28D9;--tint:#F6F4FD}
-#frame[data-ch="Flywheel"]{--acc:#0E9B87;--tint:#F3FBF8}
-#frame[data-ch="Traction"]{--acc:#6D28D9;--tint:#F8F6FE}
-#frame[data-ch="Model"]{--acc:#0E9B87;--tint:#F1FAF8}
-#frame[data-ch="Go To Market"]{--acc:#6D28D9;--tint:#FAF7FE}
-#frame[data-ch="Market"]{--acc:#0E9B87;--tint:#F3FBF9}
-#frame[data-ch="Team"]{--acc:#6D28D9;--tint:#F7F4FD}
-#frame[data-ch="Ask"]{--acc:#0E9B87;--tint:#F2FAF8}
+#frame[data-ch="Opening"]{--acc:#6D28D9;--acc-ink:#5B1FB8;--tint:#F7F5FC}
+#frame[data-ch="Headline"]{--acc:#0E9B87;--acc-ink:#0A6E5F;--tint:#F1FAF8}
+#frame[data-ch="Problem"]{--acc:#6D28D9;--acc-ink:#5B1FB8;--tint:#FAF7FE}
+#frame[data-ch="Solution"]{--acc:#0E9B87;--acc-ink:#0A6E5F;--tint:#F2FAF9}
+#frame[data-ch="Show It"]{--acc:#6D28D9;--acc-ink:#5B1FB8;--tint:#F6F4FD}
+#frame[data-ch="Revenue Model"]{--acc:#0E9B87;--acc-ink:#0A6E5F;--tint:#F3FBF8}
+#frame[data-ch="Traction"]{--acc:#6D28D9;--acc-ink:#5B1FB8;--tint:#F8F6FE}
+#frame[data-ch="Market"]{--acc:#0E9B87;--acc-ink:#0A6E5F;--tint:#F2FAF9}
+#frame[data-ch="Ask"]{--acc:#6D28D9;--acc-ink:#5B1FB8;--tint:#FAF7FE}
+#frame[data-ch="Team"]{--acc:#0E9B87;--acc-ink:#0A6E5F;--tint:#F3FBF9}
+#frame[data-ch="Conclusion"]{--acc:#6D28D9;--acc-ink:#5B1FB8;--tint:#F7F4FD}
+#frame[data-ch="Closing"]{--acc:#0E9B87;--acc-ink:#0A6E5F;--tint:#F2FAF8}
+#frame[data-ch="Appendix"]{--acc:#6D28D9;--acc-ink:#5B1FB8;--tint:#F8F6FD}
 .card{background:var(--tint)}
 #frame{background:var(--tint);transition:background .5s var(--ease)}
 #chedge{position:absolute;top:0;left:0;right:0;height:5px;background:var(--acc);z-index:6;
@@ -642,7 +644,7 @@ body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
 .tierbar b{display:flex;align-items:center;gap:8px;font-size:clamp(9.5px,1vw,14px);font-weight:800;
   letter-spacing:.06em;color:#2C6B57}
 .tierbar b i{width:clamp(9px,.95vw,13px);aspect-ratio:1;border-radius:3px;background:#3E9E8A;display:block;flex:none}
-.tierbar span{display:block;font-size:clamp(9px,.9vw,13px);color:#4A7D6C;margin-top:4px}
+.tierbar span{display:block;font-size:clamp(9px,.9vw,13px);color:#3D6A5B;margin-top:4px}
 .topact{flex:none;background:#F4F0FD;border-radius:clamp(9px,1vw,14px);
   padding:clamp(9px,1.05vw,16px) clamp(11px,1.3vw,20px);font-size:clamp(9.5px,.98vw,14px);color:var(--ink)}
 .topact b{font-weight:800;margin-right:8px}
@@ -993,7 +995,7 @@ body.cc #ccFlag{display:block}
 .tline{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.7vw,28px);
   align-content:center;margin-top:clamp(10px,1.5vw,24px);position:relative}
 .tstop{position:relative;display:flex;flex-direction:column}
-.tstop:not(:last-child)::after{content:'';position:absolute;top:calc(clamp(7px,.85vw,12px) + .6em);
+.tstop:not(:last-child)::before{content:'';position:absolute;top:calc(clamp(7px,.85vw,12px) + .6em);
   left:50%;width:calc(100% + clamp(12px,1.7vw,28px));height:2px;
   background:color-mix(in srgb,var(--acc) 34%,transparent);z-index:0}
 .tstop .when{align-self:flex-start;position:relative;z-index:1;background:var(--acc);color:#fff;
@@ -1045,13 +1047,282 @@ body.cc #ccFlag{display:block}
   .qcore{position:static;transform:none;animation:none;opacity:1;margin:0 auto}
 }
 
+
+/* ═══════ product imagery ═══════ */
+.prodwrap{flex:1;min-height:0;display:grid;grid-template-columns:.58fr 1.42fr;
+  grid-template-rows:minmax(0,1fr) auto;gap:clamp(10px,1.4vw,22px) clamp(12px,1.8vw,30px);
+  margin-top:clamp(8px,1.2vw,18px)}
+.pshot{min-height:0;min-width:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:6px}
+.pshot img{min-height:0;max-width:100%;max-height:100%;width:auto;object-fit:contain;
+  border-radius:10px;box-shadow:0 22px 44px -26px rgba(21,6,41,.5);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.pshot:hover img{transform:translateY(-5px) scale(1.015);box-shadow:0 32px 60px -28px rgba(21,6,41,.6)}
+.pshot figcaption{flex:none;font-size:clamp(9px,.82vw,12px);font-weight:800;letter-spacing:.14em;
+  text-transform:uppercase}
+.pstat{grid-column:1/-1;display:flex;align-items:center;gap:clamp(12px,1.8vw,30px);
+  background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:clamp(9px,1.1vw,16px) clamp(14px,1.8vw,26px)}
+.pstat .gauge{width:clamp(48px,5.2vw,80px);flex:none;margin:0}
+.pstat .gv{font-size:clamp(13px,1.5vw,23px)}
+.pstat .gl{font-size:clamp(7px,.62vw,9.5px);margin-top:1px;line-height:1.15}
+.pstat .quote{border-left-width:3px;padding-left:clamp(12px,1.5vw,22px)}
+.pstat .quote p{font-size:clamp(11px,1.1vw,17px);line-height:1.35}
+/* the composite has to live inside its column, not push past the card.
+   `flex:1` alone does not constrain a flex child -- min-height:0 does. */
+.compare{align-content:stretch;min-height:0}
+.compare .col{display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.colshot{flex:1;min-height:0;max-height:clamp(110px,30vh,280px);width:100%;
+  object-fit:contain;object-position:center top;
+  margin-top:clamp(10px,1.4vw,20px);border-radius:11px;display:block;
+  box-shadow:0 18px 36px -22px rgba(0,0,0,.5)}
+.compound{flex:1;min-height:0;display:grid;grid-template-columns:1.05fr .95fr;
+  gap:clamp(16px,2.2vw,36px);align-items:center;margin-top:clamp(10px,1.4vw,20px)}
+.compound .pshot img{border-radius:14px}
+.tcols.five{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr))}
+.tcols.five>*:nth-child(4){grid-column:1/2}
+.tcols.five>*:nth-child(5){grid-column:2/4}
+
+/* ═══════ the mark, quietly, on every slide ═══════ */
+.motif{color:var(--acc)}
+
+/* ═══════ dark sheet: everything that would otherwise stay ink-on-ink ═══════ */
+.sheet{color:rgba(255,255,255,.86)}
+.sheet .quote p,.sheet .statement p,.sheet .pbox p,.sheet .tcol li,.sheet .pbox li,
+.sheet .tstop li,.sheet .rrow span,.sheet .srow p,.sheet .quad p,.sheet .tmem p,
+.sheet .metric .l,.sheet .gcard,.sheet .slayer .rv,.sheet .tierc .terms span,
+.sheet .wstep span,.sheet .clab,.sheet .cval,.sheet .bigstat .k,.sheet .gauge .gl,
+.sheet .tnode h3,.sheet .moment h3{color:rgba(255,255,255,.84)}
+.sheet .quote{border-left-color:var(--teal)}
+.sheet :is(.stats,.tcols,.panes,.tline,.team,.rlist,.tiers,.stak,.metrics,.statement,.compound,.chart,.grid4,.compare) b{color:#fff}
+.sheet h3,.sheet .pbox h3,.sheet .tcol h3,.sheet .quad h3,.sheet .tierc h3,
+.sheet .tmem b,.sheet .rrow b,.sheet .srow .pc,.sheet .metric .n,.sheet .askhead .amt,
+.sheet .bigstat .v,.sheet .gauge .gv,.sheet .tierc .cap,.sheet .wstep b{color:var(--teal)}
+.sheet .tcol h3{border-bottom-color:var(--teal)}
+.sheet .pbox li::before,.sheet .tcol li::before,.sheet .tstop li::before{background:var(--teal)}
+.sheet cite,.sheet .ctitle,.sheet .cticks,.sheet .pshot figcaption,.sheet .sources span,
+.sheet .tmem em,.sheet .clab{color:rgba(255,255,255,.62)}
+.sheet :is(.srow,.tcol,.pbox,.tierc,.quad,.tmem,.tstop,.metric,.rrow,.gcard,.refstat,.dbox,.lcard){
+  background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16)}
+.sheet .ctrack{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.18)}
+.sheet .cbar{background:var(--teal)}
+.sheet .cticks{border-top-color:rgba(255,255,255,.18)}
+.sheet .caxis .cticks span{color:rgba(255,255,255,.62)}
+.sheet .tag{background:rgba(45,210,176,.16);color:var(--teal)}
+.sheet .gauge .g-bg{stroke:rgba(255,255,255,.14)}
+.sheet .stats .srow:hover,.sheet .tcol:hover,.sheet .pbox:hover{background:rgba(255,255,255,.1)}
+.sheet .qlogos img,.sheet .logos img{filter:brightness(0) invert(1);opacity:.72}
+.sheet .quad:hover .qlogos img{filter:none;opacity:1}
+
+
+/* ═══════ motion: entrances and micro-interactions ═══════
+   The pitch components inherit the deck's existing vocabulary (kRise, kPop,
+   kChip, kRiseScale) so a new chapter feels like the same deck. */
+
+/* --- staggered entrances -------------------------------------------------- */
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*,
+.card.active .quads>.quad{
+  animation:kRise .52s var(--ease) backwards}
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*:nth-child(1),
+.card.active .quads>.quad:nth-child(1){animation-delay:.20s}
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*:nth-child(2),
+.card.active .quads>.quad:nth-child(2){animation-delay:.28s}
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*:nth-child(3),
+.card.active .quads>.quad:nth-child(3){animation-delay:.36s}
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*:nth-child(4),
+.card.active .quads>.quad:nth-child(4){animation-delay:.44s}
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*:nth-child(5){animation-delay:.52s}
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*:nth-child(6){animation-delay:.60s}
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*:nth-child(7){animation-delay:.68s}
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*:nth-child(8){animation-delay:.76s}
+
+/* the stack builds bottom-up, so its own DOM order is already the right order */
+.card.active .stak>*{animation-name:kInLeft}
+/* the arrows between tiers arrive after the tier above them */
+.card.active .tarrow{animation-name:kPop}
+.card.active .askhead{animation:kPop .55s var(--ease) .16s backwards}
+.card.active .tag{animation:kChip .5s var(--ease) .78s backwards}
+.card.active .sources{animation:kChip .5s var(--ease) .9s backwards}
+.card.active .wstep{animation:kPop .5s var(--ease) backwards}
+.card.active .wstep:nth-child(1){animation-delay:.30s}
+.card.active .wstep:nth-child(2){animation-delay:.42s}
+.card.active .wstep:nth-child(3){animation-delay:.54s}
+.card.active .wstep:nth-child(4){animation-delay:.66s}
+.card.active .wstep:nth-child(5){animation-delay:.78s}
+.card.active .tmem img{animation:kPop .5s var(--ease) backwards;animation-delay:inherit}
+
+/* --- micro-interactions --------------------------------------------------- */
+
+/* competitor logos sit muted until you look at one; Knomee's circle stays the
+   only saturated thing on the market map */
+.qlogos img{filter:grayscale(1);opacity:.6;
+  transition:filter .32s var(--ease),opacity .32s var(--ease),transform .32s var(--ease)}
+.quad:hover .qlogos img{filter:none;opacity:1}
+.qlogos img:hover{transform:scale(1.14)}
+
+/* client logos are the proof: they stay in colour and lift individually */
+.logos img{transition:transform .34s var(--ease),filter .34s var(--ease)}
+.logos img:hover{transform:translateY(-4px) scale(1.06);filter:drop-shadow(0 10px 16px rgba(21,6,41,.22))}
+
+/* hovering one tier quiets the others, so the layer under discussion reads */
+.tiers:hover .tierc:not(:hover){opacity:.55;transform:scale(.99)}
+.tierc{transition:transform .4s var(--ease),box-shadow .4s var(--ease),opacity .4s var(--ease)}
+.stak:hover .slayer:not(:hover){opacity:.62}
+.slayer{transition:transform .4s var(--ease),box-shadow .4s var(--ease),opacity .4s var(--ease)}
+
+/* the flywheel step and its ring segment light up together */
+.wseg path{transition:opacity .3s var(--ease)}
+.wheel.focus .wseg:not(.on) path{opacity:.26}
+.wheel.focus .wstep:not(.on){opacity:.5}
+.wstep{transition:transform .3s var(--ease),opacity .3s var(--ease)}
+.wstep.on{transform:translateY(-3px)}
+
+/* team portraits warm up on hover */
+.tmem img{transition:transform .4s var(--ease),filter .4s var(--ease)}
+.tmem:hover img{transform:scale(1.06)}
+
+/* stat rows nudge toward their evidence */
+.srow{transition:transform .42s var(--ease),box-shadow .42s var(--ease)}
+.srow:hover{transform:translateX(6px) translateY(-4px)}
+.srow .pc{transition:transform .42s var(--ease)}
+.srow:hover .pc{transform:scale(1.06)}
+
+/* market rings breathe when you point at their row */
+.rrow{transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.ringart circle{transition:transform .45s var(--ease),opacity .3s var(--ease);transform-origin:50% 50%}
+.rings:hover .ringart circle{opacity:.45}
+.rings .rrow:nth-child(1):hover ~ .ringart circle:nth-of-type(1){opacity:1}
+
+/* buttons acknowledge the press */
+#stepper button:active{transform:scale(.9)}
+.htile,.dchip,#ccPop .cca button,#ccRail button{transition:transform .22s var(--ease),
+  background-color .22s var(--ease),border-color .22s var(--ease),color .22s var(--ease)}
+#ccPop .cca button:active,#ccRail button:active{transform:scale(.95)}
+.dchip:hover{transform:translateY(-2px);border-color:var(--acc);color:var(--acc)}
+
+/* the openable "+" badge picks up the chapter accent instead of a fixed violet */
+.opens::after{background:var(--acc)}
+.opens:hover{outline-color:color-mix(in srgb,var(--acc) 55%,transparent)}
+
+@media (prefers-reduced-motion:reduce){
+  .tiers:hover .tierc:not(:hover),.stak:hover .slayer:not(:hover),
+  .wheel.focus .wseg:not(.on) path,.wheel.focus .wstep:not(.on),
+  .rings:hover .ringart circle{opacity:1}
+}
+
+
+/* the app screens and the market-map core are light surfaces that happen to sit
+   inside the dark sheet: re-establish ink so their own rules read correctly */
+.sheet :is(.scr,.app){color:var(--ink)}
+.sheet :is(.scr,.app) :is(b,strong){color:inherit}
+.sheet .qcore b{color:#08312B}
+.sheet .qcore span{color:#08312B}
+.sheet .qcore{background:var(--teal)}
+
+
+/* small type uses the darker ink variant of the chapter accent */
+#frame{--acc-ink:var(--violet)}
+.eyebrow{color:var(--acc-ink)}
+.eyebrow::before{background:var(--acc-ink)}
+.tarrow{color:var(--acc-ink)}
+.tnode .idx{color:var(--acc-ink)}
+.tierc .cap{color:var(--acc-ink)}
+.tierc .cap b{color:var(--acc-ink)}
+.srow cite{color:var(--acc-ink)}
+.tcol h3,.pbox h3,.quad h3{color:var(--acc-ink)}
+.tstop .when{background:var(--acc-ink)}
+.tag{color:var(--acc-ink)}
+.gcard span{color:var(--ink-2)!important}
+.pshot figcaption{color:var(--ink-2)}
+/* the body copy under a title was a hair under 4.5:1 */
+.lede{color:#5F5975}
+.contact .role{color:#5F5975}
+.sheet .eyebrow,.sheet .eyebrow::before{color:var(--teal);background:none}
+.sheet .eyebrow::before{background:var(--teal)}
+.sheet .lede{color:rgba(255,255,255,.74)}
+.sheet .tarrow{color:var(--teal)}
+.sheet .tnode .idx,.sheet .srow cite,.sheet .pshot figcaption{color:rgba(255,255,255,.66)}
+.sheet .tstop .when{background:var(--teal);color:#04231D}
+.sheet .gcard span{color:rgba(255,255,255,.72)!important}
+
+
+/* closing slide: the portrait's disc is already cut at her lower edge, so it
+   just needs to sit clear of the stepper and share the row with the contact */
+.closing{flex:1;min-height:0;display:grid;grid-template-columns:1fr auto;
+  align-items:center;gap:clamp(20px,3vw,54px);margin-top:clamp(10px,1.6vw,24px)}
+.closing .contact{flex:none;justify-content:center;min-height:0}
+.closing .portrait{align-self:center;justify-self:end;
+  height:min(100%,clamp(170px,40vh,360px));width:auto;object-fit:contain;display:block;
+  margin-right:clamp(56px,6.5vw,108px);
+  animation:kRise .7s var(--ease) .28s backwards}
+@media(max-width:900px){.closing{grid-template-columns:1fr}.closing .portrait{display:none}}
+
+
+/* `.card>*{position:relative}` outranked `.motif`, so the mark sat in the flow
+   and pushed the slide's content down. Take it back out of the flow. */
+.card>svg.motif{position:absolute;right:-4%;top:50%;transform:translateY(-50%);
+  width:min(38%,440px);height:auto;opacity:.075;z-index:0;pointer-events:none}
+.card#s01>svg.motif,.card#sa9>svg.motif{width:min(46%,520px);opacity:.09}
+.sheet>svg.motif{opacity:.06}
+.screencard>svg.motif{display:none}
+
+
+/* the app screens used --faint / --mute for secondary UI labels; at these sizes
+   that lands around 2.6:1, so they get a readable ink instead */
+.scrtab,.kqq,.st2 p,.cslab{color:#5A5470}
+.scrtab.on{color:var(--violet)}
+.scrsub,.take span,.pa{color:#5F5975}
+.scrav{background:#E4E2EA;color:#4A4560}
+.av{color:#fff}
+.scr .av,.app .av{background:#5B1FB8}
+
+
+/* at this size a ring cannot hold its own label, so the figure carries it */
+.pnum{flex:none;display:flex;align-items:baseline;gap:8px}
+.pnum b{font-size:clamp(20px,2.4vw,38px);font-weight:800;letter-spacing:-.05em;
+  color:var(--acc);line-height:1}
+.pnum span{font-size:clamp(9.5px,.88vw,13px);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2)}
+.sheet .pnum b{color:var(--teal)}
+.sheet .pnum span{color:rgba(255,255,255,.7)}
+.sheet .pstat{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16)}
+
+
+/* opening slide: the one-sentence overview plus contact, per the anatomy */
+.openmeta{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(10px,1.6vw,26px);
+  margin-top:clamp(16px,2.2vw,32px);font-size:clamp(11.5px,1.05vw,16px);color:var(--ink-2)}
+.openmeta b{color:var(--ink);font-weight:800}
+.openmeta a{color:var(--acc-ink);font-weight:700;text-underline-offset:3px}
+.openmeta>*{position:relative}
+.openmeta>*+*::before{content:'';position:absolute;left:calc(clamp(10px,1.6vw,26px) / -2);
+  top:.15em;bottom:.15em;width:1px;background:var(--line)}
+.card.active .openmeta{animation:kRise .55s var(--ease) .34s backwards}
+
+/* appendix index: each tile names the sheet it opens */
+.grid4.apx{grid-template-columns:repeat(3,1fr);grid-auto-rows:auto;align-content:center;
+  gap:clamp(11px,1.5vw,22px)}
+.grid4.apx .gcard{flex-direction:column;gap:6px;line-height:1.25;min-height:clamp(78px,8vw,116px)}
+.grid4.apx .gcard span{display:block;font-weight:600;font-size:clamp(10px,.88vw,13.5px);
+  color:var(--ink-2);letter-spacing:0}
+.sheet .grid4.apx .gcard span{color:rgba(255,255,255,.72)}
+
+
+.tmem em{color:var(--acc-ink)}
+.sheet .tmem em{color:rgba(255,255,255,.66)}
+
+
+/* figures follow the chapter accent instead of a fixed violet */
+.metric .n,.bigstat .v{color:var(--acc)}
+.sheet .metric .n,.sheet .bigstat .v{color:var(--teal)}
+
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lockup" viewBox="0 0 236 24"><path d="M151.664 17.7879H146.827L146.052 20.0771H142.748L147.437 7.11728H151.092L155.781 20.0771H152.44L151.664 17.7879ZM150.852 15.351L149.246 10.6065L147.658 15.351H150.852ZM161.879 7.11728C163.245 7.11728 164.439 7.38804 165.461 7.92958C166.482 8.47111 167.27 9.23418 167.824 10.2188C168.39 11.1911 168.673 12.3172 168.673 13.5972C168.673 14.8649 168.39 15.991 167.824 16.9756C167.27 17.9602 166.476 18.7233 165.442 19.2648C164.421 19.8064 163.233 20.0771 161.879 20.0771H157.024V7.11728H161.879ZM161.676 17.3449C162.87 17.3449 163.799 17.0187 164.464 16.3664C165.128 15.7141 165.461 14.791 165.461 13.5972C165.461 12.4034 165.128 11.4742 164.464 10.8095C163.799 10.1449 162.87 9.81263 161.676 9.81263H160.181V17.3449H161.676ZM182.419 7.11728L177.822 20.0771H173.871L169.274 7.11728H172.634L175.846 16.9018L179.077 7.11728H182.419ZM186.71 7.11728V20.0771H183.553V7.11728H186.71ZM193.503 20.2064C192.555 20.2064 191.706 20.0525 190.955 19.7448C190.204 19.4372 189.601 18.9818 189.146 18.3787C188.703 17.7756 188.469 17.0495 188.444 16.2003H191.804C191.853 16.6803 192.019 17.0495 192.303 17.3079C192.586 17.5541 192.955 17.6772 193.41 17.6772C193.878 17.6772 194.247 17.5726 194.518 17.3633C194.789 17.1418 194.924 16.8403 194.924 16.4587C194.924 16.1387 194.813 15.8741 194.592 15.6649C194.383 15.4557 194.118 15.2833 193.798 15.148C193.49 15.0126 193.047 14.8587 192.469 14.6864C191.632 14.428 190.949 14.1695 190.419 13.9111C189.89 13.6526 189.435 13.2711 189.053 12.7665C188.672 12.2618 188.481 11.6034 188.481 10.7911C188.481 9.58494 188.918 8.64342 189.792 7.9665C190.666 7.27728 191.804 6.93266 193.207 6.93266C194.635 6.93266 195.786 7.27728 196.659 7.9665C197.533 8.64342 198.001 9.5911 198.062 10.8095H194.647C194.623 10.3911 194.469 10.0649 194.186 9.8311C193.903 9.58494 193.539 9.46187 193.096 9.46187C192.715 9.46187 192.407 9.56648 192.173 9.77571C191.939 9.97263 191.823 10.2619 191.823 10.6434C191.823 11.0619 192.019 11.388 192.413 11.6218C192.807 11.8557 193.423 12.108 194.259 12.3788C195.096 12.6618 195.773 12.9326 196.29 13.1911C196.819 13.4495 197.275 13.8249 197.656 14.3172C198.038 14.8095 198.229 15.4433 198.229 16.2187C198.229 16.9572 198.038 17.6279 197.656 18.231C197.287 18.8341 196.746 19.3141 196.032 19.671C195.318 20.0279 194.475 20.2064 193.503 20.2064ZM206.116 20.2064C204.898 20.2064 203.778 19.9233 202.756 19.3572C201.747 18.791 200.941 18.0033 200.338 16.9941C199.747 15.9726 199.451 14.828 199.451 13.5603C199.451 12.2926 199.747 11.1542 200.338 10.1449C200.941 9.13572 201.747 8.34803 202.756 7.78189C203.778 7.21574 204.898 6.93266 206.116 6.93266C207.334 6.93266 208.448 7.21574 209.457 7.78189C210.479 8.34803 211.279 9.13572 211.857 10.1449C212.448 11.1542 212.744 12.2926 212.744 13.5603C212.744 14.828 212.448 15.9726 211.857 16.9941C211.267 18.0033 210.467 18.791 209.457 19.3572C208.448 19.9233 207.334 20.2064 206.116 20.2064ZM206.116 17.3264C207.15 17.3264 207.974 16.9818 208.59 16.2926C209.217 15.6033 209.531 14.6926 209.531 13.5603C209.531 12.4157 209.217 11.5049 208.59 10.828C207.974 10.1388 207.15 9.79417 206.116 9.79417C205.07 9.79417 204.233 10.1326 203.605 10.8095C202.99 11.4865 202.682 12.4034 202.682 13.5603C202.682 14.7049 202.99 15.6218 203.605 16.311C204.233 16.9879 205.07 17.3264 206.116 17.3264ZM220.924 20.0771L218.229 15.1849H217.472V20.0771H214.315V7.11728H219.614C220.635 7.11728 221.503 7.29574 222.217 7.65266C222.943 8.00958 223.484 8.50188 223.841 9.12956C224.198 9.74494 224.377 10.4342 224.377 11.1972C224.377 12.0588 224.131 12.828 223.638 13.5049C223.158 14.1818 222.444 14.6618 221.497 14.9449L224.487 20.0771H220.924ZM217.472 12.9511H219.429C220.008 12.9511 220.438 12.8095 220.721 12.5265C221.017 12.2434 221.164 11.8434 221.164 11.3265C221.164 10.8342 221.017 10.4465 220.721 10.1634C220.438 9.88033 220.008 9.73879 219.429 9.73879H217.472V12.9511Z" fill="currentColor"/>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="kmark" viewBox="0 0 300 288"><path d="M165.378 198.685C164.99 198.685 164.537 198.685 164.149 198.62C110.711 192.518 93.0496 170.8 87.2917 158.466C78.8167 140.224 83.2159 121.394 98.5487 110.372C112.523 100.333 130.766 101.12 141.895 112.274C146.229 116.605 146.294 123.757 142.024 128.152C137.753 132.548 130.703 132.614 126.367 128.283C122.356 124.281 115.757 125.462 111.358 128.677C108.318 130.843 101.913 137.206 107.347 148.886C110.258 155.119 121.063 169.62 159.815 175.393C180.064 141.34 175.859 123.691 173.012 117.458C170.619 112.34 167.319 109.125 163.179 107.813C159.298 106.632 154.704 107.222 150.951 109.453C145.711 112.602 138.918 110.831 135.813 105.516C132.707 100.202 134.455 93.3125 139.695 90.1632C148.817 84.6517 159.815 83.2739 169.648 86.3577C176.764 88.5885 186.598 94.0998 193.003 107.878C198.761 120.279 204.066 147.836 174.695 193.567C172.624 196.783 169.13 198.685 165.443 198.685H165.378Z" fill="currentColor"/><path d="M182.923 284.948C177.554 284.948 172.572 281.405 170.89 275.893C168.884 269.136 172.636 261.984 179.235 259.95C221.093 246.959 252.6 211.922 261.398 168.487C267.803 136.796 261.656 104.515 244.124 77.5489C226.592 50.5825 199.744 32.1456 168.496 25.5844C161.703 24.1409 157.304 17.383 158.727 10.4937C160.151 3.60443 166.75 -0.85719 173.607 0.586272C211.389 8.45969 243.93 30.8333 265.15 63.508C286.37 96.1828 293.81 135.288 286.046 173.67C275.372 226.291 237.266 268.742 186.611 284.423C185.382 284.816 184.152 285.014 182.923 285.014V284.948Z" fill="currentColor"/><path d="M117.96 288C117.119 288 116.278 287.934 115.437 287.737C77.6551 279.864 45.1137 257.556 23.8938 224.815C2.67386 192.142 -4.76604 153.036 2.99733 114.653C14.7718 56.39 59.6054 11.446 117.184 0.226364C124.041 -1.08587 130.64 3.4413 131.935 10.3305C133.228 17.2854 128.764 23.9778 121.971 25.2901C74.4204 34.6069 37.415 71.6777 27.6461 119.837C21.2413 151.528 27.3872 183.809 44.9196 210.775C62.4518 237.742 89.3002 256.178 120.547 262.739C127.341 264.182 131.741 270.941 130.317 277.83C129.088 283.866 123.847 288 118.025 288H117.96Z" fill="currentColor"/><path d="M58.8323 136.393C57.9266 136.393 57.0208 136.262 56.1152 136.066C49.5809 134.556 45.5052 127.93 47.0578 121.303C53.0745 94.861 68.86 72.4218 91.5679 58.0527C114.211 43.6838 141.059 39.1566 167.132 45.2584C202.843 53.6568 231.179 81.0825 241.013 116.972C242.824 123.534 239.072 130.291 232.602 132.128C226.134 133.966 219.47 130.094 217.658 123.599C210.218 96.4357 188.74 75.6367 161.632 69.2724C141.901 64.614 121.586 68.0914 104.378 78.983C87.2334 89.8746 75.2648 106.868 70.6715 126.88C69.3775 132.588 64.3961 136.393 58.8323 136.393Z" fill="currentColor"/><path d="M144.457 245.68C137.018 245.68 129.448 244.828 121.944 243.055C82.3504 233.804 52.4614 201.523 45.7331 160.909C44.6333 154.217 49.0973 147.853 55.6961 146.737C62.295 145.622 68.5704 150.149 69.6702 156.841C74.7811 187.614 97.4243 212.021 127.378 219.042C168.136 228.556 208.893 202.704 218.339 161.435C219.826 154.807 226.361 150.674 232.895 152.249C239.429 153.758 243.505 160.385 241.953 167.011C231.278 213.858 190.003 245.68 144.457 245.68Z" fill="currentColor"/></symbol>
+<symbol id="lockup" viewBox="0 0 236 24"><path d="M151.664 17.7879H146.827L146.052 20.0771H142.748L147.437 7.11728H151.092L155.781 20.0771H152.44L151.664 17.7879ZM150.852 15.351L149.246 10.6065L147.658 15.351H150.852ZM161.879 7.11728C163.245 7.11728 164.439 7.38804 165.461 7.92958C166.482 8.47111 167.27 9.23418 167.824 10.2188C168.39 11.1911 168.673 12.3172 168.673 13.5972C168.673 14.8649 168.39 15.991 167.824 16.9756C167.27 17.9602 166.476 18.7233 165.442 19.2648C164.421 19.8064 163.233 20.0771 161.879 20.0771H157.024V7.11728H161.879ZM161.676 17.3449C162.87 17.3449 163.799 17.0187 164.464 16.3664C165.128 15.7141 165.461 14.791 165.461 13.5972C165.461 12.4034 165.128 11.4742 164.464 10.8095C163.799 10.1449 162.87 9.81263 161.676 9.81263H160.181V17.3449H161.676ZM182.419 7.11728L177.822 20.0771H173.871L169.274 7.11728H172.634L175.846 16.9018L179.077 7.11728H182.419ZM186.71 7.11728V20.0771H183.553V7.11728H186.71ZM193.503 20.2064C192.555 20.2064 191.706 20.0525 190.955 19.7448C190.204 19.4372 189.601 18.9818 189.146 18.3787C188.703 17.7756 188.469 17.0495 188.444 16.2003H191.804C191.853 16.6803 192.019 17.0495 192.303 17.3079C192.586 17.5541 192.955 17.6772 193.41 17.6772C193.878 17.6772 194.247 17.5726 194.518 17.3633C194.789 17.1418 194.924 16.8403 194.924 16.4587C194.924 16.1387 194.813 15.8741 194.592 15.6649C194.383 15.4557 194.118 15.2833 193.798 15.148C193.49 15.0126 193.047 14.8587 192.469 14.6864C191.632 14.428 190.949 14.1695 190.419 13.9111C189.89 13.6526 189.435 13.2711 189.053 12.7665C188.672 12.2618 188.481 11.6034 188.481 10.7911C188.481 9.58494 188.918 8.64342 189.792 7.9665C190.666 7.27728 191.804 6.93266 193.207 6.93266C194.635 6.93266 195.786 7.27728 196.659 7.9665C197.533 8.64342 198.001 9.5911 198.062 10.8095H194.647C194.623 10.3911 194.469 10.0649 194.186 9.8311C193.903 9.58494 193.539 9.46187 193.096 9.46187C192.715 9.46187 192.407 9.56648 192.173 9.77571C191.939 9.97263 191.823 10.2619 191.823 10.6434C191.823 11.0619 192.019 11.388 192.413 11.6218C192.807 11.8557 193.423 12.108 194.259 12.3788C195.096 12.6618 195.773 12.9326 196.29 13.1911C196.819 13.4495 197.275 13.8249 197.656 14.3172C198.038 14.8095 198.229 15.4433 198.229 16.2187C198.229 16.9572 198.038 17.6279 197.656 18.231C197.287 18.8341 196.746 19.3141 196.032 19.671C195.318 20.0279 194.475 20.2064 193.503 20.2064ZM206.116 20.2064C204.898 20.2064 203.778 19.9233 202.756 19.3572C201.747 18.791 200.941 18.0033 200.338 16.9941C199.747 15.9726 199.451 14.828 199.451 13.5603C199.451 12.2926 199.747 11.1542 200.338 10.1449C200.941 9.13572 201.747 8.34803 202.756 7.78189C203.778 7.21574 204.898 6.93266 206.116 6.93266C207.334 6.93266 208.448 7.21574 209.457 7.78189C210.479 8.34803 211.279 9.13572 211.857 10.1449C212.448 11.1542 212.744 12.2926 212.744 13.5603C212.744 14.828 212.448 15.9726 211.857 16.9941C211.267 18.0033 210.467 18.791 209.457 19.3572C208.448 19.9233 207.334 20.2064 206.116 20.2064ZM206.116 17.3264C207.15 17.3264 207.974 16.9818 208.59 16.2926C209.217 15.6033 209.531 14.6926 209.531 13.5603C209.531 12.4157 209.217 11.5049 208.59 10.828C207.974 10.1388 207.15 9.79417 206.116 9.79417C205.07 9.79417 204.233 10.1326 203.605 10.8095C202.99 11.4865 202.682 12.4034 202.682 13.5603C202.682 14.7049 202.99 15.6218 203.605 16.311C204.233 16.9879 205.07 17.3264 206.116 17.3264ZM220.924 20.0771L218.229 15.1849H217.472V20.0771H214.315V7.11728H219.614C220.635 7.11728 221.503 7.29574 222.217 7.65266C222.943 8.00958 223.484 8.50188 223.841 9.12956C224.198 9.74494 224.377 10.4342 224.377 11.1972C224.377 12.0588 224.131 12.828 223.638 13.5049C223.158 14.1818 222.444 14.6618 221.497 14.9449L224.487 20.0771H220.924ZM217.472 12.9511H219.429C220.008 12.9511 220.438 12.8095 220.721 12.5265C221.017 12.2434 221.164 11.8434 221.164 11.3265C221.164 10.8342 221.017 10.4465 220.721 10.1634C220.438 9.88033 220.008 9.73879 219.429 9.73879H217.472V12.9511Z" fill="currentColor"/>
 <g clip-path="url(#clip0_1164_57289)">
 <path d="M13.0751 15.7081C13.0445 15.7081 13.0087 15.7081 12.978 15.7029C8.75303 15.2205 7.35668 13.5034 6.90145 12.5283C6.23139 11.086 6.5792 9.59725 7.79145 8.72582C8.8963 7.93211 10.3386 7.99433 11.2185 8.8762C11.5612 9.21862 11.5663 9.78407 11.2287 10.1316C10.891 10.4791 10.3337 10.4843 9.99084 10.1419C9.67372 9.8255 9.15198 9.91887 8.80419 10.1731C8.56384 10.3443 8.05744 10.8474 8.48707 11.7708C8.71722 12.2636 9.57149 13.4101 12.6353 13.8665C14.2363 11.1742 13.9038 9.77885 13.6787 9.28606C13.4895 8.88141 13.2286 8.62723 12.9013 8.5235C12.5944 8.43013 12.2312 8.47677 11.9345 8.65316C11.5202 8.90213 10.9832 8.76211 10.7377 8.34189C10.4921 7.92175 10.6303 7.37705 11.0446 7.12806C11.7658 6.69231 12.6353 6.58338 13.4127 6.82719C13.9753 7.00356 14.7529 7.4393 15.2592 8.52864C15.7145 9.50909 16.1339 11.6878 13.8118 15.3034C13.648 15.5577 13.3718 15.7081 13.0803 15.7081H13.0751Z" fill="currentColor"/>
 <path d="M14.4625 22.5287C14.038 22.5287 13.6441 22.2486 13.5111 21.8128C13.3525 21.2786 13.6491 20.7131 14.1709 20.5523C17.4803 19.5252 19.9713 16.7551 20.6669 13.321C21.1733 10.8154 20.6873 8.26322 19.3012 6.13121C17.915 3.99918 15.7924 2.54152 13.3218 2.02277C12.7848 1.90864 12.437 1.37435 12.5495 0.829662C12.6621 0.284979 13.1838 -0.0677675 13.7259 0.0463562C16.7131 0.668848 19.2858 2.43776 20.9635 5.02111C22.6412 7.60446 23.2295 10.6962 22.6156 13.7308C21.7717 17.8911 18.759 21.2474 14.754 22.4872C14.6569 22.5183 14.5596 22.5339 14.4625 22.5339V22.5287Z" fill="currentColor"/>
@@ -1081,22 +1352,49 @@ body.cc #ccFlag{display:block}
 </header>
 
 <main id="frame">
-  <section class="card" id="s01" data-id="0.1" data-ch="Open">
-    <svg class="motif" viewBox="0 0 300 288" fill="none" aria-hidden="true"><path d="M165.378 198.685C164.99 198.685 164.537 198.685 164.149 198.62C110.711 192.518 93.0496 170.8 87.2917 158.466C78.8167 140.224 83.2159 121.394 98.5487 110.372C112.523 100.333 130.766 101.12 141.895 112.274C146.229 116.605 146.294 123.757 142.024 128.152C137.753 132.548 130.703 132.614 126.367 128.283C122.356 124.281 115.757 125.462 111.358 128.677C108.318 130.843 101.913 137.206 107.347 148.886C110.258 155.119 121.063 169.62 159.815 175.393C180.064 141.34 175.859 123.691 173.012 117.458C170.619 112.34 167.319 109.125 163.179 107.813C159.298 106.632 154.704 107.222 150.951 109.453C145.711 112.602 138.918 110.831 135.813 105.516C132.707 100.202 134.455 93.3125 139.695 90.1632C148.817 84.6517 159.815 83.2739 169.648 86.3577C176.764 88.5885 186.598 94.0998 193.003 107.878C198.761 120.279 204.066 147.836 174.695 193.567C172.624 196.783 169.13 198.685 165.443 198.685H165.378Z" fill="currentColor"/><path d="M182.923 284.948C177.554 284.948 172.572 281.405 170.89 275.893C168.884 269.136 172.636 261.984 179.235 259.95C221.093 246.959 252.6 211.922 261.398 168.487C267.803 136.796 261.656 104.515 244.124 77.5489C226.592 50.5825 199.744 32.1456 168.496 25.5844C161.703 24.1409 157.304 17.383 158.727 10.4937C160.151 3.60443 166.75 -0.85719 173.607 0.586272C211.389 8.45969 243.93 30.8333 265.15 63.508C286.37 96.1828 293.81 135.288 286.046 173.67C275.372 226.291 237.266 268.742 186.611 284.423C185.382 284.816 184.152 285.014 182.923 285.014V284.948Z" fill="currentColor"/><path d="M117.96 288C117.119 288 116.278 287.934 115.437 287.737C77.6551 279.864 45.1137 257.556 23.8938 224.815C2.67386 192.142 -4.76604 153.036 2.99733 114.653C14.7718 56.39 59.6054 11.446 117.184 0.226364C124.041 -1.08587 130.64 3.4413 131.935 10.3305C133.228 17.2854 128.764 23.9778 121.971 25.2901C74.4204 34.6069 37.415 71.6777 27.6461 119.837C21.2413 151.528 27.3872 183.809 44.9196 210.775C62.4518 237.742 89.3002 256.178 120.547 262.739C127.341 264.182 131.741 270.941 130.317 277.83C129.088 283.866 123.847 288 118.025 288H117.96Z" fill="currentColor"/><path d="M58.8323 136.393C57.9266 136.393 57.0208 136.262 56.1152 136.066C49.5809 134.556 45.5052 127.93 47.0578 121.303C53.0745 94.861 68.86 72.4218 91.5679 58.0527C114.211 43.6838 141.059 39.1566 167.132 45.2584C202.843 53.6568 231.179 81.0825 241.013 116.972C242.824 123.534 239.072 130.291 232.602 132.128C226.134 133.966 219.47 130.094 217.658 123.599C210.218 96.4357 188.74 75.6367 161.632 69.2724C141.901 64.614 121.586 68.0914 104.378 78.983C87.2334 89.8746 75.2648 106.868 70.6715 126.88C69.3775 132.588 64.3961 136.393 58.8323 136.393Z" fill="currentColor"/><path d="M144.457 245.68C137.018 245.68 129.448 244.828 121.944 243.055C82.3504 233.804 52.4614 201.523 45.7331 160.909C44.6333 154.217 49.0973 147.853 55.6961 146.737C62.295 145.622 68.5704 150.149 69.6702 156.841C74.7811 187.614 97.4243 212.021 127.378 219.042C168.136 228.556 208.893 202.704 218.339 161.435C219.826 154.807 226.361 150.674 232.895 152.249C239.429 153.758 243.505 160.385 241.953 167.011C231.278 213.858 190.003 245.68 144.457 245.68Z" fill="currentColor"/></svg>
+  <section class="card" id="s01" data-id="1.1" data-ch="Opening">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="opener st">
       <div class="eyebrow">Knomee</div>
       <h1 class="title">The Client Insight Layer <em>For Growth.</em></h1>
-      <p class="lede">Marla Sofer, Founder &amp; CEO · Knomee.com</p>
+      <p class="lede">Knomee is the client insight layer wealth management runs on — client-authored,
+      permissioned behavioral data that tells advisors who is ready to act and what to say.</p>
+      <div class="openmeta">
+        <span><b>Marla Sofer</b> · Founder &amp; CEO</span>
+        <a href="mailto:marla@knomee.com">marla@knomee.com</a>
+        <span>(415) 940-0519</span><span>Knomee.com</span>
+      </div>
     </div>
   </section>
 
-  <section class="card" id="s11" data-id="1.1" data-ch="Problem">
+  <section class="card" id="s02" data-id="2.1" data-ch="Headline">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Chapter 1 · Problem</div>
+      <div class="eyebrow">Chapter 2 · Traction</div>
+      <h1 class="title">Edward Jones Finished A Paid Pilot. <em>We’re In Scaled Contracting.</em></h1>
+      <p class="lede">And the pipeline behind it is already $25M across 67 opportunities.</p>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="n">$25M</div><div class="l">pipeline across 67 opportunities</div></div>
+      <div class="metric"><div class="n">95%</div><div class="l">completion rate</div></div>
+      <div class="metric"><div class="n">+10%</div><div class="l">conversion lift</div></div>
+      <div class="metric"><div class="n">$10M</div><div class="l">Edward Jones, at scale</div></div>
+    </div>
+    <div class="logos">
+      <img src="assets/logos/edward-jones.png" alt="Edward Jones" loading="lazy">
+      <img src="assets/logos/ameriprise.png" alt="Ameriprise Financial" loading="lazy">
+      <img src="assets/logos/robertson-stephens.png" alt="Robertson Stephens" loading="lazy">
+    </div>
+  </section>
+
+  <section class="card" id="s11" data-id="3.1" data-ch="Problem">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Chapter 3 · Problem</div>
       <h1 class="title">The Industry Has A <em>Growth Problem.</em></h1>
       <p class="lede">Wealth management firms don’t know what prospects want. Billions go into marketing while organic growth stays under 2%.</p>
     </div>
-    <div class="dvg">
+    <div class="dvg" data-opens="s12">
       <svg viewBox="0 0 620 250" role="img" aria-label="Marketing spend rising steeply while organic growth stays flat">
         <path class="axis" d="M46 14 L46 214 L600 214"/>
         <path class="sp" d="M56 200 L146 128 L214 168 L300 92 L370 132 L446 40 L520 22"/>
@@ -1108,9 +1406,10 @@ body.cc #ccFlag{display:block}
     <div class="sources"><span>Source: McKinsey</span></div>
   </section>
 
-  <section class="card" id="s12" data-id="1.1.1" data-ch="Problem">
+  <section class="card" id="s12" data-id="3.1.1" data-ch="Problem">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Problem · 1.1.1</div>
+      <div class="eyebrow">Problem · 3.1.1</div>
       <h1 class="title">What The <em>Research Says.</em></h1>
     </div>
     <div class="stats">
@@ -1126,9 +1425,10 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s13" data-id="1.1.2" data-ch="Problem">
+  <section class="card" id="s13" data-id="3.1.2" data-ch="Problem">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Problem · 1.1.2</div>
+      <div class="eyebrow">Problem · 3.1.2</div>
       <h1 class="title">Because The Growth Model Is <em>Product-Centric, Not Client-Centric.</em></h1>
     </div>
     <div class="tcols">
@@ -1141,29 +1441,31 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s21" data-id="2.1" data-ch="Insight Layer">
+  <section class="card" id="s21" data-id="4.1" data-ch="Solution">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Chapter 2 · Insight Layer</div>
+      <div class="eyebrow">Chapter 4 · Solution</div>
       <h1 class="title">Knomee Is The <em>Client Insight Layer For Growth.</em></h1>
     </div>
     <div class="tiers">
-      <div class="tierc"><h3>Client Insight</h3>
+      <div class="tierc" data-opens="s22"><h3>Client Insight</h3>
         <div class="terms"><span>Values</span><span>Goals</span><span>Life Events</span><span>Intent</span><span>Sentiment</span></div>
         <div class="cap"><b>Client-authored, permissioned, behavioral data:</b> not inferred or scraped</div></div>
       <div class="tarrow">&#9660;</div>
-      <div class="tierc"><h3>The Knomee Brain</h3>
+      <div class="tierc" data-opens="s23"><h3>The Knomee Brain</h3>
         <div class="terms"><span>Structured</span><span>Persistent</span><span>Evolving</span></div>
         <div class="cap">The system that <b>makes client understanding usable</b></div></div>
       <div class="tarrow">&#9660;</div>
-      <div class="tierc"><h3>Decisions Powered by Knomee</h3>
+      <div class="tierc" data-opens="s24"><h3>Decisions Powered by Knomee</h3>
         <div class="terms"><span>Segment Precisely</span><span>Act Intelligently</span><span>See the Market</span><span>Power AI Systems</span></div>
         <div class="cap">The intelligence layer <b>every growth decision runs on</b></div></div>
     </div>
   </section>
 
-  <section class="card" id="s22" data-id="2.1.1" data-ch="Insight Layer">
+  <section class="card" id="s22" data-id="4.1.1" data-ch="Solution">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Insight Layer · 2.1.1</div>
+      <div class="eyebrow">Solution · 4.1.1</div>
       <h1 class="title">Client Insight, <em>Authored By The Client.</em></h1>
     </div>
     <div class="panes">
@@ -1180,9 +1482,10 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s23" data-id="2.1.2" data-ch="Insight Layer">
+  <section class="card" id="s23" data-id="4.1.2" data-ch="Solution">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Insight Layer · 2.1.2</div>
+      <div class="eyebrow">Solution · 4.1.2</div>
       <h1 class="title">The Knomee Brain <em>Makes It Usable.</em></h1>
     </div>
     <div class="tcols">
@@ -1196,9 +1499,10 @@ body.cc #ccFlag{display:block}
     <div class="tag">The system that makes client understanding usable</div>
   </section>
 
-  <section class="card" id="s24" data-id="2.1.3" data-ch="Insight Layer">
+  <section class="card" id="s24" data-id="4.1.3" data-ch="Solution">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Insight Layer · 2.1.3</div>
+      <div class="eyebrow">Solution · 4.1.3</div>
       <h1 class="title">Four Decisions <em>Powered By Knomee.</em></h1>
     </div>
     <div class="grid4">
@@ -1209,44 +1513,10 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s31" data-id="3.1" data-ch="Product">
+  <section class="card" id="s41" data-id="4.2" data-ch="Solution">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Chapter 3 · Product</div>
-      <h1 class="title">Knomee Engages Prospects &amp; Clients <em>Before Meetings.</em></h1>
-    </div>
-    <div class="qwrap">
-      <div class="st"><div class="gauge">
-          <svg viewBox="-8 -8 116 116"><circle class="g-bg" cx="50" cy="50" r="45"/><circle class="g-fg" cx="50" cy="50" r="45"/></svg>
-          <div style="text-align:center"><div class="gv">95%</div><div class="gl">Completion<br>Rate</div></div>
-        </div></div>
-      <div class="st quote"><p>“This feels like other familiar self discovery apps, not a financial questionnaire.”</p></div>
-    </div>
-  </section>
-
-  <section class="card screencard" id="s32" data-id="3.1.1" data-ch="Product">
-    <div class="st">
-      <div class="eyebrow">Product · 3.1.1</div>
-      <h1 class="title">Advisors See Actionable, <em>Science-Proven Trust Builders</em></h1>
-    </div>
-    <div class="scr st"><div class="scrhead"><span class="scrav">S</span><span><span class="scrname">Sarah Mitchell</span><span class="scrsub">New prospect</span></span><span class="scrtabs"><span class="scrtab">Prospect Readiness</span><span class="scrtab on">Prospect Playbook</span></span></div><div class="topact"><b>Top Action</b>“Worked since 13, ready for adventures”; lead with Future You vision.</div><div class="pbrow"><div><div class="cslab">Conversation Starters</div><div class="st2"><q>“You mentioned wanting to leave a lasting legacy for your child. I’d love to hear more about what that means to you.”</q><p>Get Sarah talking positively about her future and what’s possible.</p><div class="tags"><span class="tg a">Positive Talk</span></div></div><div class="st2"><q>“You feel guilty enjoying things you’ve earned. What if a plan gave you full permission to enjoy life?”</q><div class="tags"><span class="tg b">Demonstrate Curiosity</span><span class="tg c">Acknowledge and Validate</span></div></div></div><div class="wtu"><b>Words to Use</b><div class="wchips"><span>Security</span><span>Independence</span><span>Simplicity</span><span>Confidence</span><span>Enjoy</span><span>Future</span><span>Family</span></div><div class="take"><b>Advisor takeaway</b><span>A direct, purposeful communication style will likely resonate with her.</span></div></div></div></div></section>
-
-  <section class="card screencard" id="s33" data-id="3.1.2" data-ch="Product">
-    <div class="st">
-      <div class="eyebrow">Product · 3.1.2</div>
-      <h1 class="title">And Walk Into Meetings <em>Ready To Help.</em></h1>
-    </div>
-    <div class="scr st"><div class="scrhead"><span class="scrav">S</span><span><span class="scrname">Sarah Mitchell</span><span class="scrsub">New prospect</span></span><span class="scrtabs"><span class="scrtab on">Prospect Readiness</span><span class="scrtab">Prospect Playbook</span></span></div><div class="kqrow"><div class="kqcard"><div class="kqt">Knomee Quotient (KQ)</div><div class="kqq">How ready is this prospect to convert?</div><div class="kq"><svg viewBox="-8 -8 116 116"><circle class="bg" cx="50" cy="50" r="45"/><circle class="fg" cx="50" cy="50" r="45"/></svg><b>81</b></div></div><div class="sc"><div class="kqt">Intent</div><div class="kqq">Are they actively working toward a goal?</div><div class="scv">83</div><div class="scd">Actively pursuing a meaningful goal</div></div><div class="sc"><div class="kqt">Clarity</div><div class="kqq">Can they articulate what they want?</div><div class="scv">62</div><div class="scd">Vision present, not fully formed</div></div><div class="sc"><div class="kqt">Receptivity</div><div class="kqq">Are they open to guidance?</div><div class="scv">100</div><div class="scd">Explicitly open, support-seeking</div></div></div><div class="tierbar"><b><i></i> TIER 1 – READY NOW</b><span>High-readiness prospect — actively seeking guidance and ready to engage.</span></div></div></section>
-
-  <section class="card screencard" id="s34" data-id="3.1.3" data-ch="Product">
-    <div class="st">
-      <div class="eyebrow">Product · 3.1.3</div>
-      <h1 class="title">Conversion Intelligence Identifies <em>Who to Focus on First.</em></h1>
-    </div>
-    <div class="scr st"><div class="scrhead"><span><span class="scrname">My Prospects</span><span class="scrsub">12 prospects · ranked by readiness</span></span></div><div class="plist"><div><div class="grp t1"><span>Tier 1 — Ready now</span><span class="rng">70–100 KQ</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">E</span><span class="pn">Emma Rossi</span><span class="pk t1">88</span><span class="pa">Caregiving urgency — discuss estate plan</span></div><div class="prow on"><span class="av" style="background:#EDE7FA;color:#6D28D9">S</span><span class="pn">Sarah Mitchell</span><span class="pk t1">81</span><span class="pa">Call now — lead with the Future You vision</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">J</span><span class="pn">Jorday Ray</span><span class="pk t1">76</span><span class="pa">Family legacy is their stated #1 life goal</span></div></div><div><div class="grp t2"><span>Tier 2 — Considering</span><span class="rng">40–69 KQ</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#8A8697">B</span><span class="pn">Barbara Dean</span><span class="pk t2">68</span><span class="pa">Needs a goal reframe session</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#8A8697">S</span><span class="pn">Sophie Dean</span><span class="pk t2">62</span><span class="pa">Send value-add travel planning content</span></div><div class="grp t3"><span>Tier 3 — Nurture</span><span class="rng">0–39 KQ</span></div><div class="prow"><span class="av" style="background:#F3F3F5;color:#A9A5B4">E</span><span class="pn">Emily Watson</span><span class="pk t3">35</span><span class="pa">Quarterly light-touch check-in</span></div></div></div></div></section>
-
-  <section class="card" id="s41" data-id="4.1" data-ch="Flywheel">
-    <div class="st">
-      <div class="eyebrow">Chapter 4 · Flywheel</div>
+      <div class="eyebrow">Chapter 4 · Solution</div>
       <h1 class="title">How It Works: <em>The Knomee Flywheel.</em></h1>
       <p class="lede">Reveal what prospects and clients want, when they’re ready to act, and how to progress them forward.</p>
     </div>
@@ -1264,18 +1534,19 @@ body.cc #ccFlag{display:block}
         </g>
       </svg>
       <div class="wsteps">
-        <div class="wstep" style="left:50%;top:0;transform:translateX(-50%)"><b>1. Prospect</b><span><i>Engaging experiences</i> capture client insight</span></div>
-        <div class="wstep" style="right:0;top:30%"><b>2. Advisor</b><span><i>AI translates insight</i> into ongoing, resonant action</span></div>
-        <div class="wstep" style="right:0;bottom:15%"><b>3. Client</b><span>Dynamic engagement <i>deepens relationships</i></span></div>
-        <div class="wstep" style="left:0;bottom:4%"><b>4. Firm</b><span>Firm aggregates intelligence to <i>improve decision-making</i></span></div>
-        <div class="wstep" style="left:0;top:30%"><b>5. Compounding Intelligence</b><span>Decisions improve to <i>fuel the growth flywheel</i></span></div>
+        <div class="wstep" style="left:50%;top:0;transform:translateX(-50%)" data-opens="s42"><b>1. Prospect</b><span><i>Engaging experiences</i> capture client insight</span></div>
+        <div class="wstep" style="right:0;top:30%" data-opens="s42"><b>2. Advisor</b><span><i>AI translates insight</i> into ongoing, resonant action</span></div>
+        <div class="wstep" style="right:0;bottom:15%" data-opens="s43"><b>3. Client</b><span>Dynamic engagement <i>deepens relationships</i></span></div>
+        <div class="wstep" style="left:0;bottom:4%" data-opens="s43"><b>4. Firm</b><span>Firm aggregates intelligence to <i>improve decision-making</i></span></div>
+        <div class="wstep" style="left:0;top:30%" data-opens="s44"><b>5. Compounding Intelligence</b><span>Decisions improve to <i>fuel the growth flywheel</i></span></div>
       </div>
     </div>
   </section>
 
-  <section class="card" id="s42" data-id="4.1.1" data-ch="Flywheel">
+  <section class="card" id="s42" data-id="4.2.1" data-ch="Solution">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Flywheel · 4.1.1</div>
+      <div class="eyebrow">Solution · 4.2.1</div>
       <h1 class="title">It Starts With <em>The Prospect, Then The Advisor.</em></h1>
     </div>
     <div class="panes">
@@ -1290,9 +1561,10 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s43" data-id="4.1.2" data-ch="Flywheel">
+  <section class="card" id="s43" data-id="4.2.2" data-ch="Solution">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Flywheel · 4.1.2</div>
+      <div class="eyebrow">Solution · 4.2.2</div>
       <h1 class="title">Then The Client, <em>Then The Firm.</em></h1>
     </div>
     <div class="panes">
@@ -1307,47 +1579,156 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s44" data-id="4.1.3" data-ch="Flywheel">
+  <section class="card" id="s44" data-id="4.2.3" data-ch="Solution">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Flywheel · 4.1.3</div>
+      <div class="eyebrow">Solution · 4.2.3</div>
       <h1 class="title">And It <em>Compounds.</em></h1>
     </div>
-    <div class="statement">
-      <div class="quote"><p>Decisions improve to fuel the growth flywheel.</p></div>
-      <p class="lede">Absolute and relative data improves with every client interaction. The fifth step
-      is what makes the first four worth more next quarter than they are today — each completed
-      experience sharpens the segmentation, the recommended actions, and the market view for
-      every firm on the platform.</p>
+    <div class="compound">
+      <div>
+        <div class="quote"><p>Decisions improve to fuel the growth flywheel.</p></div>
+        <p class="lede" style="max-width:none">Absolute and relative data improves with every client
+        interaction. The fifth step is what makes the first four worth more next quarter than they are
+        today.</p>
+        <div class="panes" style="grid-template-columns:1fr;gap:clamp(9px,1.2vw,16px);margin-top:clamp(12px,1.6vw,22px)">
+          <div class="pbox"><h3>What compounds</h3>
+            <ul><li>Sharper <b>segmentation</b> — who matters right now</li>
+            <li>Better <b>recommended actions</b> per prospect</li>
+            <li>A wider <b>market view</b> for every firm on the platform</li></ul></div>
+        </div>
+      </div>
+      <figure class="pshot"><img src="assets/product/knomee-composite.jpg" alt="Knomee across client and advisor surfaces" loading="lazy"></figure>
     </div>
   </section>
 
-  <section class="card" id="s51" data-id="5.1" data-ch="Traction">
+  <section class="card" id="s31" data-id="5.1" data-ch="Show It">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Chapter 5 · Traction</div>
+      <div class="eyebrow">Chapter 5 · Show It</div>
+      <h1 class="title">Knomee Engages Prospects &amp; Clients <em>Before Meetings.</em></h1>
+    </div>
+    <div class="prodwrap">
+      <figure class="pshot phones"><img src="assets/product/client-phones.jpg" alt="The Knomee client experience on mobile" loading="lazy">
+        <figcaption>What the client sees</figcaption></figure>
+      <figure class="pshot wide"><img src="assets/product/advisor-dashboard.jpg" alt="The Knomee advisor view: conversion readiness, motivators, apprehensions" loading="lazy">
+        <figcaption>What the advisor sees</figcaption></figure>
+      <div class="pstat">
+        <div class="pnum"><b>95%</b><span>completion rate</span></div>
+        <div class="quote"><p>“This feels like other familiar self discovery apps, not a financial questionnaire.”</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card screencard" id="s32" data-id="5.1.1" data-ch="Show It">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Show It · 5.1.1</div>
+      <h1 class="title">Advisors See Actionable, <em>Science-Proven Trust Builders</em></h1>
+    </div>
+    <div class="scr st"><div class="scrhead"><span class="scrav">S</span><span><span class="scrname">Sarah Mitchell</span><span class="scrsub">New prospect</span></span><span class="scrtabs"><span class="scrtab">Prospect Readiness</span><span class="scrtab on">Prospect Playbook</span></span></div><div class="topact"><b>Top Action</b>“Worked since 13, ready for adventures”; lead with Future You vision.</div><div class="pbrow"><div><div class="cslab">Conversation Starters</div><div class="st2"><q>“You mentioned wanting to leave a lasting legacy for your child. I’d love to hear more about what that means to you.”</q><p>Get Sarah talking positively about her future and what’s possible.</p><div class="tags"><span class="tg a">Positive Talk</span></div></div><div class="st2"><q>“You feel guilty enjoying things you’ve earned. What if a plan gave you full permission to enjoy life?”</q><div class="tags"><span class="tg b">Demonstrate Curiosity</span><span class="tg c">Acknowledge and Validate</span></div></div></div><div class="wtu"><b>Words to Use</b><div class="wchips"><span>Security</span><span>Independence</span><span>Simplicity</span><span>Confidence</span><span>Enjoy</span><span>Future</span><span>Family</span></div><div class="take"><b>Advisor takeaway</b><span>A direct, purposeful communication style will likely resonate with her.</span></div></div></div></div></section>
+
+  <section class="card screencard" id="s33" data-id="5.1.2" data-ch="Show It">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Show It · 5.1.2</div>
+      <h1 class="title">And Walk Into Meetings <em>Ready To Help.</em></h1>
+    </div>
+    <div class="scr st"><div class="scrhead"><span class="scrav">S</span><span><span class="scrname">Sarah Mitchell</span><span class="scrsub">New prospect</span></span><span class="scrtabs"><span class="scrtab on">Prospect Readiness</span><span class="scrtab">Prospect Playbook</span></span></div><div class="kqrow"><div class="kqcard"><div class="kqt">Knomee Quotient (KQ)</div><div class="kqq">How ready is this prospect to convert?</div><div class="kq"><svg viewBox="-8 -8 116 116"><circle class="bg" cx="50" cy="50" r="45"/><circle class="fg" cx="50" cy="50" r="45"/></svg><b>81</b></div></div><div class="sc"><div class="kqt">Intent</div><div class="kqq">Are they actively working toward a goal?</div><div class="scv">83</div><div class="scd">Actively pursuing a meaningful goal</div></div><div class="sc"><div class="kqt">Clarity</div><div class="kqq">Can they articulate what they want?</div><div class="scv">62</div><div class="scd">Vision present, not fully formed</div></div><div class="sc"><div class="kqt">Receptivity</div><div class="kqq">Are they open to guidance?</div><div class="scv">100</div><div class="scd">Explicitly open, support-seeking</div></div></div><div class="tierbar"><b><i></i> TIER 1 – READY NOW</b><span>High-readiness prospect — actively seeking guidance and ready to engage.</span></div></div></section>
+
+  <section class="card screencard" id="s34" data-id="5.1.3" data-ch="Show It">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Show It · 5.1.3</div>
+      <h1 class="title">Conversion Intelligence Identifies <em>Who to Focus on First.</em></h1>
+    </div>
+    <div class="scr st"><div class="scrhead"><span><span class="scrname">My Prospects</span><span class="scrsub">12 prospects · ranked by readiness</span></span></div><div class="plist"><div><div class="grp t1"><span>Tier 1 — Ready now</span><span class="rng">70–100 KQ</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">E</span><span class="pn">Emma Rossi</span><span class="pk t1">88</span><span class="pa">Caregiving urgency — discuss estate plan</span></div><div class="prow on"><span class="av" style="background:#EDE7FA;color:#6D28D9">S</span><span class="pn">Sarah Mitchell</span><span class="pk t1">81</span><span class="pa">Call now — lead with the Future You vision</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">J</span><span class="pn">Jorday Ray</span><span class="pk t1">76</span><span class="pa">Family legacy is their stated #1 life goal</span></div></div><div><div class="grp t2"><span>Tier 2 — Considering</span><span class="rng">40–69 KQ</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#565064">B</span><span class="pn">Barbara Dean</span><span class="pk t2">68</span><span class="pa">Needs a goal reframe session</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#565064">S</span><span class="pn">Sophie Dean</span><span class="pk t2">62</span><span class="pa">Send value-add travel planning content</span></div><div class="grp t3"><span>Tier 3 — Nurture</span><span class="rng">0–39 KQ</span></div><div class="prow"><span class="av" style="background:#F3F3F5;color:#5C5670">E</span><span class="pn">Emily Watson</span><span class="pk t3">35</span><span class="pa">Quarterly light-touch check-in</span></div></div></div></div></section>
+
+  <section class="card" id="s61" data-id="6.1" data-ch="Revenue Model">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Chapter 6 · Revenue Model</div>
+      <h1 class="title">Knomee Becomes <em>More Valuable As It’s Used.</em></h1>
+    </div>
+    <div class="stak">
+      <div class="slayer l1" data-opens="s62"><div class="no">1</div><div><div class="nm">Client Engagement Layer</div>
+        <div class="rv">Usage fee — $50 per prospect completion · $50 client subscription/yr</div></div></div>
+      <div class="slayer l2" data-opens="s62"><div class="no">2</div><div><div class="nm">Advisor Workflow Layer</div>
+        <div class="rv">Platform fee — $10–250k tiered/firm/yr</div></div></div>
+      <div class="slayer l3" data-opens="s64"><div class="no">3</div><div><div class="nm">Enterprise Intelligence Layer</div>
+        <div class="rv">Enterprise contracts &amp; premium analytics</div></div></div>
+      <div class="slayer l4" data-opens="s64"><div class="no">4</div><div><div class="nm">Market Intelligence &amp; API Layer</div>
+        <div class="rv">High-margin API and future data revenue</div></div></div>
+    </div>
+  </section>
+
+  <section class="card" id="s62" data-id="6.1.1" data-ch="Revenue Model">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Revenue Model · 6.1.1</div>
+      <h1 class="title">How Each Layer <em>Earns.</em></h1>
+    </div>
+    <div class="panes">
+      <div class="pbox"><h3>Layers 1–2 · Recurring today</h3>
+        <ul><li><b>Platform fee</b> — $10–250k tiered, per firm, per year</li>
+        <li><b>Usage fee</b> — $50 per prospect completion</li>
+        <li><b>Client subscription</b> — $50 per year</li></ul></div>
+      <div class="pbox"><h3>Layers 3–4 · Expanding</h3>
+        <ul><li><b>Enterprise contracts &amp; premium analytics</b></li>
+        <li><b>High-margin API and future data revenue</b></li></ul>
+        <p>Margin rises as the mix moves from software to analytics to APIs.</p></div>
+    </div>
+  </section>
+
+  <section class="card" id="s64" data-id="6.1.2" data-ch="Revenue Model">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Revenue Model · 6.1.2</div>
+      <h1 class="title">Platform <em>Economics.</em></h1>
+    </div>
+    <div class="tcols five">
+      <div class="tcol"><h3>Higher Retention</h3><ul><li>Sticky embedded workflows</li></ul></div>
+      <div class="tcol"><h3>Expanding ACV</h3><ul><li>Intelligence increases value per customer</li></ul></div>
+      <div class="tcol"><h3>Increasing Margins</h3><ul><li>Software &gt; Analytics &gt; APIs</li></ul></div>
+      <div class="tcol"><h3>Defensible Data Moat</h3><ul><li>Unique, consented, hard-to-replicate</li></ul></div>
+      <div class="tcol"><h3>Compounding Intelligence</h3><ul><li>Virtuous personalization cycle</li></ul></div>
+    </div>
+    <div class="tcols" style="margin-top:0">
+      <div class="tcol"><h3>Defensible Data Moat</h3><ul><li>Unique, consented, hard-to-replicate</li></ul></div>
+      <div class="tcol"><h3>Compounding Intelligence</h3><ul><li>Virtuous personalization cycle</li></ul></div>
+      <div class="tcol" style="background:transparent;border:0;box-shadow:none"></div>
+    </div>
+  </section>
+
+  <section class="card" id="s51" data-id="7.1" data-ch="Traction">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Chapter 7 · Traction</div>
       <h1 class="title">Traction With <em>Leading Financial Institutions.</em></h1>
     </div>
     <div class="logos"><img src="assets/logos/archer.png" alt="Archer Investment Management" loading="lazy"><img src="assets/logos/wealthup.png" alt="WealthUp" loading="lazy"><img src="assets/logos/wealthcare-for-women.png" alt="Wealthcare for Women" loading="lazy"><img src="assets/logos/nexa-wealth.png" alt="Nexa Wealth" loading="lazy"><img src="assets/logos/blue-ocean.png" alt="Blue Ocean Global Wealth" loading="lazy"></div>
     <div class="tcols">
-      <div class="tcol"><h3>Enterprise</h3>
+      <div class="tcol" data-opens="s52"><h3>Enterprise</h3>
         <ul><li>Edward Jones — <b>paid pilot complete</b>, in scaled contracting</li>
         <li><b>$1M to start, $10M at scale</b></li>
         <li>Ameriprise — <b>paid pilot in progress</b></li>
         <li>Robertson Stephens — <b>live deployment</b></li>
         <li><b>$25M</b> pipeline across 67 opps</li></ul></div>
-      <div class="tcol"><h3>Impact</h3>
+      <div class="tcol" data-opens="s53"><h3>Impact</h3>
         <ul><li><b>95%</b> completion rate</li><li><b>+10%</b> conversion lift</li>
         <li><b>25%</b> faster revenue</li><li><b>20%</b> increased advisor capacity</li>
         <li><b>3x</b> referrals from Knomee users</li><li><b>90%</b> “felt more understood”</li></ul></div>
-      <div class="tcol"><h3>Adoption</h3>
+      <div class="tcol" data-opens="s54"><h3>Adoption</h3>
         <ul><li><b>50+ RIAs</b> engaged</li><li><b>100+ advisors</b> active</li>
         <li><b>4,500</b> client experiences completed</li>
         <li>access to <b>200k advisors</b> via approved partnerships</li></ul></div>
     </div>
   </section>
 
-  <section class="card" id="s52" data-id="5.1.1" data-ch="Traction">
+  <section class="card" id="s52" data-id="7.1.1" data-ch="Traction">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Traction · 5.1.1</div>
+      <div class="eyebrow">Traction · 7.1.1</div>
       <h1 class="title">Enterprise: <em>Pilots Turning Into Contracts.</em></h1>
     </div>
     <div class="tcols">
@@ -1364,9 +1745,10 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s53" data-id="5.1.2" data-ch="Traction">
+  <section class="card" id="s53" data-id="7.1.2" data-ch="Traction">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Traction · 5.1.2</div>
+      <div class="eyebrow">Traction · 7.1.2</div>
       <h1 class="title">Impact <em>Firms Can Measure.</em></h1>
     </div>
     <div class="metrics eight">
@@ -1381,9 +1763,10 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s54" data-id="5.1.3" data-ch="Traction">
+  <section class="card" id="s54" data-id="7.1.3" data-ch="Traction">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Traction · 5.1.3</div>
+      <div class="eyebrow">Traction · 7.1.3</div>
       <h1 class="title">Adoption <em>And Distribution Reach.</em></h1>
     </div>
     <div class="panes">
@@ -1397,142 +1780,8 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s61" data-id="6.1" data-ch="Model">
-    <div class="st">
-      <div class="eyebrow">Chapter 6 · Model</div>
-      <h1 class="title">Knomee Becomes <em>More Valuable As It’s Used.</em></h1>
-    </div>
-    <div class="stak">
-      <div class="slayer l1"><div class="no">1</div><div><div class="nm">Client Engagement Layer</div>
-        <div class="rv">Usage fee — $50 per prospect completion · $50 client subscription/yr</div></div></div>
-      <div class="slayer l2"><div class="no">2</div><div><div class="nm">Advisor Workflow Layer</div>
-        <div class="rv">Platform fee — $10–250k tiered/firm/yr</div></div></div>
-      <div class="slayer l3"><div class="no">3</div><div><div class="nm">Enterprise Intelligence Layer</div>
-        <div class="rv">Enterprise contracts &amp; premium analytics</div></div></div>
-      <div class="slayer l4"><div class="no">4</div><div><div class="nm">Market Intelligence &amp; API Layer</div>
-        <div class="rv">High-margin API and future data revenue</div></div></div>
-    </div>
-  </section>
-
-  <section class="card" id="s62" data-id="6.1.1" data-ch="Model">
-    <div class="st">
-      <div class="eyebrow">Model · 6.1.1</div>
-      <h1 class="title">How Each Layer <em>Earns.</em></h1>
-    </div>
-    <div class="panes">
-      <div class="pbox"><h3>Layers 1–2 · Recurring today</h3>
-        <ul><li><b>Platform fee</b> — $10–250k tiered, per firm, per year</li>
-        <li><b>Usage fee</b> — $50 per prospect completion</li>
-        <li><b>Client subscription</b> — $50 per year</li></ul></div>
-      <div class="pbox"><h3>Layers 3–4 · Expanding</h3>
-        <ul><li><b>Enterprise contracts &amp; premium analytics</b></li>
-        <li><b>High-margin API and future data revenue</b></li></ul>
-        <p>Margin rises as the mix moves from software to analytics to APIs.</p></div>
-    </div>
-  </section>
-
-  <section class="card" id="s63" data-id="6.1.2" data-ch="Model">
-    <div class="st">
-      <div class="eyebrow">Model · 6.1.2</div>
-      <h1 class="title">Revenue <em>Projections.</em></h1>
-    </div>
-    <div class="chart" style="flex:1;justify-content:center">
-      <div class="ctitle">Projected annual revenue</div>
-      <div class="crow"><div class="clab">1 year</div>
-        <div class="ctrack"><div class="cbar" style="--w:7%"></div><div class="ctip">$3.5M</div></div>
-        <div class="cval">$3.5M</div></div>
-      <div class="crow"><div class="clab">2 years</div>
-        <div class="ctrack"><div class="cbar" style="--w:20%"></div><div class="ctip">$10M</div></div>
-        <div class="cval">$10M</div></div>
-      <div class="crow"><div class="clab">5 years</div>
-        <div class="ctrack"><div class="cbar" style="--w:100%"></div><div class="ctip">$50M</div></div>
-        <div class="cval">$50M</div></div>
-      <div class="caxis"><span></span><div class="cticks"><span>$0</span><span>$25M</span><span>$50M</span></div><span></span></div>
-    </div>
-  </section>
-
-  <section class="card" id="s64" data-id="6.1.3" data-ch="Model">
-    <div class="st">
-      <div class="eyebrow">Model · 6.1.3</div>
-      <h1 class="title">Platform <em>Economics.</em></h1>
-    </div>
-    <div class="tcols">
-      <div class="tcol"><h3>Higher Retention</h3><ul><li>Sticky embedded workflows</li></ul></div>
-      <div class="tcol"><h3>Expanding ACV</h3><ul><li>Intelligence increases value per customer</li></ul></div>
-      <div class="tcol"><h3>Increasing Margins</h3><ul><li>Software &gt; Analytics &gt; APIs</li></ul></div>
-    </div>
-    <div class="tcols" style="margin-top:0">
-      <div class="tcol"><h3>Defensible Data Moat</h3><ul><li>Unique, consented, hard-to-replicate</li></ul></div>
-      <div class="tcol"><h3>Compounding Intelligence</h3><ul><li>Virtuous personalization cycle</li></ul></div>
-      <div class="tcol" style="background:transparent;border:0;box-shadow:none"></div>
-    </div>
-  </section>
-
-  <section class="card" id="s71" data-id="7.1" data-ch="Go To Market">
-    <div class="st">
-      <div class="eyebrow">Chapter 7 · Go To Market</div>
-      <h1 class="title">Land Through Growth, <em>Expand Through Intelligence.</em></h1>
-    </div>
-    <div class="tflow">
-      <div class="tnode"><div class="tdot">1</div><h3>Land</h3>
-        <div class="idx">Wedge with a conversion use case that proves ROI</div></div>
-      <div class="tnode"><div class="tdot">2</div><h3>Distribute</h3>
-        <div class="idx">Leverage partners and integrations to expand reach</div></div>
-      <div class="tnode"><div class="tdot">3</div><h3>Scale</h3>
-        <div class="idx">Expand value &amp; ARR across use cases, teams, and enterprise</div></div>
-    </div>
-    <div class="tag">More insight &gt; Better actions &gt; Stronger relationships &gt; Growth</div>
-  </section>
-
-  <section class="card" id="s72" data-id="7.1.1" data-ch="Go To Market">
-    <div class="st">
-      <div class="eyebrow">Go To Market · 7.1.1</div>
-      <h1 class="title">Land: <em>Prove ROI First.</em></h1>
-    </div>
-    <div class="panes">
-      <div class="pbox"><h3>The wedge</h3>
-        <ul><li><b>Prospect Conversion Pilot</b> drives immediate impact</li>
-        <li>Scaled, <b>PE-owned RIAs</b> with a growth mandate</li>
-        <li>ROI buyer: <b>CMO / Growth leader</b></li></ul></div>
-      <div class="pbox"><h3>Why it lands</h3>
-        <p>Conversion is the one number a growth leader is already measured on, so the pilot needs no
-        new budget line to justify — and 90% of marketing spend at these firms is currently wasted on
-        prospects who never convert.</p></div>
-    </div>
-  </section>
-
-  <section class="card" id="s73" data-id="7.1.2" data-ch="Go To Market">
-    <div class="st">
-      <div class="eyebrow">Go To Market · 7.1.2</div>
-      <h1 class="title">Distribute: <em>Reach Through Partners.</em></h1>
-    </div>
-    <div class="tcols">
-      <div class="tcol"><h3>Integrations</h3><ul><li>Orion</li><li>Hubspot</li><li>Wealthbox</li></ul>
-        <div class="logos" style="margin-top:auto;justify-content:flex-start;padding-top:12px"><img src="assets/logos/orion.png" alt="Orion" loading="lazy"></div></div>
-      <div class="tcol"><h3>Strategic partnerships</h3>
-        <ul><li>Schwab Advisor Services</li><li>Access to <b>200k advisors</b></li></ul>
-        <div class="logos" style="margin-top:auto;justify-content:flex-start;padding-top:12px"><img src="assets/logos/schwab.png" alt="Charles Schwab" loading="lazy"><img src="assets/logos/cambridge.png" alt="Cambridge" loading="lazy"></div></div>
-      <div class="tcol"><h3>Ecosystem channels</h3>
-        <ul><li>Industry consultants</li><li>Ecosystem channels</li></ul></div>
-    </div>
-  </section>
-
-  <section class="card" id="s74" data-id="7.1.3" data-ch="Go To Market">
-    <div class="st">
-      <div class="eyebrow">Go To Market · 7.1.3</div>
-      <h1 class="title">Scale: <em>Expand Value And ARR.</em></h1>
-    </div>
-    <div class="panes">
-      <div class="pbox"><h3>Expand use cases</h3>
-        <ul><li>Life events</li><li>Household retention</li><li>M&amp;A</li><li>APIs</li></ul></div>
-      <div class="pbox"><h3>Expand accounts</h3>
-        <ul><li><b>Multi-team adoption</b> across firms</li>
-        <li><b>Enterprise contracts ($500K+)</b></li></ul>
-        <p>One platform. Ongoing moments. Compounding growth.</p></div>
-    </div>
-  </section>
-
   <section class="card" id="s81" data-id="8.1" data-ch="Market">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 8 · Market</div>
       <h1 class="title">All High-Stakes Financial Decisions <em>Need Client Insight To Grow.</em></h1>
@@ -1549,14 +1798,15 @@ body.cc #ccFlag{display:block}
         </svg>
       </div>
       <div class="rlist">
-        <div class="rrow" style="--rc:#8B7BC4"><b>$35B TAM</b><span>Financial data services market — 9% CAGR, $75B by 2032</span></div>
-        <div class="rrow" style="--rc:#6D28D9"><b>$15B SAM</b><span>Global WealthTech market — 15% CAGR, $37B by 2035</span></div>
-        <div class="rrow" style="--rc:#0E9B87"><b>$2B SOM</b><span>US WealthTech — 37% of the global market</span></div>
+        <div class="rrow" style="--rc:#8B7BC4" data-opens="s82"><b>$35B TAM</b><span>Financial data services market — 9% CAGR, $75B by 2032</span></div>
+        <div class="rrow" style="--rc:#6D28D9" data-opens="s82"><b>$15B SAM</b><span>Global WealthTech market — 15% CAGR, $37B by 2035</span></div>
+        <div class="rrow" style="--rc:#0E9B87" data-opens="s82"><b>$2B SOM</b><span>US WealthTech — 37% of the global market</span></div>
       </div>
     </div>
   </section>
 
   <section class="card" id="s82" data-id="8.1.1" data-ch="Market">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Market · 8.1.1</div>
       <h1 class="title">Where It <em>Expands Next.</em></h1>
@@ -1571,9 +1821,128 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s83" data-id="8.1.2" data-ch="Market">
+  <section class="card" id="sa1" data-id="9.1" data-ch="Ask">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Market · 8.1.2</div>
+      <div class="eyebrow">Chapter 9 · The Ask</div>
+      <h1 class="title">The <em>Ask.</em></h1>
+    </div>
+    <div class="askhead"><span class="amt">$2M</span><span class="lbl">Seed</span></div>
+    <div class="tline">
+      <div class="tstop" data-opens="sa4"><span class="when">Now</span>
+        <ul><li>Convert enterprise pilots</li><li>RIA growth</li></ul></div>
+      <div class="tstop" data-opens="sa4"><span class="when">12 Months</span>
+        <ul><li><b>3 Enterprises</b></li><li><b>&gt;50 RIAs</b> live</li><li><b>ARR &gt;$3.5M</b></li><li>5 partner integrations</li></ul></div>
+      <div class="tstop" data-opens="sa4"><span class="when">24 Months</span>
+        <ul><li><b>6 Enterprises</b></li><li><b>&gt;150 RIAs</b></li><li><b>ARR &gt;$10M</b></li><li>Positive cash flow</li></ul></div>
+    </div>
+    <div class="tag">Roadmap gate: 250k profiles unlocks anonymized intelligence APIs</div>
+  </section>
+
+  <section class="card" id="sa4" data-id="9.1.1" data-ch="Ask">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">The Ask · 9.1.1</div>
+      <h1 class="title">The <em>Roadmap Gate.</em></h1>
+    </div>
+    <div class="statement">
+      <div class="quote"><p>250k profiles unlocks anonymized intelligence APIs.</p></div>
+      <p class="lede" style="max-width:none">That threshold is what turns layers 1–3 into layer 4 —
+      the point where the consented data set becomes a market intelligence product in its own right,
+      at API margins, rather than only an input to advisor workflow.</p>
+    </div>
+  </section>
+
+  <section class="card" id="s91" data-id="10.1" data-ch="Team">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Chapter 10 · Team</div>
+      <h1 class="title">Built By <em>Fintech, Behavioral Science And Wealth Leaders.</em></h1>
+    </div>
+    <div class="team">
+      <div class="tmem"><img src="assets/team/marla-sofer.png" alt="Marla Sofer" loading="lazy"><b>Marla Sofer</b><em>Founder &amp; CEO</em><p>Fintech, enterprise, wealth, data &amp; big tech exposure to this problem</p></div>
+      <div class="tmem"><img src="assets/team/meghaan-lurtz.png" alt="Dr. Meghaan Lurtz" loading="lazy"><b>Dr. Meghaan Lurtz</b><em>PhD, Chief Behavioral Officer</em><p>International CFP educator, leading behavioral finance researcher</p></div>
+      <div class="tmem"><img src="assets/team/taylor-fah.png" alt="Taylor Fah" loading="lazy"><b>Taylor Fah</b><em>Head of Engineering</em><p>AI, data privacy, infrastructure, APIs, consumer engagement, 0&gt;1 platform builder</p></div>
+      <div class="tmem"><img src="assets/team/miyuki-iwahashi.png" alt="Miyuki Iwahashi" loading="lazy"><b>Miyuki Iwahashi</b><em>Product</em><p>Exited 0&gt;1 SaaS &amp; wellness platforms with enterprise success</p></div>
+      <div class="tmem"><img src="assets/team/john-pearce.png" alt="John Pearce" loading="lazy"><b>John Pearce</b><em>Finance and Ops Lead</em><p>Technical ops, sourcing, strategic finance, data acquisition</p></div>
+      <div class="tmem"><img src="assets/team/viktor-mascaro.png" alt="Viktor Mascaro" loading="lazy"><b>Viktor Mascaro</b><em>Designer</em><p>Gamification &amp; behavioral psychology UX/UI, focus on education</p></div>
+    </div>
+  </section>
+
+  <section class="card" id="s92" data-id="10.1.1" data-ch="Team">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Team · 10.1.1</div>
+      <h1 class="title">Why <em>This Team.</em></h1>
+    </div>
+    <div class="statement">
+      <div class="quote"><p>Advisors were drowning in data but missing the human context that drives
+      trust, retention, and growth.</p></div>
+      <p class="lede" style="max-width:none">Built by fintech, behavioral science, and wealth management
+      leaders who saw the same problem repeatedly. Knomee was created to turn missing insight into
+      scalable infrastructure for modern wealth firms.</p>
+    </div>
+  </section>
+
+  <section class="card" id="s99" data-id="11.1" data-ch="Conclusion">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Chapter 11 · Conclusion</div>
+      <h1 class="title">Why Knomee Is <em>A Good Investment.</em></h1>
+    </div>
+    <div class="tcols">
+      <div class="tcol"><h3>The wedge works</h3>
+        <ul><li><b>95%</b> completion, <b>+10%</b> conversion lift, <b>25%</b> faster revenue</li>
+        <li>Edward Jones pilot complete, <b>$1M to start, $10M at scale</b></li>
+        <li><b>$25M</b> pipeline across 67 opportunities</li></ul></div>
+      <div class="tcol"><h3>The asset compounds</h3>
+        <ul><li>Consented, <b>client-authored</b> data no competitor can scrape</li>
+        <li>Four revenue layers, <b>margin rising</b> from software to APIs</li>
+        <li><b>250k profiles</b> unlocks the intelligence API layer</li></ul></div>
+      <div class="tcol"><h3>The market is there</h3>
+        <ul><li><b>$2B</b> US WealthTech SOM inside a <b>$15B</b> SAM</li>
+        <li>Access to <b>200k advisors</b> via approved partnerships</li>
+        <li><b>$2M seed</b> to reach <b>ARR &gt;$10M</b> and positive cash flow</li></ul></div>
+    </div>
+  </section>
+
+  <section class="card" id="sa9" data-id="12.1" data-ch="Closing">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Knomee</div>
+      <h1 class="title">The Client Insight Layer <em>For Growth.</em></h1>
+    </div>
+    <div class="closing">
+      <div class="contact">
+        <div class="who">Marla Sofer</div>
+        <div class="role">Founder &amp; CEO · Knomee.com</div>
+        <a href="mailto:marla@knomee.com">marla@knomee.com</a>
+        <span>(415) 940-0519</span>
+      </div>
+      <img class="portrait" src="assets/team/marla-portrait.png" alt="Marla Sofer, Founder and CEO" loading="lazy">
+    </div>
+  </section>
+
+  <section class="card" id="sx1" data-id="13.1" data-ch="Appendix">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Chapter 13 · Appendix</div>
+      <h1 class="title">Appendix.</h1>
+      <p class="lede">Everything a diligence conversation asks for. Open any card.</p>
+    </div>
+    <div class="grid4 apx">
+      <div class="gcard" data-opens="s83">Competition<br><span>The market map, quadrant by quadrant</span></div>
+      <div class="gcard" data-opens="s84">Our Moat<br><span>Why this data cannot be replicated</span></div>
+      <div class="gcard" data-opens="sa3">Use of Funds<br><span>Where the $2M goes</span></div>
+      <div class="gcard" data-opens="s63">Financial Projections<br><span>1, 2 and 5 year revenue</span></div>
+      <div class="gcard" data-opens="s71">Go-To-Market<br><span>Land, distribute, scale</span></div>
+    </div>
+  </section>
+
+  <section class="card" id="s83" data-id="13.1.1" data-ch="Appendix">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
+    <div class="st">
+      <div class="eyebrow">Appendix · 13.1.1</div>
       <h1 class="title">Market Map <em>&amp; Competition.</em></h1>
     </div>
     <div class="quads">
@@ -1594,9 +1963,10 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s84" data-id="8.1.3" data-ch="Market">
+  <section class="card" id="s84" data-id="13.1.2" data-ch="Appendix">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Market · 8.1.3</div>
+      <div class="eyebrow">Appendix · 13.1.2</div>
       <h1 class="title">Our Moat: <em>We Don’t Compete For Data, We Change What Is Created.</em></h1>
     </div>
     <div class="compare">
@@ -1605,62 +1975,18 @@ body.cc #ccFlag{display:block}
         <span class="dchip">Untrusted</span><span class="dchip">Unactionable</span><span class="dchip">Hard to Embed</span></div></div>
       <div class="col k"><h3>Reimagined with Knomee</h3>
         <div class="dchips"><span class="dchip">Client-Authored</span><span class="dchip">Structured at Source</span><span class="dchip">Permissioned</span>
-        <span class="dchip">Actionable</span><span class="dchip">Embedded in Workflows</span><span class="dchip">Dynamic</span></div></div>
+        <span class="dchip">Actionable</span><span class="dchip">Embedded in Workflows</span><span class="dchip">Dynamic</span></div>
+        <img class="colshot" src="assets/product/knomee-composite.jpg" alt="Knomee across client and advisor surfaces" loading="lazy"></div>
     </div>
     <p class="lede" style="max-width:none">Knomee is the only behavioral science-based source of consented, client-authored
     intent at scale. Absolute and relative data improves with every client interaction. It’s built to be embedded in
     human and AI decision workflows.</p>
   </section>
 
-  <section class="card" id="s91" data-id="9.1" data-ch="Team">
+  <section class="card" id="sa3" data-id="13.1.3" data-ch="Appendix">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Chapter 9 · Team</div>
-      <h1 class="title">Built By <em>Fintech, Behavioral Science And Wealth Leaders.</em></h1>
-    </div>
-    <div class="team">
-      <div class="tmem"><img src="assets/team/marla-sofer.png" alt="Marla Sofer" loading="lazy"><b>Marla Sofer</b><em>Founder &amp; CEO</em><p>Fintech, enterprise, wealth, data &amp; big tech exposure to this problem</p></div>
-      <div class="tmem"><img src="assets/team/meghaan-lurtz.png" alt="Dr. Meghaan Lurtz" loading="lazy"><b>Dr. Meghaan Lurtz</b><em>PhD, Chief Behavioral Officer</em><p>International CFP educator, leading behavioral finance researcher</p></div>
-      <div class="tmem"><img src="assets/team/taylor-fah.png" alt="Taylor Fah" loading="lazy"><b>Taylor Fah</b><em>Head of Engineering</em><p>AI, data privacy, infrastructure, APIs, consumer engagement, 0&gt;1 platform builder</p></div>
-      <div class="tmem"><img src="assets/team/miyuki-iwahashi.png" alt="Miyuki Iwahashi" loading="lazy"><b>Miyuki Iwahashi</b><em>Product</em><p>Exited 0&gt;1 SaaS &amp; wellness platforms with enterprise success</p></div>
-      <div class="tmem"><img src="assets/team/john-pearce.png" alt="John Pearce" loading="lazy"><b>John Pearce</b><em>Finance and Ops Lead</em><p>Technical ops, sourcing, strategic finance, data acquisition</p></div>
-      <div class="tmem"><img src="assets/team/viktor-mascaro.png" alt="Viktor Mascaro" loading="lazy"><b>Viktor Mascaro</b><em>Designer</em><p>Gamification &amp; behavioral psychology UX/UI, focus on education</p></div>
-    </div>
-  </section>
-
-  <section class="card" id="s92" data-id="9.1.1" data-ch="Team">
-    <div class="st">
-      <div class="eyebrow">Team · 9.1.1</div>
-      <h1 class="title">Why <em>This Team.</em></h1>
-    </div>
-    <div class="statement">
-      <div class="quote"><p>Advisors were drowning in data but missing the human context that drives
-      trust, retention, and growth.</p></div>
-      <p class="lede" style="max-width:none">Built by fintech, behavioral science, and wealth management
-      leaders who saw the same problem repeatedly. Knomee was created to turn missing insight into
-      scalable infrastructure for modern wealth firms.</p>
-    </div>
-  </section>
-
-  <section class="card" id="sa1" data-id="10.1" data-ch="Ask">
-    <div class="st">
-      <div class="eyebrow">Chapter 10 · Ask</div>
-      <h1 class="title">The <em>Ask.</em></h1>
-    </div>
-    <div class="askhead"><span class="amt">$2M</span><span class="lbl">Seed</span></div>
-    <div class="tline">
-      <div class="tstop"><span class="when">Now</span>
-        <ul><li>Convert enterprise pilots</li><li>RIA growth</li></ul></div>
-      <div class="tstop"><span class="when">12 Months</span>
-        <ul><li><b>3 Enterprises</b></li><li><b>&gt;50 RIAs</b> live</li><li><b>ARR &gt;$3.5M</b></li><li>5 partner integrations</li></ul></div>
-      <div class="tstop"><span class="when">24 Months</span>
-        <ul><li><b>6 Enterprises</b></li><li><b>&gt;150 RIAs</b></li><li><b>ARR &gt;$10M</b></li><li>Positive cash flow</li></ul></div>
-    </div>
-    <div class="tag">Roadmap gate: 250k profiles unlocks anonymized intelligence APIs</div>
-  </section>
-
-  <section class="card" id="sa3" data-id="10.1.1" data-ch="Ask">
-    <div class="st">
-      <div class="eyebrow">Ask · 10.1.1</div>
+      <div class="eyebrow">Appendix · 13.1.3</div>
       <h1 class="title">Use Of <em>Funds.</em></h1>
     </div>
     <div class="grid4">
@@ -1671,30 +1997,50 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="sa4" data-id="10.1.2" data-ch="Ask">
+  <section class="card" id="s63" data-id="13.1.4" data-ch="Appendix">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Ask · 10.1.2</div>
-      <h1 class="title">The <em>Roadmap Gate.</em></h1>
+      <div class="eyebrow">Appendix · 13.1.4</div>
+      <h1 class="title">Revenue <em>Projections.</em></h1>
     </div>
-    <div class="statement">
-      <div class="quote"><p>250k profiles unlocks anonymized intelligence APIs.</p></div>
-      <p class="lede" style="max-width:none">That threshold is what turns layers 1–3 into layer 4 —
-      the point where the consented data set becomes a market intelligence product in its own right,
-      at API margins, rather than only an input to advisor workflow.</p>
+    <div class="chart" style="flex:1;justify-content:center">
+      <div class="ctitle">Projected annual revenue</div>
+      <div class="crow"><div class="clab">1 year</div>
+        <div class="ctrack"><div class="cbar" style="--w:7%"></div><div class="ctip">$3.5M</div></div>
+        <div class="cval">$3.5M</div></div>
+      <div class="crow"><div class="clab">2 years</div>
+        <div class="ctrack"><div class="cbar" style="--w:20%"></div><div class="ctip">$10M</div></div>
+        <div class="cval">$10M</div></div>
+      <div class="crow"><div class="clab">5 years</div>
+        <div class="ctrack"><div class="cbar" style="--w:100%"></div><div class="ctip">$50M</div></div>
+        <div class="cval">$50M</div></div>
+      <div class="caxis"><span></span><div class="cticks"><span>$0</span><span>$25M</span><span>$50M</span></div><span></span></div>
     </div>
   </section>
 
-  <section class="card" id="sa9" data-id="10.2" data-ch="Ask">
+  <section class="card" id="s71" data-id="13.1.5" data-ch="Appendix">
+    <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
-      <div class="eyebrow">Knomee</div>
-      <h1 class="title">The Client Insight Layer <em>For Growth.</em></h1>
+      <div class="eyebrow">Appendix · 13.1.5</div>
+      <h1 class="title">Go-To-Market: <em>Land, Distribute, Scale.</em></h1>
     </div>
-    <div class="contact">
-      <div class="who">Marla Sofer</div>
-      <div class="role">Founder &amp; CEO · Knomee.com</div>
-      <a href="mailto:marla@knomee.com">marla@knomee.com</a>
-      <span>(415) 940-0519</span>
+    <div class="tcols">
+      <div class="tcol"><h3>1 · Land</h3>
+        <ul><li><b>Prospect Conversion Pilot</b> drives immediate impact</li>
+        <li>Scaled, <b>PE-owned RIAs</b> with a growth mandate</li>
+        <li>ROI buyer: <b>CMO / Growth leader</b></li>
+        <li>Wedge with a conversion use case that <b>proves ROI</b></li></ul></div>
+      <div class="tcol"><h3>2 · Distribute</h3>
+        <ul><li>Integrations: <b>Orion, Hubspot, Wealthbox</b></li>
+        <li><b>Schwab Advisor Services</b> &amp; strategic partnerships</li>
+        <li>Industry consultants and ecosystem channels</li>
+        <li>Access to <b>200k advisors</b></li></ul></div>
+      <div class="tcol"><h3>3 · Scale</h3>
+        <ul><li>Expand use cases: <b>life events, household retention, M&amp;A, APIs</b></li>
+        <li><b>Multi-team adoption</b> across firms</li>
+        <li><b>Enterprise contracts ($500K+)</b></li></ul></div>
     </div>
+    <div class="tag">More insight &gt; Better actions &gt; Stronger relationships &gt; Growth</div>
   </section>
 
   <div id="stepper"><button id="prev" aria-label="Previous slide">←</button><button id="next" aria-label="Next slide">→</button></div>
@@ -1749,8 +2095,8 @@ const CARDS=[...document.querySelectorAll('.card')].map(c=>({
   t:c.querySelector('h1.title')?c.querySelector('h1.title').textContent.trim():(c.querySelector('.who')?'Contact — Marla Sofer':c.id)
 }));
 /* the spine is what you walk through; everything else opens on demand */
-const SPINE=['s01','s11','s21','s31','s41','s51','s61','s71','s81','s91','sa1','sa9'];
-const DETAIL={s11:['s12','s13'],s21:['s22','s23','s24'],s31:['s32','s33','s34'],s41:['s42','s43','s44'],s51:['s52','s53','s54'],s61:['s62','s63','s64'],s71:['s72','s73','s74'],s81:['s82','s83','s84'],s91:['s92'],sa1:['sa3','sa4']};
+const SPINE=['s01','s02','s11','s21','s41','s31','s61','s51','s81','sa1','s91','s99','sa9','sx1'];
+const DETAIL={s11:['s12','s13'],s21:['s22','s23','s24'],s41:['s42','s43','s44'],s31:['s32','s33','s34'],s61:['s62','s64'],s51:['s52','s53','s54'],s81:['s82'],sa1:['sa4'],s91:['s92'],sx1:['s83','s84','sa3','s63','s71']};
 const PARENT={}; Object.entries(DETAIL).forEach(([p,ds])=>ds.forEach(d=>PARENT[d]=p));
 const meta=id=>CARDS.find(c=>c.el===id);
 let cur=SPINE[0];
@@ -1762,15 +2108,17 @@ const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function countUp(card){
   if(REDUCED||!card) return;
-  card.querySelectorAll('.metric .n, .bigstat .v, .refstat .rv').forEach(el=>{
+  card.querySelectorAll('.metric .n, .bigstat .v, .refstat .rv, .srow .pc, .rrow b, .askhead .amt, .cval, .gauge .gv, .dial .n').forEach(el=>{
     if(el.children.length) return;
     const raw=el.dataset.raw||(el.dataset.raw=el.textContent.trim());
-    const m=raw.match(/^(\D*?)(\d+(?:\.\d+)?)(\D*)$/); if(!m) return;
+    const m=raw.replace(/,/g,'').match(/^(\D*?)(\d+(?:\.\d+)?)(\D*)$/); if(!m) return;
+    const grouped=/,/.test(raw);
     const pre=m[1],target=parseFloat(m[2]),suf=m[3],dec=(m[2].split('.')[1]||'').length;
     const dur=900,t0=performance.now();
     el.textContent=pre+(0).toFixed(dec)+suf;
+    const fmt=v=>{const n=v.toFixed(dec);return grouped?Number(n).toLocaleString('en-US'):n;};
     const step=t=>{const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);
-      el.textContent=k<1?pre+(target*e).toFixed(dec)+suf:raw; if(k<1)requestAnimationFrame(step);};
+      el.textContent=k<1?pre+fmt(target*e)+suf:raw; if(k<1)requestAnimationFrame(step);};
     requestAnimationFrame(step);
   });
 }
@@ -1843,7 +2191,7 @@ document.getElementById('prev').addEventListener('click',()=>step(-1));
 document.getElementById('detback').addEventListener('click',()=>show(PARENT[cur]||SPINE[0]));
 
 /* the slide's own content opens the detail — no buttons anywhere */
-const OPENABLE='.row,.metric,.refstat,.crow,.tnode,.dbox,.lcard,.gcard,.col,.dial,.gauge,.quote,.cloud span,.shot,.srow,.tierc,.wstep,.tcol,.slayer,.rrow,.quad,.tmem,.tstop,.pbox';
+const OPENABLE='.row,.metric,.refstat,.crow,.tnode,.dbox,.lcard,.gcard,.col,.dial,.gauge,.quote,.cloud span,.shot,.srow,.tierc,.wstep,.tcol,.slayer,.rrow,.quad,.tmem,.tstop,.pbox,.pshot,.pstat,[data-opens]';
 Object.entries(DETAIL).forEach(([p,list])=>{
   const card=document.getElementById(p); if(!card) return;
   const els=[...card.querySelectorAll(OPENABLE)];
@@ -1851,9 +2199,10 @@ Object.entries(DETAIL).forEach(([p,list])=>{
     el.classList.add('opens');
     el.setAttribute('tabindex','0');
     el.setAttribute('role','button');
-    // when a slide has as many openable elements as detail sheets, each element
-    // opens its own sheet; otherwise every element opens the first one
-    const target=(els.length===list.length)?list[i]:list[0];
+    // an element that stands for one sheet says so in the markup; otherwise fall
+    // back to position, then to the first sheet
+    const named=el.dataset.opens||el.closest('[data-opens]')?.dataset.opens;
+    const target=(named&&list.includes(named))?named:((els.length===list.length)?list[i]:list[0]);
     el.addEventListener('click',ev=>{ev.stopPropagation();show(target);});
     el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();show(target);}});
   });
@@ -2043,6 +2392,17 @@ function ccOpenThread(id){
   ccPop.style.position='fixed';
   ccPop.classList.add('on'); ccText.value=''; setTimeout(()=>ccText.focus(),40);
 }
+// clicking outside an open detail sheet closes it, the way a modal should
+document.getElementById('backdrop').addEventListener('click',()=>{
+  if(PARENT[cur]) show(PARENT[cur]);
+});
+frame.addEventListener('click',e=>{
+  if(!PARENT[cur]) return;                          // no sheet open
+  if(document.body.classList.contains('cc')) return; // comment mode owns clicks
+  const sheet=document.querySelector('.card.sheet');
+  if(sheet&&!sheet.contains(e.target)&&!e.target.closest('#stepper,#detbar')) show(PARENT[cur]);
+});
+
 function ccClose(){ ccOpen=null; ccPop.classList.remove('on'); ccRender(); }
 ccCatcher.addEventListener('click',e=>{
   const fr=frame.getBoundingClientRect();
@@ -2076,6 +2436,21 @@ function ccToggle(on){
   document.body.classList.toggle('cc', on!==undefined?on:!document.body.classList.contains('cc'));
   if(!document.body.classList.contains('cc')) ccClose(); else ccRender();
 }
+// the flywheel step and the ring segment behind it belong to each other
+document.querySelectorAll('.wheel').forEach(w=>{
+  const steps=[...w.querySelectorAll('.wstep')], segs=[...w.querySelectorAll('.wseg')];
+  steps.forEach((st,i)=>{
+    const seg=segs[i];
+    const on=()=>{w.classList.add('focus');st.classList.add('on');seg&&seg.classList.add('on');};
+    const off=()=>{w.classList.remove('focus');st.classList.remove('on');seg&&seg.classList.remove('on');};
+    st.addEventListener('mouseenter',on); st.addEventListener('mouseleave',off);
+    st.addEventListener('focus',on); st.addEventListener('blur',off);
+    if(seg){seg.style.cursor='pointer';
+      seg.addEventListener('mouseenter',on); seg.addEventListener('mouseleave',off);
+      seg.addEventListener('click',()=>st.click());}
+  });
+});
+
 frame.appendChild(ccCatcher); frame.appendChild(ccLayer);
 ccRender();
 
