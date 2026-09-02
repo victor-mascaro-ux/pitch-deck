@@ -1400,6 +1400,62 @@ body.cc #ccFlag{display:block}
 #ccWho button{background:none;border:0;padding:0 0 0 6px;font-family:inherit;font-size:11px;
   color:var(--cc-pin-ink);font-weight:700;cursor:pointer;text-decoration:underline}
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STATIC DECK
+   Every animation, transition and hover movement is off. Slides, sheets and
+   the comment overlay change state instantly. Hover still marks what can be
+   opened — outline and "+" badge — but nothing moves, scales or fades.
+   ═══════════════════════════════════════════════════════════════════════ */
+*,*::before,*::after{
+  animation:none!important;
+  transition:none!important;
+  animation-delay:0s!important;
+  animation-duration:0s!important;
+  transition-duration:0s!important;
+}
+
+/* elements that used to arrive via an entrance animation must simply be there */
+.card.active :is(.stats,.tcols,.stak,.rlist,.team,.tline,.panes,.tiers,.grid4,.metrics)>*,
+.card.active .quads>.quad,.card.active .wstep,.card.active .tmem img,
+.card.active .askhead,.card.active .tag,.card.active .sources,.card.active .openmeta,
+.card.active .st,.card.active .app,.card.active .side,.card.active .tabs,
+.card.active .pane>.ch2,.card.active .top-action,.card.active .pcard,.card.active .tier,
+.card.active .starter,.card.active .note,.card.active .wchips span,.card.active .grp,
+.card.active .prow,.card.active .scr,.card.active .scrhead,.card.active .kqcard,
+.card.active .sc,.card.active .tierbar,.card.active .topact,.card.active .st2,
+.card.active .deepbtn,.card.active .quote,.card.active .layerbar,.card.active .cbar,
+.card.active .metric,.card.active .kqcard,.closing .portrait,
+.logos img,.ringart circle,.qcore,.wseg,.dvg .sp,.dvg .gr{
+  opacity:1!important;transform:none!important;
+}
+/* the chart bars and drawn lines are shown complete rather than drawn in */
+.cbar{transform:scaleX(1)!important}
+.dvg .sp,.dvg .gr{stroke-dashoffset:0!important}
+
+/* no lift, scale or slide on hover — the affordance stays, the movement goes */
+.opens:hover,.row.opens:hover,.metric:hover,.srow:hover,.srow:hover .pc,.tcol:hover,
+.pbox:hover,.tierc:hover,.quad:hover,.tmem:hover,.tmem:hover img,.rrow:hover,
+.slayer:hover,.logos img:hover,.qlogos img:hover,.pshot:hover img,.dchip:hover,
+#stepper button:hover,#stepper button:active,.htile:hover,.wstep:hover,.wstep.on,
+.wseg:hover,#ccPop .cca button:active,#ccRail button:active,.cc-pin-wrap:hover,
+.start:hover,.screen:hover,.tstop:hover,.gcard:hover,.col:hover{
+  transform:none!important;
+}
+/* dimming siblings is a micro-interaction too */
+.tiers:hover .tierc:not(:hover),.stak:hover .slayer:not(:hover),
+.wheel.focus .wseg:not(.on) path,.wheel.focus .wstep:not(.on),
+.rings:hover .ringart circle{opacity:1!important}
+.quad .qlogos img{filter:none!important;opacity:1!important}
+
+/* the chapter title card between chapters is gone */
+#chapbreak{display:none!important}
+
+
+/* the bar tooltip was a hover micro-interaction; the value is already printed
+   beside every bar, so the tooltip goes rather than sitting there invisible */
+.ctip{display:none!important}
+
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -2186,6 +2242,7 @@ const detbar=document.getElementById('detbar');
 const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function countUp(card){
+  return;   // static deck: figures render at their final value
   if(REDUCED||!card) return;
   card.querySelectorAll('.metric .n, .bigstat .v, .refstat .rv, .srow .pc, .rrow b, .askhead .amt, .cval, .gauge .gv, .dial .n').forEach(el=>{
     if(el.children.length) return;
@@ -2259,9 +2316,7 @@ function playChapterBreak(id){
   chapbreak._end=setTimeout(()=>chapbreak.classList.remove('run'),1000);
 }
 function goTo(id){
-  const crossing = !PARENT[cur] && !PARENT[id] && meta(cur).ch!==meta(id).ch;
-  show(id);                                   // advance first — input is never queued
-  if(crossing && !REDUCED) playChapterBreak(id);
+  show(id);                                   // static deck: no chapter interstitial
 }
 function step(dir){
   if(PARENT[cur]){
@@ -2557,15 +2612,9 @@ function ccToggle(on){
 // the flywheel step and the ring segment behind it belong to each other
 document.querySelectorAll('.wheel').forEach(w=>{
   const steps=[...w.querySelectorAll('.wstep')], segs=[...w.querySelectorAll('.wseg')];
-  steps.forEach((st,i)=>{
+  steps.forEach((st,i)=>{                 // segments stay clickable, nothing lights up
     const seg=segs[i];
-    const on=()=>{w.classList.add('focus');st.classList.add('on');seg&&seg.classList.add('on');};
-    const off=()=>{w.classList.remove('focus');st.classList.remove('on');seg&&seg.classList.remove('on');};
-    st.addEventListener('mouseenter',on); st.addEventListener('mouseleave',off);
-    st.addEventListener('focus',on); st.addEventListener('blur',off);
-    if(seg){seg.style.cursor='pointer';
-      seg.addEventListener('mouseenter',on); seg.addEventListener('mouseleave',off);
-      seg.addEventListener('click',()=>st.click());}
+    if(seg){seg.style.cursor='pointer'; seg.addEventListener('click',()=>st.click());}
   });
 });
 
