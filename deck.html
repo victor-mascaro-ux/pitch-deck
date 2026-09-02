@@ -352,15 +352,23 @@ h1.title em{font-style:normal;color:var(--violet)}
 
 .dial.opens,.gauge.opens{border-radius:50%}
 .dial.opens::after,.gauge.opens::after{top:4%;right:4%}
-#detbar{position:absolute;left:clamp(32px,4.4vw,74px);top:clamp(30px,4vw,64px);z-index:14;
-  display:none;align-items:center;gap:14px}
+#detbar{position:absolute;left:clamp(32px,4.4vw,74px);top:clamp(30px,4vw,64px);
+  right:clamp(32px,4.4vw,74px);z-index:14;display:none;align-items:flex-end;
+  gap:clamp(6px,1.1vw,18px);border-bottom:1px solid rgba(255,255,255,.18);overflow-x:auto;
+  scrollbar-width:none}
+#detbar::-webkit-scrollbar{display:none}
 #detbar.on{display:flex}
-#detback{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:inherit;
-  background:var(--violet);color:#fff;border:0;border-radius:999px;padding:10px 18px;
-  font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
-  transition:transform .25s var(--ease),filter .25s var(--ease)}
-#detback:hover{transform:translateX(-3px);filter:brightness(1.08)}
-#detcount{font-size:12.5px;font-weight:800;letter-spacing:.06em;color:rgba(255,255,255,.6)}
+.dtab{background:none;border:0;font-family:inherit;cursor:pointer;white-space:nowrap;
+  font-size:clamp(11px,1.02vw,15px);font-weight:600;color:rgba(255,255,255,.6);
+  padding:0 clamp(4px,.7vw,10px) clamp(9px,1.1vw,15px);position:relative;
+  transition:color .2s var(--ease)}
+.dtab:first-child{padding-left:0}
+.dtab:hover{color:rgba(255,255,255,.88)}
+.dtab[aria-selected="true"]{color:#fff;font-weight:800}
+.dtab[aria-selected="true"]::after{content:'';position:absolute;left:0;right:0;bottom:-1px;
+  height:3px;border-radius:2px;background:var(--teal);transition:background .2s var(--ease)}
+.dtab.home{color:var(--teal);font-weight:800}
+.dtab.home:hover{color:#fff}
 .card.active .deepbtn{animation:kChip .5s var(--ease) .5s backwards}
 
 
@@ -439,9 +447,8 @@ body.detail #stepper button{background:rgba(255,255,255,.10);border-color:rgba(2
 body.detail #stepper button:hover{background:var(--teal);border-color:var(--teal);color:#04231D}
 body.detail #stepper button:disabled{opacity:.35;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5)}
 body.detail #detbar{left:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
+  right:calc(var(--sheet-inset) + clamp(30px,3.6vw,58px));
   top:calc(var(--sheet-inset) + clamp(16px,1.8vw,24px));z-index:21}
-#detback{background:var(--teal);color:#04231D}
-#detcount{color:rgba(255,255,255,.55)}
 
 
 /* ===== app screen reconstructions (trimmed for legibility on a slide) ===== */
@@ -1079,9 +1086,8 @@ body.cc #ccFlag{display:block}
 .compound{flex:1;min-height:0;display:grid;grid-template-columns:1.05fr .95fr;
   gap:clamp(16px,2.2vw,36px);align-items:center;margin-top:clamp(10px,1.4vw,20px)}
 .compound .pshot img{border-radius:14px}
-.tcols.five{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr))}
-.tcols.five>*:nth-child(4){grid-column:1/2}
-.tcols.five>*:nth-child(5){grid-column:2/4}
+.tcols.five{grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(0,1fr);
+  align-content:center;row-gap:clamp(14px,1.9vw,30px)}
 
 /* ═══════ the mark, quietly, on every slide ═══════ */
 .motif{color:var(--acc)}
@@ -1249,10 +1255,11 @@ body.cc #ccFlag{display:block}
 /* closing slide: the portrait's disc is already cut at her lower edge, so it
    just needs to sit clear of the stepper and share the row with the contact */
 .closing{flex:1;min-height:0;display:grid;grid-template-columns:1fr auto;
-  align-items:center;gap:clamp(20px,3vw,54px);margin-top:clamp(10px,1.6vw,24px)}
+  grid-template-rows:minmax(0,1fr);align-items:center;
+  gap:clamp(20px,3vw,54px);margin-top:clamp(10px,1.6vw,24px)}
 .closing .contact{flex:none;justify-content:center;min-height:0}
 .closing .portrait{align-self:center;justify-self:end;
-  height:min(100%,clamp(170px,40vh,360px));width:auto;object-fit:contain;display:block;
+  height:clamp(150px,34vh,340px);max-height:100%;width:auto;object-fit:contain;display:block;
   margin-right:clamp(56px,6.5vw,108px);
   animation:kRise .7s var(--ease) .28s backwards}
 @media(max-width:900px){.closing{grid-template-columns:1fr}.closing .portrait{display:none}}
@@ -1314,6 +1321,84 @@ body.cc #ccFlag{display:block}
 /* figures follow the chapter accent instead of a fixed violet */
 .metric .n,.bigstat .v{color:var(--acc)}
 .sheet .metric .n,.sheet .bigstat .v{color:var(--teal)}
+
+
+/* the real knomee mark sits at the hub, not an approximation of it */
+.whub{color:var(--ink);opacity:.92}
+.sheet .whub{color:#fff}
+
+
+/* ═══════ cards end where their text ends ═══════ */
+.tcols,.panes{align-content:center;align-items:start}
+.tcols.five{align-items:start}
+.tcol,.pbox{height:auto}
+
+/* ═══════ client logos read as proof, so give them room ═══════ */
+.logos{gap:clamp(20px,3vw,56px)}
+.logos img{height:clamp(30px,4vw,64px)}
+.qlogos img{height:clamp(16px,1.9vw,30px)}
+
+/* ═══════ short windows: the deck still has to fit ═══════ */
+@media(max-height:770px){
+  .srow{padding:clamp(9px,1.2vw,16px) clamp(12px,1.5vw,20px)}
+  .srow .pc{font-size:clamp(24px,3vw,44px)}
+  .srow p{font-size:clamp(11px,1.02vw,15px)}
+  .tierc{padding:clamp(9px,1.2vw,16px) clamp(14px,1.8vw,24px)}
+  .tierc h3{font-size:clamp(13px,1.4vw,20px)}
+  .tierc .terms{margin-top:5px}
+  .tarrow{height:clamp(15px,1.8vw,26px)}
+  .compound{gap:clamp(12px,1.6vw,24px)}
+  .compound .pshot{max-height:46vh}
+  .closing .contact{gap:8px}
+  .closing .portrait{height:clamp(110px,26vh,220px)}
+  .contact .who{font-size:clamp(22px,2.6vw,38px)}
+  .logos img{height:clamp(24px,3vw,44px)}
+}
+@media(max-height:700px){
+  .prodwrap{gap:clamp(7px,1vw,14px)}
+  .pstat{padding:clamp(6px,.8vw,11px) clamp(11px,1.4vw,20px)}
+}
+
+
+/* the last few pixels on very short windows */
+.dvg svg{max-height:100%}
+.compound{align-items:start}
+.compound>div{min-height:0}
+@media(max-height:770px){
+  .compound .pbox{padding:clamp(10px,1.3vw,18px)}
+  .compound .pbox li{font-size:clamp(10.5px,.95vw,14px)}
+  .compound .quote p{font-size:clamp(13px,1.5vw,22px)}
+  .compound .lede{font-size:clamp(11px,.95vw,14px);margin-top:9px}
+  .compound .panes{margin-top:clamp(8px,1.1vw,14px)!important}
+  .st2{padding:clamp(6px,.8vw,11px)}
+  .st2 q{font-size:clamp(8.5px,.84vw,11.5px)}
+  .st2 p{font-size:clamp(8px,.78vw,11px);margin-top:3px}
+  .tags{margin-top:4px}
+}
+
+
+/* same auto-row + percentage-child circularity as the closing slide */
+.compound{grid-template-rows:minmax(0,1fr)}
+.compound .pshot{max-height:100%;min-height:0}
+.compound .pshot img{max-height:100%}
+.dvg{grid-template-rows:minmax(0,1fr)}
+.dvg svg{max-height:100%;height:auto}
+
+
+/* the commenter names themselves once; the field disappears after that */
+#ccName{width:100%;border:1px solid rgba(20,10,40,.14);border-radius:10px;
+  padding:8px 11px;font-family:inherit;font-size:12.5px;color:var(--cc-text);
+  background:rgba(255,255,255,.7);margin-bottom:7px;outline:none}
+#ccName:focus{border-color:var(--cc-pin-ink)}
+#ccName::placeholder{color:var(--cc-muted)}
+#ccPop.known #ccName{display:none}
+.cc-msg .by{font-weight:700;color:var(--cc-text)}
+#ccWho{flex:none;font-size:11px;color:var(--cc-muted);padding:8px 2px 6px;display:none;
+  border-top:1px solid rgba(20,10,40,.08)}
+#ccWho.on{display:block}
+#ccWho b{color:var(--cc-text);font-weight:700}
+#ccWho button{background:none;border:0;padding:0 0 0 6px;font-family:inherit;font-size:11px;
+  color:var(--cc-pin-ink);font-weight:700;cursor:pointer;text-decoration:underline}
 
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -1387,7 +1472,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s11" data-id="3.1" data-ch="Problem">
+  <section class="card" id="s11" data-tab="Problem" data-id="3.1" data-ch="Problem">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 3 · Problem</div>
@@ -1406,7 +1491,7 @@ body.cc #ccFlag{display:block}
     <div class="sources"><span>Source: McKinsey</span></div>
   </section>
 
-  <section class="card" id="s12" data-id="3.1.1" data-ch="Problem">
+  <section class="card" id="s12" data-tab="The research" data-id="3.1.1" data-ch="Problem">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Problem · 3.1.1</div>
@@ -1425,7 +1510,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s13" data-id="3.1.2" data-ch="Problem">
+  <section class="card" id="s13" data-tab="Why it happens" data-id="3.1.2" data-ch="Problem">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Problem · 3.1.2</div>
@@ -1441,7 +1526,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s21" data-id="4.1" data-ch="Solution">
+  <section class="card" id="s21" data-tab="The layer" data-id="4.1" data-ch="Solution">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 4 · Solution</div>
@@ -1462,7 +1547,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s22" data-id="4.1.1" data-ch="Solution">
+  <section class="card" id="s22" data-tab="Client Insight" data-id="4.1.1" data-ch="Solution">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Solution · 4.1.1</div>
@@ -1482,7 +1567,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s23" data-id="4.1.2" data-ch="Solution">
+  <section class="card" id="s23" data-tab="The Brain" data-id="4.1.2" data-ch="Solution">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Solution · 4.1.2</div>
@@ -1499,7 +1584,7 @@ body.cc #ccFlag{display:block}
     <div class="tag">The system that makes client understanding usable</div>
   </section>
 
-  <section class="card" id="s24" data-id="4.1.3" data-ch="Solution">
+  <section class="card" id="s24" data-tab="Decisions" data-id="4.1.3" data-ch="Solution">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Solution · 4.1.3</div>
@@ -1513,7 +1598,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s41" data-id="4.2" data-ch="Solution">
+  <section class="card" id="s41" data-tab="Flywheel" data-id="4.2" data-ch="Solution">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 4 · Solution</div>
@@ -1521,17 +1606,14 @@ body.cc #ccFlag{display:block}
       <p class="lede">Reveal what prospects and clients want, when they’re ready to act, and how to progress them forward.</p>
     </div>
     <div class="wheel">
-      <svg viewBox="0 0 300 300" role="img" aria-label="Five-step flywheel">
-        <g class="wseg"><path d="M150 32 A118 118 0 0 1 262 114 L226 126 A80 80 0 0 0 150 70 Z" fill="#240446"/></g>
-        <g class="wseg"><path d="M266 132 A118 118 0 0 1 202 258 L184 224 A80 80 0 0 0 228 138 Z" fill="#2DD2B0"/></g>
-        <g class="wseg"><path d="M194 262 A118 118 0 0 1 82 246 L104 216 A80 80 0 0 0 180 227 Z" fill="#C7B6DF"/></g>
-        <g class="wseg"><path d="M75 241 A118 118 0 0 1 36 116 L72 127 A80 80 0 0 0 98 212 Z" fill="#086375"/></g>
-        <g class="wseg"><path d="M40 106 A118 118 0 0 1 141 33 L145 70 A80 80 0 0 0 76 119 Z" fill="#AFFC41"/></g>
-        <g transform="translate(150 150)" opacity=".92">
-          <circle r="52" fill="none" stroke="#221833" stroke-width="7"/>
-          <circle r="33" fill="none" stroke="#221833" stroke-width="7" stroke-dasharray="150 40"/>
-          <path d="M0 16c-11-8.6-16.6-13.7-16.6-20.2A9 9 0 0 1 0-8.9a9 9 0 0 1 16.6 4.7C16.6 2.3 11 7.4 0 16Z" fill="#221833"/>
-        </g>
+      <svg viewBox="-6 -6 312 312" role="img" aria-label="Five-step flywheel">
+        <g class="wseg"><path d="M159.73 26.38 A124.0 124.0 0 0 1 248.38 74.51 L257.10 67.82 L246.08 110.20 L207.91 105.56 L216.64 98.86 A84.0 84.0 0 0 0 156.59 66.26 Z" fill="#240446"/></g>
+        <g class="wseg"><path d="M270.57 121.05 A124.0 124.0 0 0 1 252.19 220.23 L261.26 226.46 L217.54 229.08 L210.16 191.35 L219.23 197.58 A84.0 84.0 0 0 0 231.68 130.39 Z" fill="#2DD2B0"/></g>
+        <g class="wseg"><path d="M214.79 255.73 A124.0 124.0 0 0 1 114.78 268.89 L111.66 279.44 L95.66 238.67 L129.27 219.99 L126.14 230.54 A84.0 84.0 0 0 0 193.89 221.62 Z" fill="#C7B6DF"/></g>
+        <g class="wseg"><path d="M69.47 244.29 A124.0 124.0 0 0 1 26.04 153.25 L15.05 153.53 L48.87 125.72 L77.03 151.91 L66.03 152.20 A84.0 84.0 0 0 0 95.45 213.87 Z" fill="#086375"/></g>
+        <g class="wseg"><path d="M35.44 102.55 A124.0 124.0 0 0 1 108.61 33.11 L104.94 22.74 L141.84 46.32 L125.63 81.19 L121.96 70.82 A84.0 84.0 0 0 0 72.39 117.85 Z" fill="#AFFC41"/></g>
+        <use class="whub" href="#kmark" x="0" y="0" width="300" height="288"
+             transform="translate(94.5 97.6) scale(0.37)"/>
       </svg>
       <div class="wsteps">
         <div class="wstep" style="left:50%;top:0;transform:translateX(-50%)" data-opens="s42"><b>1. Prospect</b><span><i>Engaging experiences</i> capture client insight</span></div>
@@ -1543,7 +1625,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s42" data-id="4.2.1" data-ch="Solution">
+  <section class="card" id="s42" data-tab="Prospect &amp; Advisor" data-id="4.2.1" data-ch="Solution">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Solution · 4.2.1</div>
@@ -1561,7 +1643,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s43" data-id="4.2.2" data-ch="Solution">
+  <section class="card" id="s43" data-tab="Client &amp; Firm" data-id="4.2.2" data-ch="Solution">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Solution · 4.2.2</div>
@@ -1579,7 +1661,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s44" data-id="4.2.3" data-ch="Solution">
+  <section class="card" id="s44" data-tab="Compounding" data-id="4.2.3" data-ch="Solution">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Solution · 4.2.3</div>
@@ -1602,14 +1684,14 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s31" data-id="5.1" data-ch="Show It">
+  <section class="card" id="s31" data-tab="Product" data-id="5.1" data-ch="Show It">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 5 · Show It</div>
       <h1 class="title">Knomee Engages Prospects &amp; Clients <em>Before Meetings.</em></h1>
     </div>
     <div class="prodwrap">
-      <figure class="pshot phones"><img src="assets/product/client-phones.jpg" alt="The Knomee client experience on mobile" loading="lazy">
+      <figure class="pshot phones"><img src="assets/product/client-phones.png" alt="The Knomee client experience on mobile" loading="lazy">
         <figcaption>What the client sees</figcaption></figure>
       <figure class="pshot wide"><img src="assets/product/advisor-dashboard.jpg" alt="The Knomee advisor view: conversion readiness, motivators, apprehensions" loading="lazy">
         <figcaption>What the advisor sees</figcaption></figure>
@@ -1620,7 +1702,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card screencard" id="s32" data-id="5.1.1" data-ch="Show It">
+  <section class="card screencard" id="s32" data-tab="Readiness" data-id="5.1.1" data-ch="Show It">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Show It · 5.1.1</div>
@@ -1628,7 +1710,7 @@ body.cc #ccFlag{display:block}
     </div>
     <div class="scr st"><div class="scrhead"><span class="scrav">S</span><span><span class="scrname">Sarah Mitchell</span><span class="scrsub">New prospect</span></span><span class="scrtabs"><span class="scrtab">Prospect Readiness</span><span class="scrtab on">Prospect Playbook</span></span></div><div class="topact"><b>Top Action</b>“Worked since 13, ready for adventures”; lead with Future You vision.</div><div class="pbrow"><div><div class="cslab">Conversation Starters</div><div class="st2"><q>“You mentioned wanting to leave a lasting legacy for your child. I’d love to hear more about what that means to you.”</q><p>Get Sarah talking positively about her future and what’s possible.</p><div class="tags"><span class="tg a">Positive Talk</span></div></div><div class="st2"><q>“You feel guilty enjoying things you’ve earned. What if a plan gave you full permission to enjoy life?”</q><div class="tags"><span class="tg b">Demonstrate Curiosity</span><span class="tg c">Acknowledge and Validate</span></div></div></div><div class="wtu"><b>Words to Use</b><div class="wchips"><span>Security</span><span>Independence</span><span>Simplicity</span><span>Confidence</span><span>Enjoy</span><span>Future</span><span>Family</span></div><div class="take"><b>Advisor takeaway</b><span>A direct, purposeful communication style will likely resonate with her.</span></div></div></div></div></section>
 
-  <section class="card screencard" id="s33" data-id="5.1.2" data-ch="Show It">
+  <section class="card screencard" id="s33" data-tab="Playbook" data-id="5.1.2" data-ch="Show It">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Show It · 5.1.2</div>
@@ -1636,7 +1718,7 @@ body.cc #ccFlag{display:block}
     </div>
     <div class="scr st"><div class="scrhead"><span class="scrav">S</span><span><span class="scrname">Sarah Mitchell</span><span class="scrsub">New prospect</span></span><span class="scrtabs"><span class="scrtab on">Prospect Readiness</span><span class="scrtab">Prospect Playbook</span></span></div><div class="kqrow"><div class="kqcard"><div class="kqt">Knomee Quotient (KQ)</div><div class="kqq">How ready is this prospect to convert?</div><div class="kq"><svg viewBox="-8 -8 116 116"><circle class="bg" cx="50" cy="50" r="45"/><circle class="fg" cx="50" cy="50" r="45"/></svg><b>81</b></div></div><div class="sc"><div class="kqt">Intent</div><div class="kqq">Are they actively working toward a goal?</div><div class="scv">83</div><div class="scd">Actively pursuing a meaningful goal</div></div><div class="sc"><div class="kqt">Clarity</div><div class="kqq">Can they articulate what they want?</div><div class="scv">62</div><div class="scd">Vision present, not fully formed</div></div><div class="sc"><div class="kqt">Receptivity</div><div class="kqq">Are they open to guidance?</div><div class="scv">100</div><div class="scd">Explicitly open, support-seeking</div></div></div><div class="tierbar"><b><i></i> TIER 1 – READY NOW</b><span>High-readiness prospect — actively seeking guidance and ready to engage.</span></div></div></section>
 
-  <section class="card screencard" id="s34" data-id="5.1.3" data-ch="Show It">
+  <section class="card screencard" id="s34" data-tab="Prospect list" data-id="5.1.3" data-ch="Show It">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Show It · 5.1.3</div>
@@ -1644,7 +1726,7 @@ body.cc #ccFlag{display:block}
     </div>
     <div class="scr st"><div class="scrhead"><span><span class="scrname">My Prospects</span><span class="scrsub">12 prospects · ranked by readiness</span></span></div><div class="plist"><div><div class="grp t1"><span>Tier 1 — Ready now</span><span class="rng">70–100 KQ</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">E</span><span class="pn">Emma Rossi</span><span class="pk t1">88</span><span class="pa">Caregiving urgency — discuss estate plan</span></div><div class="prow on"><span class="av" style="background:#EDE7FA;color:#6D28D9">S</span><span class="pn">Sarah Mitchell</span><span class="pk t1">81</span><span class="pa">Call now — lead with the Future You vision</span></div><div class="prow"><span class="av" style="background:#EDE7FA;color:#6D28D9">J</span><span class="pn">Jorday Ray</span><span class="pk t1">76</span><span class="pa">Family legacy is their stated #1 life goal</span></div></div><div><div class="grp t2"><span>Tier 2 — Considering</span><span class="rng">40–69 KQ</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#565064">B</span><span class="pn">Barbara Dean</span><span class="pk t2">68</span><span class="pa">Needs a goal reframe session</span></div><div class="prow"><span class="av" style="background:#EFEFF2;color:#565064">S</span><span class="pn">Sophie Dean</span><span class="pk t2">62</span><span class="pa">Send value-add travel planning content</span></div><div class="grp t3"><span>Tier 3 — Nurture</span><span class="rng">0–39 KQ</span></div><div class="prow"><span class="av" style="background:#F3F3F5;color:#5C5670">E</span><span class="pn">Emily Watson</span><span class="pk t3">35</span><span class="pa">Quarterly light-touch check-in</span></div></div></div></div></section>
 
-  <section class="card" id="s61" data-id="6.1" data-ch="Revenue Model">
+  <section class="card" id="s61" data-tab="Revenue model" data-id="6.1" data-ch="Revenue Model">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 6 · Revenue Model</div>
@@ -1662,7 +1744,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s62" data-id="6.1.1" data-ch="Revenue Model">
+  <section class="card" id="s62" data-tab="How layers earn" data-id="6.1.1" data-ch="Revenue Model">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Revenue Model · 6.1.1</div>
@@ -1680,7 +1762,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s64" data-id="6.1.2" data-ch="Revenue Model">
+  <section class="card" id="s64" data-tab="Economics" data-id="6.1.2" data-ch="Revenue Model">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Revenue Model · 6.1.2</div>
@@ -1693,14 +1775,9 @@ body.cc #ccFlag{display:block}
       <div class="tcol"><h3>Defensible Data Moat</h3><ul><li>Unique, consented, hard-to-replicate</li></ul></div>
       <div class="tcol"><h3>Compounding Intelligence</h3><ul><li>Virtuous personalization cycle</li></ul></div>
     </div>
-    <div class="tcols" style="margin-top:0">
-      <div class="tcol"><h3>Defensible Data Moat</h3><ul><li>Unique, consented, hard-to-replicate</li></ul></div>
-      <div class="tcol"><h3>Compounding Intelligence</h3><ul><li>Virtuous personalization cycle</li></ul></div>
-      <div class="tcol" style="background:transparent;border:0;box-shadow:none"></div>
-    </div>
   </section>
 
-  <section class="card" id="s51" data-id="7.1" data-ch="Traction">
+  <section class="card" id="s51" data-tab="Traction" data-id="7.1" data-ch="Traction">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 7 · Traction</div>
@@ -1725,7 +1802,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s52" data-id="7.1.1" data-ch="Traction">
+  <section class="card" id="s52" data-tab="Enterprise" data-id="7.1.1" data-ch="Traction">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Traction · 7.1.1</div>
@@ -1745,7 +1822,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s53" data-id="7.1.2" data-ch="Traction">
+  <section class="card" id="s53" data-tab="Impact" data-id="7.1.2" data-ch="Traction">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Traction · 7.1.2</div>
@@ -1763,7 +1840,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s54" data-id="7.1.3" data-ch="Traction">
+  <section class="card" id="s54" data-tab="Adoption" data-id="7.1.3" data-ch="Traction">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Traction · 7.1.3</div>
@@ -1780,7 +1857,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s81" data-id="8.1" data-ch="Market">
+  <section class="card" id="s81" data-tab="Market" data-id="8.1" data-ch="Market">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 8 · Market</div>
@@ -1805,7 +1882,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s82" data-id="8.1.1" data-ch="Market">
+  <section class="card" id="s82" data-tab="Expansion" data-id="8.1.1" data-ch="Market">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Market · 8.1.1</div>
@@ -1821,7 +1898,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="sa1" data-id="9.1" data-ch="Ask">
+  <section class="card" id="sa1" data-tab="The Ask" data-id="9.1" data-ch="Ask">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 9 · The Ask</div>
@@ -1839,7 +1916,7 @@ body.cc #ccFlag{display:block}
     <div class="tag">Roadmap gate: 250k profiles unlocks anonymized intelligence APIs</div>
   </section>
 
-  <section class="card" id="sa4" data-id="9.1.1" data-ch="Ask">
+  <section class="card" id="sa4" data-tab="Roadmap gate" data-id="9.1.1" data-ch="Ask">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">The Ask · 9.1.1</div>
@@ -1853,7 +1930,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s91" data-id="10.1" data-ch="Team">
+  <section class="card" id="s91" data-tab="Team" data-id="10.1" data-ch="Team">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 10 · Team</div>
@@ -1869,7 +1946,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s92" data-id="10.1.1" data-ch="Team">
+  <section class="card" id="s92" data-tab="Why this team" data-id="10.1.1" data-ch="Team">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Team · 10.1.1</div>
@@ -1923,7 +2000,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="sx1" data-id="13.1" data-ch="Appendix">
+  <section class="card" id="sx1" data-tab="Appendix" data-id="13.1" data-ch="Appendix">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Chapter 13 · Appendix</div>
@@ -1939,7 +2016,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s83" data-id="13.1.1" data-ch="Appendix">
+  <section class="card" id="s83" data-tab="Competition" data-id="13.1.1" data-ch="Appendix">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Appendix · 13.1.1</div>
@@ -1963,7 +2040,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s84" data-id="13.1.2" data-ch="Appendix">
+  <section class="card" id="s84" data-tab="Moat" data-id="13.1.2" data-ch="Appendix">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Appendix · 13.1.2</div>
@@ -1983,7 +2060,7 @@ body.cc #ccFlag{display:block}
     human and AI decision workflows.</p>
   </section>
 
-  <section class="card" id="sa3" data-id="13.1.3" data-ch="Appendix">
+  <section class="card" id="sa3" data-tab="Use of funds" data-id="13.1.3" data-ch="Appendix">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Appendix · 13.1.3</div>
@@ -1997,7 +2074,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s63" data-id="13.1.4" data-ch="Appendix">
+  <section class="card" id="s63" data-tab="Projections" data-id="13.1.4" data-ch="Appendix">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Appendix · 13.1.4</div>
@@ -2018,7 +2095,7 @@ body.cc #ccFlag{display:block}
     </div>
   </section>
 
-  <section class="card" id="s71" data-id="13.1.5" data-ch="Appendix">
+  <section class="card" id="s71" data-tab="Go-to-market" data-id="13.1.5" data-ch="Appendix">
     <svg class="motif" viewBox="0 0 300 288" aria-hidden="true"><use href="#kmark"/></svg>
     <div class="st">
       <div class="eyebrow">Appendix · 13.1.5</div>
@@ -2047,7 +2124,7 @@ body.cc #ccFlag{display:block}
   <div id="backdrop"></div>
   <div id="chedge"></div>
   <div id="chapbreak"><div><div class="cbnum"></div><div class="cbname"></div><div class="cbrule"></div></div></div>
-  <div id="detbar"><button id="detback">&larr; Back</button><span id="detcount"></span></div>
+  <div id="detbar" role="tablist"></div>
   
 <div id="ccLayer"></div>
 <div id="ccCatcher"></div>
@@ -2055,6 +2132,7 @@ body.cc #ccFlag{display:block}
   <div class="cch"><span class="cc-token"><span id="ccPopNum">1</span></span>
     <b id="ccPopSlide"></b><button class="ccx" id="ccPopX">&times;</button></div>
   <div id="ccMsgs"></div>
+  <input id="ccName" type="text" maxlength="40" placeholder="Your name" autocomplete="name">
   <textarea id="ccText" rows="3" placeholder="Leave a comment…"></textarea>
   <div class="cca"><button id="ccAdd">Comment</button><button class="gh" id="ccDel">Delete pin</button></div>
 </div>
@@ -2078,6 +2156,7 @@ body.cc #ccFlag{display:block}
   <h4>Comments <span id="ccCount">0</span></h4>
   <div class="sub">Click anywhere on the slide to drop a pin. Press <b>Esc</b> to leave comment mode.</div>
   <div id="ccList"></div>
+  <div id="ccWho"></div>
   <div id="ccFoot"><button id="ccHide">Hide panel</button><button class="dang" id="ccClear">Clear all</button></div>
 </aside>
 <div id="ccFlag">Comment mode — click the slide to pin · Esc to exit</div>
@@ -2103,7 +2182,7 @@ let cur=SPINE[0];
 
 const frame=document.getElementById('frame'), ghost=document.getElementById('ghost'), hub=document.getElementById('hub');
 const cnt=document.getElementById('cnt'), ppath=document.getElementById('ppath'), cpos=document.getElementById('cpos'), bar=document.getElementById('bar');
-const detbar=document.getElementById('detbar'), detcount=document.getElementById('detcount');
+const detbar=document.getElementById('detbar');
 const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function countUp(card){
@@ -2142,8 +2221,15 @@ function show(id){
   if(inDetail){
     const p=PARENT[id], list=DETAIL[p];
     shownId=meta(p).id+'.'+(list.indexOf(id)+1);      // 1.1 -> 1.1.1, 1.1.2
-    detcount.textContent=shownId;
-    document.getElementById('detback').innerHTML='&larr; Back to '+meta(p).id;
+    // tabs across the parent and its sheets, so the number never repeats
+    const label=x=>document.getElementById(x)?.dataset.tab||meta(x).id;
+    detbar.innerHTML=
+      '<button class="dtab home" role="tab" data-go="'+p+'">'+label(p)+'</button>'+
+      DETAIL[p].map(d=>'<button class="dtab" role="tab" data-go="'+d+'" aria-selected="'+
+        (d===id)+'">'+label(d)+'</button>').join('');
+    detbar.querySelectorAll('.dtab').forEach(t=>
+      t.addEventListener('click',ev=>{ev.stopPropagation();show(t.dataset.go);}));
+    detbar.querySelector('[aria-selected="true"]')?.scrollIntoView({block:'nearest',inline:'nearest'});
     cnt.textContent=shownId;
   }else{
     cnt.textContent=(SPINE.indexOf(id)+1)+' / '+SPINE.length;
@@ -2188,7 +2274,6 @@ function step(dir){
 }
 document.getElementById('next').addEventListener('click',()=>step(1));
 document.getElementById('prev').addEventListener('click',()=>step(-1));
-document.getElementById('detback').addEventListener('click',()=>show(PARENT[cur]||SPINE[0]));
 
 /* the slide's own content opens the detail — no buttons anywhere */
 const OPENABLE='.row,.metric,.refstat,.crow,.tnode,.dbox,.lcard,.gcard,.col,.dial,.gauge,.quote,.cloud span,.shot,.srow,.tierc,.wstep,.tcol,.slayer,.rrow,.quad,.tmem,.tstop,.pbox,.pshot,.pstat,[data-opens]';
@@ -2308,12 +2393,15 @@ document.addEventListener('keydown',e=>{
 const CC_PROJECT='knomee-pitch-deck';
 const CC_KEY='knomee-deck-comments';
 const CC_MIGRATED_KEY='knomee-deck-comments-migrated';
+const CC_AUTHOR_KEY='knomee-deck-author';
+let ccAuthor=''; try{ ccAuthor=localStorage.getItem(CC_AUTHOR_KEY)||''; }catch(e){}
 let ccThreads=[], ccOpen=null, ccDb=null, ccThreadsRef=null, ccStateRef=null;
 
 const ccNormalize=r=>({
   id:r.id, slide:r.slide, x:r.x, y:r.y,
   createdAt:r.createdAt||Date.now(),
-  comments:Array.isArray(r.comments)?r.comments:[]
+  comments:(Array.isArray(r.comments)?r.comments:[])
+    .map(c=>({text:c.text,ts:c.ts||Date.now(),by:c.by||''}))
 });
 try{ ccThreads=(JSON.parse(localStorage.getItem(CC_KEY)||'[]')).map(ccNormalize); }catch(e){ ccThreads=[]; }
 
@@ -2328,6 +2416,7 @@ function ccWarn(msg,sticky){
   else setTimeout(()=>{el.remove(); if(ccWarnEl===el) ccWarnEl=null;},7000);
 }
 
+const ccEsc=t=>String(t).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
 function ccCacheLocally(){ try{ localStorage.setItem(CC_KEY,JSON.stringify(ccThreads)); }catch(e){} }
 // Write-through: cache locally, then push the one thread that changed.
 function ccSave(t){
@@ -2363,7 +2452,8 @@ function ccRender(){
   ccCount.textContent=ccThreads.length;
   ccList.innerHTML = ccThreads.length ? ccThreads.map((t,i)=>
     '<button class="cc-item" data-id="'+t.id+'"><span class="cc-token"><span>'+(i+1)+'</span></span>'+
-    '<span class="b"><span class="sl">Slide '+ccSlideLabel(t.slide)+'</span>'+
+    '<span class="b"><span class="sl">Slide '+ccSlideLabel(t.slide)+
+    (t.comments[0]&&t.comments[0].by?' · '+ccEsc(t.comments[0].by):'')+'</span>'+
     '<p>'+(t.comments[0]?t.comments[0].text.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])):'—')+'</p></span></button>').join('')
     : '<div id="ccEmpty"><b>No comments yet</b>Click anywhere on a slide to drop a pin and leave a note.</div>';
   ccList.querySelectorAll('.cc-item').forEach(n=>n.addEventListener('click',()=>{
@@ -2380,7 +2470,7 @@ function ccOpenThread(id){
   document.getElementById('ccPopSlide').textContent='Slide '+ccSlideLabel(t.slide);
   document.getElementById('ccMsgs').innerHTML=t.comments.map((c,ci)=>
     '<div class="cc-msg"><p>'+c.text.replace(/[<>&]/g,ch=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[ch]))+'</p>'+
-    '<time>'+new Date(c.ts).toLocaleString()+'</time>'+
+    '<time>'+(c.by?'<span class="by">'+ccEsc(c.by)+'</span> · ':'')+new Date(c.ts).toLocaleString()+'</time>'+
     '<button class="del" data-i="'+ci+'">&times;</button></div>').join('');
   document.getElementById('ccMsgs').querySelectorAll('.del').forEach(d=>d.addEventListener('click',()=>{
     t.comments.splice(+d.dataset.i,1); ccSave(t); ccOpenThread(id);
@@ -2390,7 +2480,9 @@ function ccOpenThread(id){
   ccPop.style.left=Math.min(Math.max(fr.left+fr.width*t.x/100-150,railW),window.innerWidth-312)+'px';
   ccPop.style.top=Math.min(fr.top+fr.height*t.y/100+8,window.innerHeight-260)+'px';
   ccPop.style.position='fixed';
-  ccPop.classList.add('on'); ccText.value=''; setTimeout(()=>ccText.focus(),40);
+  ccPop.classList.toggle('known',!!ccAuthor);
+  ccPop.classList.add('on'); ccText.value='';
+  setTimeout(()=>(ccAuthor?ccText:document.getElementById('ccName')).focus(),40);
 }
 // clicking outside an open detail sheet closes it, the way a modal should
 document.getElementById('backdrop').addEventListener('click',()=>{
@@ -2414,8 +2506,34 @@ ccCatcher.addEventListener('click',e=>{
 });
 document.getElementById('ccAdd').addEventListener('click',()=>{
   const t=ccThreads.find(x=>x.id===ccOpen); if(!t) return;
-  const v=ccText.value.trim(); if(!v) return;
-  t.comments.push({text:v,ts:Date.now()}); ccSave(t); ccOpenThread(t.id);
+  const nameEl=document.getElementById('ccName');
+  if(!ccAuthor){                                  // asked once, then remembered
+    const n=nameEl.value.trim();
+    if(!n){ nameEl.focus(); nameEl.style.borderColor='#C0392B'; return; }
+    ccSetAuthor(n);
+  }
+  const v=ccText.value.trim(); if(!v){ ccText.focus(); return; }
+  t.comments.push({text:v,ts:Date.now(),by:ccAuthor}); ccSave(t); ccOpenThread(t.id);
+});
+function ccSetAuthor(n){
+  ccAuthor=n.slice(0,40);
+  try{ localStorage.setItem(CC_AUTHOR_KEY,ccAuthor); }catch(e){}
+  ccPop.classList.add('known'); ccWhoRender();
+}
+function ccWhoRender(){
+  const el=document.getElementById('ccWho');
+  el.classList.toggle('on',!!ccAuthor);
+  if(!ccAuthor) return;
+  el.innerHTML='Commenting as <b>'+ccEsc(ccAuthor)+'</b><button id="ccWhoEdit">change</button>';
+  el.querySelector('#ccWhoEdit').addEventListener('click',()=>{
+    const n=prompt('Your name',ccAuthor);
+    if(n&&n.trim()) ccSetAuthor(n.trim());
+  });
+}
+ccWhoRender();
+document.getElementById('ccName').addEventListener('keydown',e=>{
+  e.stopPropagation();
+  if(e.key==='Enter'){e.preventDefault();ccText.focus();}
 });
 ccText.addEventListener('keydown',e=>{
   e.stopPropagation();
