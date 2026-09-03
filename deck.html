@@ -1465,6 +1465,39 @@ body.cc #ccFlag{display:block}
 
 /* the hub's morph ghost was the purple panel; it has no role in a static deck */
 #ghost{display:none!important}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LIVE CONTENT EDITOR  (deck.html?edit=1)
+   Same model as the activation playbook: each text slot carries a stable
+   data-k key, edits save to Firestore on blur, and every visitor — editing
+   or not — reads the saved copy. Without ?edit=1 nothing here is visible.
+   ═══════════════════════════════════════════════════════════════════════ */
+#ceBar{display:none}
+body.ce-on{--ce-h:56px}
+body.ce-on #ceBar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:400;
+  align-items:center;gap:clamp(10px,1.4vw,20px);flex-wrap:wrap;
+  background:var(--shell);color:#fff;padding:10px clamp(14px,2.4vw,26px);
+  font-size:12.5px;box-shadow:0 -6px 26px rgba(0,0,0,.34)}
+body.ce-on #ceBar .ce-badge{font-weight:800;background:var(--teal);color:#04231D;
+  padding:4px 12px;border-radius:999px;font-size:11.5px;letter-spacing:.02em}
+body.ce-on #ceBar .ce-hint{color:rgba(255,255,255,.72)}
+body.ce-on #ceBar .ce-status{margin-left:auto;color:var(--teal);font-weight:700;
+  min-width:84px;text-align:right}
+body.ce-on #ceBar .ce-live{color:#fff;border:1px solid rgba(255,255,255,.32);
+  padding:5px 14px;border-radius:999px;text-decoration:none;font-weight:600}
+body.ce-on #ceBar .ce-live:hover{background:rgba(255,255,255,.14)}
+/* the bar sits over the stage, so lift the deck chrome clear of it */
+/* the bar owns the bottom of the window, so the stage and the deck's own
+   chrome move up rather than sliding under it */
+body.ce-on #frame{margin-bottom:calc(var(--ce-h) + 16px)}
+body.ce-on #stepper,body.ce-on #ccRail{bottom:calc(var(--ce-h) + 18px)}
+body.ce-on [data-k]{border-radius:4px}
+body.ce-on [data-k]:hover{outline:1px dashed rgba(45,210,176,.75);outline-offset:2px;cursor:text}
+body.ce-on [data-k]:focus{outline:2px solid var(--teal);outline-offset:2px;
+  background:rgba(45,210,176,.12)}
+/* editing text must never re-trigger the hover affordance of the tile it sits in */
+body.ce-on .opens:has([data-k]:focus)::after{opacity:0}
+
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -2233,6 +2266,13 @@ body.cc #ccFlag{display:block}
   </div>
 </div>
 
+<div id="ceBar">
+  <span class="ce-badge">&#9999;&#65039; Editing</span>
+  <span class="ce-hint">Click any text to edit &mdash; changes save automatically and go live for everyone.</span>
+  <span class="ce-hint">Move between slides with the hub or the arrow keys.</span>
+  <span class="ce-status" id="ceStatus">Ready</span>
+  <a class="ce-live" id="ceLive" href="#" target="_blank" rel="noopener">View live &#8599;</a>
+</div>
 <script>
 const CARDS=[...document.querySelectorAll('.card')].map(c=>({
   el:c.id, id:c.dataset.id, ch:c.dataset.ch,
@@ -2685,6 +2725,103 @@ function fromHash(){
 show(fromHash()||SPINE[0]);
 window.addEventListener('resize',()=>{if(ccOpen)ccOpenThread(ccOpen);});
 window.addEventListener('hashchange',()=>{const t=fromHash();if(t)show(t);});
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LIVE CONTENT EDITOR
+   Open deck.html?edit=1 to rewrite any text on any slide. Saves land in
+   Firestore under the deck's own namespace, so the plain URL shows them too.
+   ═══════════════════════════════════════════════════════════════════════ */
+const CE_EDIT=/[?&]edit=1/.test(location.search);
+let ceOverrides={}, ceSlots=[], ceRef=null;
+
+/* Walk each card and mark the text slots. A tag that only ever wraps text
+   (a heading, a paragraph, a <b>) becomes one slot; a layout container is
+   descended into — unless it holds loose text of its own, in which case it
+   is the slot. Keys are cardId::index in document order, so they stay put
+   as long as the markup does. */
+const CE_SKIP=new Set(['SVG','BUTTON','A','IMG','CANVAS','INPUT','TEXTAREA','SELECT','SCRIPT','STYLE','VIDEO','BR','HR']);
+const CE_BOX =new Set(['DIV','SECTION','UL','OL','TABLE','THEAD','TBODY','TFOOT','TR','DL','FIGURE','HEADER','FOOTER','ASIDE','MAIN','ARTICLE','NAV','FORM']);
+const ceHasText=el=>!!(el.textContent||'').trim();
+const ceOwnText=el=>[...el.childNodes].some(n=>n.nodeType===3&&n.nodeValue.trim());
+
+function ceWalk(el,out){
+  for(const kid of el.children){
+    if(CE_SKIP.has(kid.tagName)||kid.hasAttribute('data-no-edit')) continue;
+    if(!ceHasText(kid)) continue;
+    if(CE_BOX.has(kid.tagName)&&!ceOwnText(kid)){ ceWalk(kid,out); continue; }
+    out.push(kid);                          // a text slot, edited whole
+  }
+}
+function ceCollect(){
+  document.querySelectorAll('.card').forEach(card=>{
+    const out=[]; ceWalk(card,out);
+    out.forEach((el,i)=>{ el.setAttribute('data-k',card.id+'::'+i); ceSlots.push(el); });
+  });
+}
+
+/* Overrides are applied to every visitor, not just the editor. A slot the
+   author is typing in is left alone so a remote save never eats the caret. */
+function ceApply(){
+  ceSlots.forEach(el=>{
+    const k=el.getAttribute('data-k');
+    if(!Object.prototype.hasOwnProperty.call(ceOverrides,k)) return;
+    if(document.activeElement===el) return;
+    if(el.innerHTML!==ceOverrides[k]) el.innerHTML=ceOverrides[k];
+  });
+}
+const ceStatus=t=>{const s=document.getElementById('ceStatus'); if(s)s.textContent=t;};
+
+function ceInit(){
+  if(typeof firebase==='undefined'||!ccDb){ ceStatus('Offline'); return; }
+  try{
+    ceRef=ccDb.collection('video-feedback').doc(CC_PROJECT).collection('content').doc('deck');
+    ceRef.onSnapshot(snap=>{ ceOverrides=snap.exists?(snap.data()||{}):{}; ceApply(); },
+      err=>{ console.warn('content sync error',err); ceStatus('Offline'); });
+  }catch(e){ console.warn('content editor unavailable',e); ceStatus('Offline'); }
+}
+function ceSave(key,html){
+  if(!ceRef){ ceStatus('Save failed'); return; }
+  ceStatus('Saving…');
+  ceRef.set({[key]:html},{merge:true})
+    .then(()=>ceStatus('Saved ✓'),
+          err=>{ console.warn('save failed',err); ceStatus('Save failed'); });
+}
+function cePlainPaste(e){                    // paste text, never someone's markup
+  e.preventDefault();
+  const t=((e.clipboardData||window.clipboardData).getData('text/plain')||'');
+  document.execCommand('insertText',false,t);
+}
+function ceWire(el){
+  el.setAttribute('contenteditable','true');
+  el.setAttribute('spellcheck','true');
+  /* clicks inside a slot must not reach the tile that opens a detail sheet,
+     and keys must not reach the deck's arrow / shortcut handlers */
+  ['mousedown','click','dblclick'].forEach(t=>el.addEventListener(t,e=>e.stopPropagation()));
+  el.addEventListener('keydown',e=>{
+    e.stopPropagation();
+    if(e.key==='Escape'){ el.blur(); }
+    if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); el.blur(); }
+  });
+  el.addEventListener('paste',cePlainPaste);
+  el.addEventListener('blur',()=>{
+    const k=el.getAttribute('data-k'), html=el.innerHTML;
+    if(ceOverrides[k]===html) return;        // nothing changed, nothing written
+    ceOverrides[k]=html; ceSave(k,html);
+  });
+}
+function ceMeasure(){
+  const bar=document.getElementById('ceBar'); if(!bar) return;
+  document.body.style.setProperty('--ce-h',Math.ceil(bar.getBoundingClientRect().height)+'px');
+}
+function ceStart(){
+  document.body.classList.add('ce-on');
+  ceMeasure(); window.addEventListener('resize',ceMeasure);
+  ceSlots.forEach(ceWire);
+  const live=document.getElementById('ceLive');
+  if(live) live.href=location.pathname+location.hash;
+}
+ceCollect(); ceInit(); if(CE_EDIT) ceStart();
+
 </script>
 </body>
 </html>
